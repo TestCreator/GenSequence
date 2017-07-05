@@ -6,6 +6,11 @@ but the "colun" generators can share some state.
 
 import random
 import sys
+import logging
+
+logging.basicConfig(format='%(levelname)s:%(message)s',
+                        level=logging.DEBUG)
+log = logging.getLogger(__name__)
 
 #
 #  Example: A sequence of natural numbers,
@@ -21,14 +26,21 @@ def nat_seq(low=0, high=sys.maxsize):
 
 #
 # Example:  A filter for duplicates
+#    with a limit on attempts
 #
-def dedup(f):
+def dedup(f, limit=100):
     def deduplicated(*args): 
         seen = set()
         stream = f(*args)
         while (True):
             trial = next(stream)
+            attempts=1
             while trial in seen:
+                attempts += 1
+                if attempts > limit:
+                    log.debug("Dedup filter bailing after {} attempts".format(attempts))
+                    raise StopIteration("{} failed attempts to generate a unique value".
+                                            format(attempts))
                 trial = next(stream)
             seen.add(trial)
             yield(trial)
@@ -56,14 +68,7 @@ if __name__ == "__main__":
     for x in zip(unique_nats(0,15), unique_nats(0,15), names()): 
         print(x)
         count += 1
-        if count > 10:
+        if count > 20:
             break
 
 
-# FIXME:
-#    This currently does not behave well when one of the sequences
-#    is exhausted.  If I set the limit above to 20, when there are only
-#    15 unique naturals between 0 and 15, the program will hang.  What
-#    I want instead is that the loop is broken (the 'for' stops) when any
-#    of the sub-sequences is exhausted. 
-    
