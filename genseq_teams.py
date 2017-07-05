@@ -17,6 +17,62 @@ For this example, a test case consists of:
 import argparse
 import csv
 import sys
+import arrow   # For timestamps in student questionnaire records
+import genseq  # Experimental support for random streams
+import random 
+import rand_util # Other selection that is not about streams
+
+freetime_choices_mwf = ["9:00-12:00", "12:00-2:00", "2:00-4:00", "4:00-6:00"]
+freetime_choices_uh = ["12:00-2:00", "2:00-4:00", "4:00-6:00"]
+
+#
+# Meeting time availability
+# 
+def some_times(from_list,min=1,max=3):
+    return ";".join(rand_util.choose_ordered_m_n(from_list,min,max))
+
+#
+# Technology skills/experience
+# We'll imagine that each student has at least one technical skill,
+# up to five, with randomly distributed skill ranges 1-5; other
+# skills are 0 (so zero has a different distribution from the other
+# levels)
+# 
+# We'll generate skill levels as a vector, then separately load that
+# into a dict.  There are 9 skills in the Flying Bison questionnaire.
+#
+def skill_levels():
+    """
+    Vector of skill levels 0-5
+    """
+    n_possible_skills = 9  # This would change if questionnaire schema changed
+    skills = [0]*n_possible_skills         # Initially no skills
+    n_skills = random.randint(1,5)
+    for i in range(n_skills):
+        skill_level = random.randint(1,5)
+        # Which skill to update?  Choosing randomly means we may
+        # have collisions, which somewhat reduce the overall skill
+        # level.  I think that's fairly harmless given the arbitrariness
+        # of my assumptions about skill levels.
+        skill_to_update = random.randrange(n_possible_skills)
+        skills[skill_to_update] = skill_level
+    return skills
+
+#
+# Distribute vector elements to named elements of a dict.
+# The name "scatter" derives from the scatter/gather idiom
+# of I/O or message passing.
+#
+def scatter(vec, field_names, dest):
+    """
+    Values from vec are assigned to each corresponding field_name 
+    in dictionary dest.  The lengths of vec and field_names must be 
+    equal. 
+    """
+    assert len(vec) == len(field_names)
+    for i in range(len(vec)):
+        dest[field_names[i]] = vec[i]
+
 
 def generate_tests(infile,outpath_prefix):
     """
@@ -50,12 +106,15 @@ field_titles = { "time": "Timestamp",
                      "wed": "Wednesday", "thu": "Thursday", "fri": "Friday",
                      "mates": "Desired Teammates DuckIDs (separated by ';')" }
 
+
 def generate_test(test_vec, outpath_prefix, outpath_suffix):
     """
     Generate one concrete test case based on the test vector. 
     outpath_prefix and outpath_suffix are parts of the file names
     to be generated; the suffix part gives uniqueness.
     """
+    global names_source
+    names_source=genseq.names()
     runner_name = "{}{}_runner.sh".format(outpath_prefix, outpath_suffix)
     classfile_name = "{}{}_class.csv".format(outpath_prefix, outpath_suffix)
     with open(runner_name, 'w') as runner:
@@ -63,6 +122,38 @@ def generate_test(test_vec, outpath_prefix, outpath_suffix):
     # print("Test vector: {}".format(test_vec))
     with open(classfile_name, 'w') as classfile:
         writer = csv.DictWriter(classfile,fieldnames=fieldnames)
+        writer.writeheader()
+        # First cut:  20 student records, ignore the test vector'
+        # FIXME: Vary contents of test file based on test vector
+        for _ in range(20):
+            writer.writerow( gen_student_record() )
+        
+freetime_choices_mwf = ["9:00-12:00", "12:00-2:00", "2:00-4:00", "4:00-6:00"]
+freetime_choices_uh = ["12:00-2:00", "2:00-4:00", "4:00-6:00"]
+
+
+#
+# A vector of concrete values for a single row of the
+# output test sequence.  Since this is a function and not
+# a generator, and since we don't have other state maintenance
+# mechanisms, we currently have no relations between rows.
+#
+def gen_student_record():
+    """One student record"""
+    rec = {"time": arrow.now(),
+           "name": next(names_source),
+           "id": rand_util.rand_str(9,"0123456789"),
+           "mates": ""}
+    skills = skill_levels();
+    scatter(skills, ["exp_py", "exp_jav", "exp_js", "exp_c",
+                  "exp_cpp", "exp_php", "exp_htm", "exp_sql","exp_bsh"],
+                  rec)
+    rec["mon"] = some_times(freetime_choices_mwf,0,4)
+    rec["tue"] = some_times(freetime_choices_uh, 0,3)
+    rec["wed"] = some_times(freetime_choices_mwf,0,4)
+    rec["thu"] = some_times(freetime_choices_uh, 0,3)
+    rec["fri"] = some_times(freetime_choices_mwf,0,4)
+    return rec
 
 
 
