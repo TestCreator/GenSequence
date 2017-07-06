@@ -107,6 +107,19 @@ field_titles = { "time": "Timestamp",
                      "mates": "Desired Teammates DuckIDs (separated by ';')" }
 
 
+# Mapping value names to parameters used in generating
+# concrete values
+class_sizes = { "0": (0,0),  "1": (1,1), "2": (2,2),
+                    "small": (8,18), "medium": (20,35),
+                    "large": (40,80) }
+
+def choose_class_size(test_vec):
+    min, max = class_sizes[test_vec["class_size"]]
+    if min==max:
+        return min
+    return random.randint(min,max)
+
+
 def generate_test(test_vec, outpath_prefix, outpath_suffix):
     """
     Generate one concrete test case based on the test vector. 
@@ -118,19 +131,17 @@ def generate_test(test_vec, outpath_prefix, outpath_suffix):
     runner_name = "{}{}_runner.sh".format(outpath_prefix, outpath_suffix)
     classfile_name = "{}{}_class.csv".format(outpath_prefix, outpath_suffix)
     with open(runner_name, 'w') as runner:
-        print("#! env python3 myprog {} ".format(classfile_name))
+        print("#! env python3 myprog {} ".format(classfile_name),file=runner)
+        print("# For test vector {}".format(test_vec), file=runner)
     # print("Test vector: {}".format(test_vec))
     with open(classfile_name, 'w') as classfile:
         writer = csv.DictWriter(classfile,fieldnames=fieldnames)
         writer.writeheader()
         # First cut:  20 student records, ignore the test vector'
         # FIXME: Vary contents of test file based on test vector
-        for _ in range(20):
+        for _ in range( choose_class_size(test_vec)):
             writer.writerow( gen_student_record() )
         
-freetime_choices_mwf = ["9:00-12:00", "12:00-2:00", "2:00-4:00", "4:00-6:00"]
-freetime_choices_uh = ["12:00-2:00", "2:00-4:00", "4:00-6:00"]
-
 
 #
 # A vector of concrete values for a single row of the
