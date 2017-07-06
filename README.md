@@ -1,4 +1,4 @@
-#GenSequence
+# GenSequence
 
 From a CSV file representing a sequence of test vectors, produce a set of sequences of concrete values, one sequence per test vector.  Intended to be used in creation of concrete test cases as a step in a pipeline after GenPairs. 
 
