@@ -42,13 +42,19 @@ So let's see how hard that is in practice ...
 from mako.template import Template
 import random
 
+import logging
+logging.basicConfig(format='%(levelname)s:%(message)s',
+                        level=logging.WARNING)
+log = logging.getLogger(__name__)
+
+
 class Grammar:
     """
     A generative grammar implemented as a set of 
     Python functions and templates. 
     """
     def __init__(self):
-        self.grammar_env = { }  # For functions & attributes we want to pass to Mako
+        self.grammar_env = { }  # Functions & attributes we want to pass to Mako
         #
         # Dynamic context of generation
         self.context = None
@@ -60,6 +66,7 @@ class Grammar:
         """
         def decorate(f):
             self.grammar_env[name] = f
+            log.debug("Registered function to term '{}'".format(name))
             return f
         return decorate
 
@@ -79,11 +86,14 @@ class Grammar:
         n_choices = len(productions)
         def f():
             choice_index = int(random.random() * n_choices)
+            log.debug("Expanding {} to choice {} : {}"
+                          .format(name, choice_index,
+                                  productions[choice_index]))
             choice = right_hands[choice_index]
             return choice.render(**self.grammar_env)
         self.grammar_env[name] = f
 
-    def gen(self,term):
+    def gen(self,term, context={}):
         """
         Interpret 'term' as a template to be expanded. 
         This is a top-level method that begins generating a new 
@@ -91,11 +101,15 @@ class Grammar:
         the current sentence, which may include state information like 
         current depth of recursion, counts of various terms, etc. 
         Do not call this recursively from within the grammar! 
+
+        Issue:  We need an opportunity to set beginning 
+        context.  For now we'll try doing it with an 
+        optional (keywore) argument
         """
         if self.context:
             print("Warning: Recursive call to 'gen'")
         self.ctx_stack.append(self.context)
-        self.context = {}
+        self.context = dict(context)  # Prevent side effects across calls
         sentence = self._expand(Template(term))
         self.context = self.ctx_stack.pop()
         return sentence 
