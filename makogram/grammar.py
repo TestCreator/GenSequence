@@ -14,6 +14,14 @@ symbol can be provided in one of two ways:
       g.prod("tests", "${tests()} ${test()}")
       g.prod("tests", "${test()}")
 
+(1.5) Grammar.kleene(symbol, rhs, reps=k) is a special 
+   case of Grammar.prod for a bounded version of 
+   Kleene star.  Another way to get 10 repetitions of 
+   ${test() } is 
+      g.kleene("tests", "${test()}", reps=10)
+   or we can draw from 1..5 repetitions uniformly with 
+      g.kleene("tests", "${test()}", min=1, max=5)
+
 (2) Procedural attachment: 
       @g.procdef("next_name")
       def next_name():
