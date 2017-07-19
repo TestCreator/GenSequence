@@ -29,10 +29,19 @@ ${tests()}
 """)
 
 # tests ::=  tests test | test
-#   with weights and limits to always produce
+#   with weights and limits to always produce 10 reps
 #   
-g.prod("tests", "${tests()} ${test()}", max_uses=10)
-g.prod("tests", "${test()}", weight=0)
+# g.prod("tests", "${tests()} ${test()}", max_uses=10)
+# g.prod("tests", "${test()}", weight=0)
+
+# tests ::= (test)^10
+#    with ( )^k as fixed number of repetitions
+g.kleene("tests", "${test()}", reps=10)
+
+# tests ::= (test)^[1-5]
+#    with ( )^[m-n] as variable number of repetitions
+g.kleene("tests", "${test()}", min=1, max=5)
+
 
 # test ::= (boilerplate with next_name) 
 g.prod("test", """

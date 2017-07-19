@@ -65,6 +65,29 @@ class Grammar:
             return f
         return decorate
 
+    def kleene(self, name, rhs, reps=None, min=0, max=9):
+        """
+        Repetition of a pattern.  If reps is provided, we 
+        repeat it exactly that many times.  Otherwise we choose 
+        uniformly between min and max repetitions each time we 
+        expand the template. 
+
+        Examples: 
+        g.kleene("tests", "${test()}", reps=10)
+        g.kleene("tests", "${test()}", min=1, max=5)
+        """
+        tmpl = Template(rhs)
+        if reps:
+            def _reps():
+                return reps
+        else:
+            def _reps():
+                return random.randint(min, max)
+        def _kleene():
+            l = [ tmpl.render(**self.grammar_env) for _ in range(_reps()) ]
+            return "".join(l)
+        self.grammar_env[name] = _kleene
+
     def _dump_choices(self, choices):
         """
         Debugging: What are our choices? 
