@@ -15,6 +15,7 @@ g.prod("skel", """
 import nose
 
 def ordered(s):
+    print("Checking order of {}".format("".join(s)))
     if len(s) < 1:
         return True
     prior = s[0]
@@ -28,6 +29,8 @@ ${tests()}
 """)
 
 # tests ::=  tests test | test
+#   with weights and limits to always produce
+#   
 g.prod("tests", "${tests()} ${test()}", max_uses=10)
 g.prod("tests", "${test()}", weight=0)
 
@@ -35,6 +38,7 @@ g.prod("tests", "${test()}", weight=0)
 g.prod("test", """
 input_str = "${next_name()}"
 output_str = sorted(input_str)
+print("Sorted {} and got {}".format(input_str, output_str))
 assert len(input_str) == len(output_str)
 assert ordered(output_str)
 """)

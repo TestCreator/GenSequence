@@ -119,6 +119,15 @@ def choose_class_size(test_vec):
         return min
     return random.randint(min,max)
 
+# Not clear how team size would be set ... it is currently
+# supplied through a GUI, and the test cases produced in
+# spring 2017 do not include it.  I'll skip that for now. 
+#
+
+# Time overlaps.  How shall we interpret this?
+# some_times draws the times; we'll fix it there
+#
+
 
 def generate_test(test_vec, outpath_prefix, outpath_suffix):
     """
@@ -137,10 +146,8 @@ def generate_test(test_vec, outpath_prefix, outpath_suffix):
     with open(classfile_name, 'w') as classfile:
         writer = csv.DictWriter(classfile,fieldnames=fieldnames)
         writer.writeheader()
-        # First cut:  20 student records, ignore the test vector'
-        # FIXME: Vary contents of test file based on test vector
         for _ in range( choose_class_size(test_vec)):
-            writer.writerow( gen_student_record() )
+            writer.writerow( gen_student_record(test_vec) )
         
 
 #
@@ -149,7 +156,7 @@ def generate_test(test_vec, outpath_prefix, outpath_suffix):
 # a generator, and since we don't have other state maintenance
 # mechanisms, we currently have no relations between rows.
 #
-def gen_student_record():
+def gen_student_record(test_vec):
     """One student record"""
     rec = {"time": arrow.now(),
            "name": next(names_source),
@@ -159,6 +166,7 @@ def gen_student_record():
     scatter(skills, ["exp_py", "exp_jav", "exp_js", "exp_c",
                   "exp_cpp", "exp_php", "exp_htm", "exp_sql","exp_bsh"],
                   rec)
+    
     rec["mon"] = some_times(freetime_choices_mwf,0,4)
     rec["tue"] = some_times(freetime_choices_uh, 0,3)
     rec["wed"] = some_times(freetime_choices_mwf,0,4)

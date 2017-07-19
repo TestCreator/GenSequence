@@ -99,6 +99,83 @@ def coincidence(f, p=0.33):
                 yield item
     return with_coincidence
 
+#
+# Weighted, limited choice of elements from
+# two or more streams. Direct analogue to
+# the way we choose among productions for a
+# non-terminal in makogram.grammar.
+# 
+# We need to keep track of how many times each
+# production has been used, and we don't want to be
+# passing it around everywhere all the time, so we'll
+# keep a global context.  We may add a context stack
+# or other context-swapping mechanism later. 
+#
+#
+context = { "counts": { } }
+
+def prior_uses(stream):
+    counts = context["counts"]
+    return counts.get(stream,0)
+
+def incr_uses(stream):
+    counts = context["counts"]
+    if stream in counts:
+        counts[stream] += 1
+    else:
+        counts[stream] = 1
+
+def choice(name, stream, max_uses=99999, weight=1):
+    """
+    This stream may be used up to max_uses times in 
+    a context, and if enabled will be chosen with 
+    weight weight (relative to other choices). 
+    """
+    return { "name": name, "stream": stream,
+             "max_uses": max_uses, "weight": weight }
+
+
+def choose( choices ):
+    """
+    Each element of choices is a choice structure; here we 
+    choose among them by limits and by weight. 
+    Compare to Grammar.choose in makogram.grammar. 
+    """
+    allowed = [ ]
+    for choice in choices:
+        if prior_uses(choice["stream"]) < choice["max_uses"]:
+            allowed.append(choice)
+    if allowed:
+        choices = allowed
+    else:
+        log.debug("All choices have limited out")
+    if len(choices) == 1:
+        ch = choices[0]
+        name = ch["name"]
+        log.debug("Only one choice, so we'll take {}".format(name))
+        stream = cho["stream"]
+        incr_uses(stream)
+        result = next(stream)
+        log.debug("Generate element {}".format(result))
+        yield result
+    # Multiple choices left ... weighted selection
+    weight_sum = 0.0
+    for choice in choices:
+        weight_sum += choice["weight"]
+    threshold = random.random() * weight_sum
+    for ch in choices:
+        if ch["weight"] >= threshold:
+            stream = ch["stream"]
+            name = ch["name"]
+            log.debug("Weighted choice of stream {}".format(name))
+            incr_uses(stream)
+            result = next(stream)
+            log.debug("Generate element {}".format(result))
+            yield result
+        threshold -= choice["weight"]
+    assert(False, "Exhausted choices!")
+            
+        
 
 #
 # Names (firstname, lastname)
