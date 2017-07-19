@@ -1,0 +1,5 @@
+# These files don't go in the repo
+__pycache__
+env
+tmp*
+*.pyc
