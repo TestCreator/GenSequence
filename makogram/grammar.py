@@ -14,7 +14,7 @@ UNLIMITED = Decimal('Infinity')  # Just to print nicer than sys.max_size
 
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s',
-                        level=logging.DEBUG)
+                        level=logging.WARNING)
 log = logging.getLogger(__name__)
 
 
@@ -104,11 +104,11 @@ class Grammar:
         elif isinstance(rhs,Proc):
             self._prod(name,rhs)
         elif callable(rhs):
-            print("{} is callable".format(name))
+            log.debug("{} is callable".format(name))
             wrapped = Proc(rhs)
-            print("All wrapped up")
+            log.debug("All wrapped up")
             self._prod(name, wrapped)
-            print("And associated with its name")
+            log.debug("And associated with its name")
 
     def __str__(self):
         """
@@ -171,7 +171,7 @@ class Proc(Renderable):
         super().__init__(**kwargs)
         
     def render(self):
-        print("Rendering wrapped function")
+        log.debug("Rendering wrapped function")
         return self.f()
 
         
