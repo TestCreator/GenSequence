@@ -23,7 +23,7 @@ class Grammar:
 
     non-terminal ->  right hand side (rhs)
     where an rhs is a Renderable.  A Renderable is like a function 
-    (it can be called) but has additional attributes weight and max-uses. 
+    (it can be called) but has adDitional attributes weight and max-uses. 
     
     A renderable may be
 
@@ -118,7 +118,12 @@ class Grammar:
         built up from sub-expressions that cannot be referred 
         to by name.
         """
-        return str(self.grammar_env)
+        rep = "***GRAMMAR***"
+        for symbol in self.grammar_env:
+            rep += "\n{} -> {}".format(symbol, self.grammar_env[symbol])
+        rep += "\n*** ------ ***"
+        return rep
+        #return str(self.grammar_env)
 
     def gen(self, name):
         return self.grammar_env[name].render()
@@ -245,6 +250,7 @@ class Choice(Renderable):
         for choice in choices:
             if choice.weight >= threshold:
                 counts[choice.desc] += 1
+                log.debug("Rendering '{}'".format(choice.desc))
                 return choice.render()
             threshold -= choice.weight
         assert False, "Exhausted choices!"
