@@ -61,8 +61,11 @@ class Grammar:
 
     def _prod(self, name, rhs):
         """ 
-        Production.  Called indirectly through 
-        one of the convenience methods below. 
+        Associate production with non-terminal name. 
+        At this point rhs should be a Renderable, and may 
+        already have been wrapped in a Kleene.  We may 
+        further wrap in a Choice if the non-terminal name 
+        already has one or more rhs associated with it. 
         """
         if name not in self.grammar_env:
             log.debug("Adding {} -> {} to grammar_env"
@@ -92,23 +95,42 @@ class Grammar:
                       .format(name, self.grammar_env[name]))
 
 
-    ### Convenience methods instantiate the different kinds
-    ### of right-hand-sides
-    def prod(self, name, rhs):
+    ### Convenience method instantiates the different kinds
+    ### of right-hand-sides depending on what is in the
+    ### rhs.  If it has repetition parameters, we wrap it
+    ### in a Kleene. 
+    def prod(self, name, rhs, reps=None, min=0, max=None, **kwargs):
         """
         Instantiate and record the appropriate kind of 
         right-hand-side. 
         """
+        # If the right hand side isn't already a Renderable,
+        # create a Renderable of the appropriate kind
         if isinstance(rhs,str):
-            self._prod(name, Template(self,rhs))
-        elif isinstance(rhs,Proc):
-            self._prod(name,rhs)
+            rhs = Template(self, rhs)
+        elif isinstance(rhs, Renderable):
+            pass
         elif callable(rhs):
+            # But not a Renderable ... 
             log.debug("{} is callable".format(name))
-            wrapped = Proc(rhs)
-            log.debug("All wrapped up")
-            self._prod(name, wrapped)
-            log.debug("And associated with its name")
+            rhs = Proc(self, rhs)
+
+        # At this point, if we don't have a Renderable,
+        # we must have been passed something we can't
+        # handle
+        assert isinstance(rhs, Renderable), "Can't render {}".format(rhs)
+        
+        # If it has repetition parameters, we need to 
+        # wrap it in a Kleene
+        if reps or max:
+            rhs = Kleene(self, rhs, reps=reps, min=min, max=max)
+
+        # Note that weight and max_uses, if given, will apply to the
+        # fully wrapped rhs.  For example, we might have been given
+        # a string, wrapped it in a Template, then wrapped that in a
+        # Kleene ... and the weight and max_uses will apply to the
+        # Kleene (which may then be further wrapped in a Choice by _prod). 
+        self._prod(name, rhs, **kwargs)
 
     def __str__(self):
         """
@@ -168,9 +190,11 @@ class Renderable:
 class Proc(Renderable):
     """
     Turn any zero-argument callable into a renderable by wrapping it 
-    in an object. 
+    in an object.  Note the grammar argument is not actually used; 
+    it is here just for consistency with the other Renderable 
+    constructors.   
     """
-    def __init__(self, f, **kwargs):
+    def __init__(self, grammar, f, **kwargs):
         log.debug("Initializing Proc object")
         self.f = f
         super().__init__(**kwargs)
@@ -194,6 +218,33 @@ class Template(Renderable):
 
     def render(self):
         return self.template.render(**self.grammar.grammar_env)
+
+class Kleene(Renderable):
+    """
+    A production thatis repeated some number of times, 
+    either an absolute (reps) or a range (min,max).
+    """
+
+    def __init__(self, grammar, term, reps=None, min=0, max=9, **kwargs):
+        log.debug("Initializing Kleene object {}/{}/{}"
+                    .format(reps, min, max))
+        self.grammar = grammar
+        self.term = term
+        self.reps = reps
+        self.min = min
+        self.max = max
+        super().__init__(**kwargs, desc="({})*".format(term.desc))
+
+        
+    def render(self):
+        if self.reps:
+            reps = self.reps
+        else:
+            reps = random.randint(self.min, self.max)
+        l = [ self.term.render() for _ in range(reps) ]
+        log.debug("Kleene render to {}".format(l))
+        return "".join(l)
+
 
 class Choice(Renderable):
     """
