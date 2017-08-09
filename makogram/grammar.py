@@ -3,6 +3,62 @@ CFG as test "grammar", but the right hand side of a
 production is anything with a 'render' method that takes
 the grammar environment as a parameter. 
 
+Most user code will use only the Grammar class, using Grammar.prod to 
+create Renderables as the right hand sides of productions.  Some user 
+code may need to create new subclasses of Renderable and provide them 
+directly as the right hand sides of productions. 
+
+Typical usage: 
+
+from makogram import grammar
+import random
+
+g = grammar.Grammar()
+
+# Production rules can be defined from a symbol
+# like "NP" and a template using Mako syntax.  In a
+# template, a non-terminal like NP would be invoked as ${NP()}
+# Direct and indirect recursion is permitted. 
+g.prod("Sentence", "The ${NP()}  ${VP()}")
+g.prod("NP", "${Adjectives()} ${Noun()}")
+
+# Repetition can be fixed with the reps keyword or
+# selected randomly between a min and max bound
+g.prod("Adjectives", "${Adj()}", min=0, max=3)
+
+# Functions that return text can also be used as
+# definitions of non-terminals
+def noun():
+    return random.choice(["dog", "cat"])
+g.prod("Noun", noun)
+
+def adj():
+    return random.choice(["big ", "small "])
+g.prod("Adj", adj)
+
+# If multiple productions are given for the same
+# non-terminal, it will be treated as a random choice,
+# which may be limited and weighted.  
+g.prod("VP", "chases mice", weight=3, max_uses=2)
+g.prod("VP", "eats ${food()}", weight=1)
+
+g.prod("food", "kibble", weight=2)
+g.prod("food", "table scraps")
+g.prod("food", "bugs")
+
+# The max-uses holds across any number of calls to
+# expand a term in the grammar.  "chases mice" will
+# appear at most twice in the following sequence.
+for _ in range(5):
+    print(g.gen("Sentence"))
+
+# Example output:
+# The small small small  cat  chases mice
+# The big  dog  eats kibble
+# The big  dog  chases mice
+# The small big  cat  chases mice
+# The  cat  eats table scraps
+
 """
 
 import mako.template      # For text productions --- use $(S()) to expand a non-terminal S
@@ -59,7 +115,7 @@ class Grammar:
         self.grammar_env = { }
         self.counts = { }
 
-    def _prod(self, name, rhs):
+    def _prod(self, name, rhs, weight=1):
         """ 
         Associate production with non-terminal name. 
         At this point rhs should be a Renderable, and may 
@@ -89,7 +145,7 @@ class Grammar:
         # individual rhs.
         choice = Choice(self)
         choice.add_choice(prior)
-        choice.add_choice(rhs)
+        choice.add_choice(rhs, weight=weight)
         self.grammar_env[name] = choice
         log.debug("New mapping to Choice {} -> {}"
                       .format(name, self.grammar_env[name]))
@@ -99,10 +155,32 @@ class Grammar:
     ### of right-hand-sides depending on what is in the
     ### rhs.  If it has repetition parameters, we wrap it
     ### in a Kleene. 
-    def prod(self, name, rhs, reps=None, min=0, max=None, **kwargs):
+    def prod(self, name, rhs, reps=None, min=0, max=None,
+                 max_uses=999, **kwargs):
         """
         Instantiate and record the appropriate kind of 
         right-hand-side. 
+
+        Parameters
+        ----------
+        name : str
+            The non-terminal symbol to be defined
+        rhs :  str, Renderable, or callable
+            right-hand-side, a possible expansion of the non-terminal
+        reps : int, default=None
+            if provided, the right-hand-side will be expanded reps times
+        min : int, default=0
+            if max is also provided, this is the minimum number of times 
+            this rhs will be expanded
+        max : int, default=None
+            if provided (and if reps is not provided), then the 
+            right hand side will be expanded between min and max times, 
+            inclusive. 
+        max_uses : int, default=999
+            if there are other choices of rhs, then this one will be 
+            chosen no more than max_uses times, across all expansions of 
+            non-terminals in this grammar
+
         """
         # If the right hand side isn't already a Renderable,
         # create a Renderable of the appropriate kind
@@ -148,6 +226,19 @@ class Grammar:
         #return str(self.grammar_env)
 
     def gen(self, name):
+        """Apply the previously defined production rules and 
+        return the derived string.
+
+        Parameters
+        ----------
+        name : string
+           A non-terminal symbol
+        
+        Returns
+        -------
+        A string derived from the non-terminal symbol 
+        (typically through several recursive levels of expansion)
+        """
         return self.grammar_env[name].render()
 
 NAME_CNT = 0
@@ -192,7 +283,7 @@ class Proc(Renderable):
     Turn any zero-argument callable into a renderable by wrapping it 
     in an object.  Note the grammar argument is not actually used; 
     it is here just for consistency with the other Renderable 
-    constructors.   
+    constructors.  
     """
     def __init__(self, grammar, f, **kwargs):
         log.debug("Initializing Proc object")
@@ -259,7 +350,8 @@ class Choice(Renderable):
         self.choices = [ ]
         super().__init__(**kwargs)
 
-    def add_choice(self, choice):
+    def add_choice(self, choice, weight=1):
+        choice.weight = weight
         self.choices.append(choice)
         self.desc="{}|{}".format(self.desc,choice.desc)
 
