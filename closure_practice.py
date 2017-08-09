@@ -28,4 +28,7 @@ def jazz_it_up(execute):
 @jazz_it_up
 def print_name(name):
 	print(name)
+
+#really means:
+#print_name = jazz_it_up(print_name)
 print_name("Mr. Business")
