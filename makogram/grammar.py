@@ -74,6 +74,14 @@ logging.basicConfig(format='%(levelname)s:%(message)s',
 log = logging.getLogger(__name__)
 
 
+def concat(x):
+    """Default splicing function for Kleene"""
+    return "".join(x)
+
+def nosplice(x):
+    """Identity function, mnemonically named for use with Kleene"""
+    return x
+
 class Grammar:
     """A grammar has a set of rules, 
 
@@ -156,7 +164,7 @@ class Grammar:
     ### rhs.  If it has repetition parameters, we wrap it
     ### in a Kleene. 
     def prod(self, name, rhs, reps=None, min=0, max=None,
-                 max_uses=999, **kwargs):
+                 max_uses=999, splice=concat, **kwargs):
         """
         Instantiate and record the appropriate kind of 
         right-hand-side. 
@@ -180,7 +188,11 @@ class Grammar:
             if there are other choices of rhs, then this one will be 
             chosen no more than max_uses times, across all expansions of 
             non-terminals in this grammar
-
+        splice : function(list) default "".join(l)
+            used only if reps or max is provided; how to splice 
+            together the repeated elements constructed by Kleene. 
+            The default is concatenation of strings.  Use grammar.nosplice
+            to return a list. 
         """
         # If the right hand side isn't already a Renderable,
         # create a Renderable of the appropriate kind
@@ -201,7 +213,10 @@ class Grammar:
         # If it has repetition parameters, we need to 
         # wrap it in a Kleene
         if reps or max:
-            rhs = Kleene(self, rhs, reps=reps, min=min, max=max)
+            rhs = Kleene(self, rhs,
+                             reps=reps, min=min, max=max,
+                             splice=splice,
+                             **kwargs)
 
         # Note that weight and max_uses, if given, will apply to the
         # fully wrapped rhs.  For example, we might have been given
@@ -314,9 +329,14 @@ class Kleene(Renderable):
     """
     A production thatis repeated some number of times, 
     either an absolute (reps) or a range (min,max).
+
+    The default "splice" function concatenates strings. 
+    To return a list, set splice to lambda x: x or grammar.nosplice
     """
 
-    def __init__(self, grammar, term, reps=None, min=0, max=9, **kwargs):
+    def __init__(self, grammar, term,
+                     reps=None, min=0, max=9,
+                     splice=concat, **kwargs):
         log.debug("Initializing Kleene object {}/{}/{}"
                     .format(reps, min, max))
         self.grammar = grammar
@@ -324,6 +344,7 @@ class Kleene(Renderable):
         self.reps = reps
         self.min = min
         self.max = max
+        self.splice=splice
         super().__init__(**kwargs, desc="({})*".format(term.desc))
 
         
@@ -334,7 +355,7 @@ class Kleene(Renderable):
             reps = random.randint(self.min, self.max)
         l = [ self.term.render() for _ in range(reps) ]
         log.debug("Kleene render to {}".format(l))
-        return "".join(l)
+        return self.splice(l)
 
 
 class Choice(Renderable):
