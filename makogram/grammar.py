@@ -123,7 +123,7 @@ class Grammar:
         self.grammar_env = { }
         self.counts = { }
 
-    def _prod(self, name, rhs, weight=1):
+    def _prod(self, name, rhs):
         """ 
         Associate production with non-terminal name. 
         At this point rhs should be a Renderable, and may 
@@ -153,7 +153,7 @@ class Grammar:
         # individual rhs.
         choice = Choice(self)
         choice.add_choice(prior)
-        choice.add_choice(rhs, weight=weight)
+        choice.add_choice(rhs)
         self.grammar_env[name] = choice
         log.debug("New mapping to Choice {} -> {}"
                       .format(name, self.grammar_env[name]))
@@ -164,7 +164,7 @@ class Grammar:
     ### rhs.  If it has repetition parameters, we wrap it
     ### in a Kleene. 
     def prod(self, name, rhs, reps=None, min=0, max=None,
-                 max_uses=999, splice=concat, **kwargs):
+                 max_uses=UNLIMITED, weight=1, splice=concat, **kwargs):
         """
         Instantiate and record the appropriate kind of 
         right-hand-side. 
@@ -197,13 +197,13 @@ class Grammar:
         # If the right hand side isn't already a Renderable,
         # create a Renderable of the appropriate kind
         if isinstance(rhs,str):
-            rhs = Template(self, rhs)
+            rhs = Template(self, rhs, weight=weight, max_uses=max_uses)
         elif isinstance(rhs, Renderable):
             pass
         elif callable(rhs):
             # But not a Renderable ... 
             log.debug("{} is callable".format(name))
-            rhs = Proc(self, rhs)
+            rhs = Proc(self, rhs, weight=weight, max_uses=max_uses)
 
         # At this point, if we don't have a Renderable,
         # we must have been passed something we can't
@@ -215,6 +215,7 @@ class Grammar:
         if reps or max:
             rhs = Kleene(self, rhs,
                              reps=reps, min=min, max=max,
+                             weight=weight, max_uses=max_uses, 
                              splice=splice,
                              **kwargs)
 
@@ -269,6 +270,10 @@ class Renderable:
     and optionally overrides the '__init__' method (e.g., if you need
     the grammar object as context).   
 
+    NOTE: If a keyword argument (weight, desc, or max_uses) appears in 
+    the argument list of a subclass, it must be explicitly passed
+    through the super().__init__ call, else the provided argument 
+    will be overridden by a default value. 
     """
     def __init__(self, weight=1,max_uses=UNLIMITED, desc=None):
         log.debug("Initializing Renderable object")
@@ -290,7 +295,7 @@ class Renderable:
     def __repr__(self):
         max = self.max_uses
         if max == UNLIMITED : max = "_"
-        return "{}[{}/{}]".format(self.desc, self.weight, self.max_uses)
+        return "{}[w:{}/mx:{}]".format(self.desc, self.weight, max)
 
 
 class Proc(Renderable):
@@ -302,8 +307,8 @@ class Proc(Renderable):
     """
     def __init__(self, grammar, f, **kwargs):
         log.debug("Initializing Proc object")
+        super().__init__(**kwargs, desc=str(f))
         self.f = f
-        super().__init__(**kwargs)
         
     def render(self):
         log.debug("Rendering wrapped function")
@@ -318,9 +323,9 @@ class Template(Renderable):
 
     def __init__(self, grammar, pattern, **kwargs):
         log.debug("Initializing Template object")
+        super().__init__(**kwargs, desc=pattern)
         self.grammar = grammar
         self.template = mako.template.Template(pattern)
-        super().__init__(**kwargs, desc=pattern)
 
     def render(self):
         return self.template.render(**self.grammar.grammar_env)
@@ -337,16 +342,21 @@ class Kleene(Renderable):
     def __init__(self, grammar, term,
                      reps=None, min=0, max=9,
                      splice=concat, **kwargs):
-        log.debug("Initializing Kleene object {}/{}/{}"
+        log.debug("Initializing Kleene object r{}/{}-{}"
                     .format(reps, min, max))
+
+        if reps:
+            desc = "({})^{}".format(term.desc,reps)
+        else:
+            desc = "({})^{}-{}".format(term.desc,min,max)
+        super().__init__(**kwargs, desc=desc)
+
         self.grammar = grammar
         self.term = term
         self.reps = reps
         self.min = min
         self.max = max
         self.splice=splice
-        super().__init__(**kwargs, desc="({})*".format(term.desc))
-
         
     def render(self):
         if self.reps:
@@ -367,12 +377,12 @@ class Choice(Renderable):
     """
     def __init__(self, grammar,  **kwargs):
         log.debug("Initializing Choice object")
+        super().__init__(**kwargs)
         self.grammar = grammar
         self.choices = [ ]
-        super().__init__(**kwargs)
 
-    def add_choice(self, choice, weight=1):
-        choice.weight = weight
+
+    def add_choice(self, choice):
         self.choices.append(choice)
         self.desc="{}|{}".format(self.desc,choice.desc)
 
