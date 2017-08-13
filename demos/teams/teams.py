@@ -34,9 +34,10 @@ import argparse
 import csv
 import sys
 import arrow   # For timestamps in student questionnaire records
-import genseq  # Experimental support for random streams
 import random 
-import rand_util # Other selection that is not about streams
+
+import context
+from distribute import draw
 from  makogram.grammar import Grammar
 
 freetime_choices_mwf = ["9:00-12:00", "12:00-2:00", "2:00-4:00", "4:00-6:00"]
@@ -46,7 +47,7 @@ freetime_choices_uh = ["12:00-2:00", "2:00-4:00", "4:00-6:00"]
 # Meeting time availability
 # 
 def some_times(from_list,min=1,max=3):
-    return ";".join(rand_util.choose_ordered_m_n(from_list,min,max))
+    return ";".join(draw.sample_ordered_m_n(from_list,min,max))
 
 #
 # Technology skills/experience
@@ -153,7 +154,6 @@ def choose_class_size(test_vec):
 # some_times draws the times; we'll fix it there
 #
 
-
 def generate_test(test_vec, outpath_prefix, outpath_suffix):
     """
     Generate one concrete test case based on the test vector. 
@@ -161,7 +161,7 @@ def generate_test(test_vec, outpath_prefix, outpath_suffix):
     to be generated; the suffix part gives uniqueness.
     """
     global names_source
-    names_source=genseq.names()
+    names_source=draw.full_names()
     runner_name = "{}{}_runner.sh".format(outpath_prefix, outpath_suffix)
     classfile_name = "{}{}_class.csv".format(outpath_prefix, outpath_suffix)
     with open(runner_name, 'w') as runner:
@@ -184,12 +184,12 @@ def generate_test(test_vec, outpath_prefix, outpath_suffix):
 def gen_student_record(test_vec):
     """One student record"""
     rec = {timestamp: arrow.now(),
-           name: next(names_source),
-           id: rand_util.rand_str(9,"0123456789"),
+           name: next(names_source).strip(),
+           id: draw.rand_str(9,"0123456789"),
            teammates: ""}
     skills = skill_levels();
     scatter(skills, [exp_py, exp_jav, exp_js, exp_c,
-                  exp_cpp, exp_php, exp_htm, exp_sql,exp_bsh],
+                  exp_cpp, exp_php, exp_html, exp_sql,exp_bsh],
                   rec)
     
     rec[monday] = some_times(freetime_choices_mwf,0,4)

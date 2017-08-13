@@ -9,11 +9,56 @@ callable objects.
 
 import random
 import sys
+import os
 import logging
 
 logging.basicConfig(format='%(levelname)s:%(message)s',
                         level=logging.DEBUG)
 log = logging.getLogger(__name__)
+
+# ##################
+#
+# Some basic utilities that extend what the 'random'
+# module gives us.  These were previously in rand_util.py.
+#
+# ##################
+
+def sample_m_n(li,min,max):
+    """Choose from m to n items, inclusive from li
+    Examples: choose_m_n('abcdefg',3,5) => ['c', 'g', 'a']
+              choose_m_n('abcdefg',3,5) => ['f','a','b','g','c']
+   See also: random.sample.  The difference is that random.sample
+   picks a sample of a fixed size, while sample_m_n picks a
+   sample in a range of sizes. 
+   """
+    n_items = random.randrange(min,max+1)
+    if n_items == 0:
+        return [ ]
+    sample=random.sample(li,n_items) 
+    return sample
+
+def sample_ordered_m_n(li,min,max):
+    """Choose from m to n items, inclusive from li, 
+    and return the in the same order as they appear in li. 
+    Examples: choose_m_n('abcdefg',3,5) => ['a', 'c', 'g']
+              choose_m_n('abcdefg',3,5) => ['a','b','c'', 'f', 'g']
+   See also: random.sample.  The difference is that random.sample
+   picks a sample of a fixed size, while sample_m_n picks a
+   sample in a range of sizes. 
+   """
+    n_items = random.randrange(min,max+1)
+    if n_items == 0:
+        return [ ]
+    indices = range(len(li))
+    sample=random.sample(indices,n_items)  
+    return [li[i] for i in sorted(sample)]
+
+# Random string from alphabet --- based on Jamie's code for names
+# and student ID numbers. 
+# 
+def rand_str(length,alphabet="abcdefghijklmnopqrstuvwxyz"):
+    return ''.join(random.choice(alphabet) for _ in range(length))
+
 
 # ##################
 #
@@ -112,4 +157,21 @@ def streamify(f):
         while True:
             yield f(*args)
     return stream_of
+
+#
+# We have some precomputed streams of data as files.
+# Currently 1:  A list of 100 names. 
+#
+def full_names():
+    """Return a file descriptor from which up to 100 unique 
+    alliterative names may be read.  
+
+    These names do NOT cover
+    all the variations in names, such as the 'von' prefix and 
+    suffixes like Jr and III, so this pool of names should be
+    used only where names are treated essentially as random strings
+    with no program logic for name parsing.  
+    """
+    path = os.path.dirname(__file__) + "/pools/names.txt"
+    return open(path)
 
