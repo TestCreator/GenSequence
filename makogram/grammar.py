@@ -328,7 +328,17 @@ class Template(Renderable):
         self.template = mako.template.Template(pattern)
 
     def render(self):
-        return self.template.render(**self.grammar.grammar_env)
+        env = self.grammar.grammar_env
+        try:
+            result = self.template.render(**env)
+            return result
+        except TypeError as err:
+            ## This is typically because of a reference to a symbol
+            ## that has not been defined, e.g., a misspelled symbol 
+            type_env = [ ( sym, type(sym) ) for sym in env.keys()]
+            log.error("Failed to expand '{}' with symbols {}"
+                          .format(self.template.source, type_env))
+            raise err
 
 class Kleene(Renderable):
     """
