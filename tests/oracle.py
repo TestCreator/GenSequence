@@ -75,4 +75,23 @@ The current example is limiting in two ways:
     1. the current grammar only generates one output - not
         the intended use case of a grammar. A grammar is a
         blue print not a comprehensive and limiting guideline
-    2. the oracle checking is very simple - 
+    2. the oracle checking is very simple - we must know the 
+        structure and implementation (and moreover, the very 
+        nature and structure of the input) to know how they
+        can relate and how we can check them. In more complex
+        versions, we'd have to write our own functions that 
+        check the output is acceptable. Here we "wrote" our
+        own function, i.e. we wrote =
+Broader scope:
+    We have a test case, and a grammar of the expected output.
+    The challenge is:
+        How do we parse the resultant output and cross check the grammar?
+    Ex:
+    input -> "Command write a sentence"
+    output -> "the house builds the man"
+    expected grammar ->
+        Sentence: article noun intransitive
+        Sentence: article noun transitive article noun
+        noun: adj noun | noun
+
+
