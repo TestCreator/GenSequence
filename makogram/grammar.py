@@ -3,6 +3,62 @@ CFG as test "grammar", but the right hand side of a
 production is anything with a 'render' method that takes
 the grammar environment as a parameter. 
 
+Most user code will use only the Grammar class, using Grammar.prod to 
+create Renderables as the right hand sides of productions.  Some user 
+code may need to create new subclasses of Renderable and provide them 
+directly as the right hand sides of productions. 
+
+Typical usage: 
+
+from makogram import grammar
+import random
+
+g = grammar.Grammar()
+
+# Production rules can be defined from a symbol
+# like "NP" and a template using Mako syntax.  In a
+# template, a non-terminal like NP would be invoked as ${NP()}
+# Direct and indirect recursion is permitted. 
+g.prod("Sentence", "The ${NP()}  ${VP()}")
+g.prod("NP", "${Adjectives()} ${Noun()}")
+
+# Repetition can be fixed with the reps keyword or
+# selected randomly between a min and max bound
+g.prod("Adjectives", "${Adj()}", min=0, max=3)
+
+# Functions that return text can also be used as
+# definitions of non-terminals
+def noun():
+    return random.choice(["dog", "cat"])
+g.prod("Noun", noun)
+
+def adj():
+    return random.choice(["big ", "small "])
+g.prod("Adj", adj)
+
+# If multiple productions are given for the same
+# non-terminal, it will be treated as a random choice,
+# which may be limited and weighted.  
+g.prod("VP", "chases mice", weight=3, max_uses=2)
+g.prod("VP", "eats ${food()}", weight=1)
+
+g.prod("food", "kibble", weight=2)
+g.prod("food", "table scraps")
+g.prod("food", "bugs")
+
+# The max-uses holds across any number of calls to
+# expand a term in the grammar.  "chases mice" will
+# appear at most twice in the following sequence.
+for _ in range(5):
+    print(g.gen("Sentence"))
+
+# Example output:
+# The small small small  cat  chases mice
+# The big  dog  eats kibble
+# The big  dog  chases mice
+# The small big  cat  chases mice
+# The  cat  eats table scraps
+
 """
 
 import mako.template      # For text productions --- use $(S()) to expand a non-terminal S
@@ -17,6 +73,14 @@ logging.basicConfig(format='%(levelname)s:%(message)s',
                         level=logging.WARNING)
 log = logging.getLogger(__name__)
 
+
+def concat(x):
+    """Default splicing function for Kleene"""
+    return "".join(x)
+
+def nosplice(x):
+    """Identity function, mnemonically named for use with Kleene"""
+    return x
 
 class Grammar:
     """A grammar has a set of rules, 
@@ -99,21 +163,47 @@ class Grammar:
     ### of right-hand-sides depending on what is in the
     ### rhs.  If it has repetition parameters, we wrap it
     ### in a Kleene. 
-    def prod(self, name, rhs, reps=None, min=0, max=None, **kwargs):
+    def prod(self, name, rhs, reps=None, min=0, max=None,
+                 max_uses=UNLIMITED, weight=1, splice=concat, **kwargs):
         """
         Instantiate and record the appropriate kind of 
         right-hand-side. 
+
+        Parameters
+        ----------
+        name : str
+            The non-terminal symbol to be defined
+        rhs :  str, Renderable, or callable
+            right-hand-side, a possible expansion of the non-terminal
+        reps : int, default=None
+            if provided, the right-hand-side will be expanded reps times
+        min : int, default=0
+            if max is also provided, this is the minimum number of times 
+            this rhs will be expanded
+        max : int, default=None
+            if provided (and if reps is not provided), then the 
+            right hand side will be expanded between min and max times, 
+            inclusive. 
+        max_uses : int, default=999
+            if there are other choices of rhs, then this one will be 
+            chosen no more than max_uses times, across all expansions of 
+            non-terminals in this grammar
+        splice : function(list) default "".join(l)
+            used only if reps or max is provided; how to splice 
+            together the repeated elements constructed by Kleene. 
+            The default is concatenation of strings.  Use grammar.nosplice
+            to return a list. 
         """
         # If the right hand side isn't already a Renderable,
         # create a Renderable of the appropriate kind
         if isinstance(rhs,str):
-            rhs = Template(self, rhs)
+            rhs = Template(self, rhs, weight=weight, max_uses=max_uses)
         elif isinstance(rhs, Renderable):
             pass
         elif callable(rhs):
             # But not a Renderable ... 
             log.debug("{} is callable".format(name))
-            rhs = Proc(self, rhs)
+            rhs = Proc(self, rhs, weight=weight, max_uses=max_uses)
 
         # At this point, if we don't have a Renderable,
         # we must have been passed something we can't
@@ -123,7 +213,11 @@ class Grammar:
         # If it has repetition parameters, we need to 
         # wrap it in a Kleene
         if reps or max:
-            rhs = Kleene(self, rhs, reps=reps, min=min, max=max)
+            rhs = Kleene(self, rhs,
+                             reps=reps, min=min, max=max,
+                             weight=weight, max_uses=max_uses, 
+                             splice=splice,
+                             **kwargs)
 
         # Note that weight and max_uses, if given, will apply to the
         # fully wrapped rhs.  For example, we might have been given
@@ -148,6 +242,19 @@ class Grammar:
         #return str(self.grammar_env)
 
     def gen(self, name):
+        """Apply the previously defined production rules and 
+        return the derived string.
+
+        Parameters
+        ----------
+        name : string
+           A non-terminal symbol
+        
+        Returns
+        -------
+        A string derived from the non-terminal symbol 
+        (typically through several recursive levels of expansion)
+        """
         return self.grammar_env[name].render()
 
 NAME_CNT = 0
@@ -163,6 +270,10 @@ class Renderable:
     and optionally overrides the '__init__' method (e.g., if you need
     the grammar object as context).   
 
+    NOTE: If a keyword argument (weight, desc, or max_uses) appears in 
+    the argument list of a subclass, it must be explicitly passed
+    through the super().__init__ call, else the provided argument 
+    will be overridden by a default value. 
     """
     def __init__(self, weight=1,max_uses=UNLIMITED, desc=None):
         log.debug("Initializing Renderable object")
@@ -184,7 +295,7 @@ class Renderable:
     def __repr__(self):
         max = self.max_uses
         if max == UNLIMITED : max = "_"
-        return "{}[{}/{}]".format(self.desc, self.weight, self.max_uses)
+        return "{}[w:{}/mx:{}]".format(self.desc, self.weight, max)
 
 
 class Proc(Renderable):
@@ -192,12 +303,12 @@ class Proc(Renderable):
     Turn any zero-argument callable into a renderable by wrapping it 
     in an object.  Note the grammar argument is not actually used; 
     it is here just for consistency with the other Renderable 
-    constructors.   
+    constructors.  
     """
     def __init__(self, grammar, f, **kwargs):
         log.debug("Initializing Proc object")
+        super().__init__(**kwargs, desc=str(f))
         self.f = f
-        super().__init__(**kwargs)
         
     def render(self):
         log.debug("Rendering wrapped function")
@@ -212,29 +323,50 @@ class Template(Renderable):
 
     def __init__(self, grammar, pattern, **kwargs):
         log.debug("Initializing Template object")
+        super().__init__(**kwargs, desc=pattern)
         self.grammar = grammar
         self.template = mako.template.Template(pattern)
-        super().__init__(**kwargs, desc=pattern)
 
     def render(self):
-        return self.template.render(**self.grammar.grammar_env)
+        env = self.grammar.grammar_env
+        try:
+            result = self.template.render(**env)
+            return result
+        except TypeError as err:
+            ## This is typically because of a reference to a symbol
+            ## that has not been defined, e.g., a misspelled symbol 
+            type_env = [ ( sym, type(sym) ) for sym in env.keys()]
+            log.error("Failed to expand '{}' with symbols {}"
+                          .format(self.template.source, type_env))
+            raise err
 
 class Kleene(Renderable):
     """
     A production thatis repeated some number of times, 
     either an absolute (reps) or a range (min,max).
+
+    The default "splice" function concatenates strings. 
+    To return a list, set splice to lambda x: x or grammar.nosplice
     """
 
-    def __init__(self, grammar, term, reps=None, min=0, max=9, **kwargs):
-        log.debug("Initializing Kleene object {}/{}/{}"
+    def __init__(self, grammar, term,
+                     reps=None, min=0, max=9,
+                     splice=concat, **kwargs):
+        log.debug("Initializing Kleene object r{}/{}-{}"
                     .format(reps, min, max))
+
+        if reps:
+            desc = "({})^{}".format(term.desc,reps)
+        else:
+            desc = "({})^{}-{}".format(term.desc,min,max)
+        super().__init__(**kwargs, desc=desc)
+
         self.grammar = grammar
         self.term = term
         self.reps = reps
         self.min = min
         self.max = max
-        super().__init__(**kwargs, desc="({})*".format(term.desc))
-
+        self.splice=splice
         
     def render(self):
         if self.reps:
@@ -243,7 +375,7 @@ class Kleene(Renderable):
             reps = random.randint(self.min, self.max)
         l = [ self.term.render() for _ in range(reps) ]
         log.debug("Kleene render to {}".format(l))
-        return "".join(l)
+        return self.splice(l)
 
 
 class Choice(Renderable):
@@ -255,9 +387,10 @@ class Choice(Renderable):
     """
     def __init__(self, grammar,  **kwargs):
         log.debug("Initializing Choice object")
+        super().__init__(**kwargs)
         self.grammar = grammar
         self.choices = [ ]
-        super().__init__(**kwargs)
+
 
     def add_choice(self, choice):
         self.choices.append(choice)
