@@ -93,5 +93,5 @@ Broader scope:
         Sentence: article noun intransitive
         Sentence: article noun transitive article noun
         noun: adj noun | noun
-
+'''
 
