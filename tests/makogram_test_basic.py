@@ -33,6 +33,7 @@ def test_mako_sub():
     g.prod("p2", "passing")
     result = g.gen("S")
     assert result == "testing passing testing"
+    return result
 
 def test_mako_choice():
     g = grammar.Grammar()
@@ -65,5 +66,6 @@ def test_mixed_choice():
 
     
 if __name__ == "__main__":
-    nose.runmodule()
+    print(test_mako_sub())
+    #nose.runmodule()
 
