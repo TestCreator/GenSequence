@@ -1,7 +1,9 @@
 import random
 import context
 import re
-from dns import resolver
+import dns.resolver
+import socket
+import smtplib
 from makogram.grammar import Grammar
 
 
@@ -58,9 +60,9 @@ def isValidEmail(addressToVerify):
     	mxRecord = records[0].exchange
     	mxRecord = str(mxRecord)
     except:
+        print("\tgetting error in dns")
         return False
 
-    print("Got to here - dns must be imported")
     # move on to next round - at this point the email is properly formatted and the domain exists
     # Get local server hostname
     host = socket.gethostname()
@@ -84,3 +86,7 @@ def isValidEmail(addressToVerify):
 for _ in range(20):
 	email = g.gen("email")
 	print(email, isValidEmail(email))
+
+
+
+
