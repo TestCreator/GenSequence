@@ -13,7 +13,7 @@ def rand_str(times):
 def user():
 	return random.choice(['jamiez', 'michal', 'brian', 'amie'])
 def group():
-	return random.choice(['admissions', 'testing', 'GTFF'])
+	return random.choice(['uoadmit', 'testing', 'GTFF'])
 def company():
 	return random.choice(['gmail', 'uoregon', 'symantec', 'usda'])
 def dom():
