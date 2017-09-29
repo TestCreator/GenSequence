@@ -43,8 +43,9 @@ g.prod("food", "bugs")
 # The max-uses holds across any number of calls to
 # expand a term in the grammar.  "chases mice" will
 # appear at most twice in the following sequence.
-for _ in range(5):
-    print(g.gen("Sentence"))
+print("A top level generation: {}".format(g.gen("Sentence")))
+print("A Noun particle generation: {}".format(g.gen("NP")))
+print("a verb object generation: {}".format(g.gen("food")))
 
 # Example output:
 # The small small small  cat  chases mice
