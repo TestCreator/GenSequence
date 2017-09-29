@@ -35,6 +35,54 @@ g.prod("Domain", rand_str(4))
 
 
 
+class TestCaseSuite:
+	'''
+	a test case suite has a reference to the grammar and all the rules (productions) in it
+	a test case suite also has a mapping between test case generations and the oracle paired with it
+	say for example, the email grammar, everytime a g.gen("email") is called,
+	the result and its oracle are stored key,value pair in table
+
+	->in email case, the grammar rules are printed as:
+	for symbol in self.grammar_env:
+	            rep += "\n{} -> {}".format(symbol, self.grammar_env[symbol])
+	        rep += "\n*** ------ ***"
+
+	->and here are the productions:
+	***GRAMMAR***
+	Service -> N_3|<function company at 0x1021f2d90>|eclcq
+	email -> ${Prefix()}@${Suffix()}
+	Suffix -> ${Service()}.${Domain()}
+	Prefix -> N_1|${username()}|wrqth
+	username -> N_2|<function user at 0x1025ae6a8>|<function group at 0x1021f2598>
+	Domain -> N_4|<function dom at 0x1021f2e18>|fgml
+	*** ------ ***
+	'''
+	def __init__(self, grammar):
+		self.gram = grammar
+		self.table = {}
+
+	def __repr__(self):
+		return str(self.gram)
+
+	def gen(self):
+		'''
+		call self.grammar.gen
+		in gen, if the random flag is set, mark an oracle object as "expect false"
+		post generation (test case instance) and oracle as key-value pair in table
+		'''
+
+testcases = TestCaseSuite(g)
+print(testcases)
+
+'''
+*** NOTE: oracle definition may not be necessary, I think I can do it with just a string
+after all, it's just a word description!
+class Oracle:
+	def __init__(self):
+		self.expected = ''
+		self.actual = ''
+'''
+
 def isValidEmail(addressToVerify):
 	"""
 	args:
@@ -95,10 +143,13 @@ def isValidEmail(addressToVerify):
 		return True
 	return False
 
-
+'''
 for _ in range(30):
 	email = g.gen("email")
 	print("{} {}".format(email.ljust(25), isValidEmail(email)))
+'''
+
+
 
 
 
