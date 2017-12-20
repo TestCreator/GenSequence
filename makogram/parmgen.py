@@ -8,12 +8,26 @@ log = logging.getLogger(__name__)
 MAX_GENS = 100
 
 def many(gens):
+        """
+        returns a proportion of MAX_GENS, the greatest number of data points, a calibration point
+        """
         return int(.7 * gens)
 def few(gens):
+        """
+        returns a proportion of MAX_GENS, to calibrate how many data points are needed
+        """
         return int(.3 * gens)
 def posint(x):
+        """
+        returns no negative numbers
+        """
         return 0 if x<0 else x
 def norm(args):
+        """
+        creates a data point with normal (gaussian) distribution
+        needs an average and devation (mu and sigma)
+        guarantees the point is in a certain range (low and high) if those args are specified
+        """
         ave = args["ave"]
         dev = args["dev"]
         low = args["low"]
@@ -26,10 +40,16 @@ def norm(args):
                         x = round(gauss(ave, dev))
                 return x
 def uni(args):
+        """
+        creates a data point with uniform distribution
+        """
         low = args["low"]
         high = args["high"]
         return uniform(low, high)
 def slanted(args):
+        """
+        creates a data point with slant, triangular probability
+        """
         low = args["low"]
         high = args["high"]
         peak = args["ave"]
@@ -44,6 +64,7 @@ def names():
                         nameslist.append(name.strip())
         return nameslist
 
+# typemap is a mapping from string specifiers passed into Parm initialization to function references
 typemap = {"many": many,
            "few": few,
            "normal": norm,
