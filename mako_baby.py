@@ -36,12 +36,6 @@ def norm(ave, dev, maxval=None):
                 while x > maxval:
                         x = round(posint(gauss(ave, dev)))
                 return x
-# ensure the data point is within a certain range 0-max, and recalculates if not
-def recalculate(rv, ave, dev, maxval=20):
-        x = rv(ave, dev)
-        while x > maxval-1:
-                x = rv(ave, dev)
-        return x
 
 def generation(rv, average, deviation, maxval=None, k=100000, from_set=None):
         if from_set == None:

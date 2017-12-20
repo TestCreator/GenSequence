@@ -8,8 +8,8 @@ import sys
 from makogram.grammar import Grammar
 
 
-def rand_str(times):
-	return ''.join(random.choice("abcdefghijklmnopqrstuvwxyz") for _ in range(times))
+def rand_str():
+	return ''.join(random.choice("abcdefghijklmnopqrstuvwxyz") for _ in range(4))
 def user():
 	return random.choice(['jamiez', 'michal', 'brian', 'amie'])
 def group():
@@ -23,15 +23,15 @@ def dom():
 g = Grammar()
 g.prod("email", "${Prefix()}@${Suffix()}", max_uses=4, weight=2)
 g.prod("Prefix", "${username()}")
-g.prod("Prefix", rand_str(5))
+g.prod("Prefix", rand_str, rand_flag=True)
 g.prod("username", user)
 g.prod("username", group)
 
 g.prod("Suffix", "${Service()}.${Domain()}")
 g.prod("Service", company)
-g.prod("Service", rand_str(5))
+g.prod("Service", rand_str, rand_flag=True)
 g.prod("Domain", dom)
-g.prod("Domain", rand_str(4))
+g.prod("Domain", rand_str, rand_flag=True)
 
 
 
@@ -46,15 +46,18 @@ class TestCaseSuite:
 	for symbol in self.grammar_env:
 	            rep += "\n{} -> {}".format(symbol, self.grammar_env[symbol])
 	        rep += "\n*** ------ ***"
+	-> the rhs is printed as 
+	self.desc="{}|{}".format(self.desc,choice.desc) # if Choice
+
 
 	->and here are the productions:
 	***GRAMMAR***
-	Service -> N_3|<function company at 0x1021f2d90>|eclcq
-	email -> ${Prefix()}@${Suffix()}
+	Service -> N_3|<function company at 0x101cc22f0>|<function rand_str at 0x100756f28>
 	Suffix -> ${Service()}.${Domain()}
-	Prefix -> N_1|${username()}|wrqth
-	username -> N_2|<function user at 0x1025ae6a8>|<function group at 0x1021f2598>
-	Domain -> N_4|<function dom at 0x1021f2e18>|fgml
+	Domain -> N_4|<function dom at 0x101cc2378>|<function rand_str at 0x100756f28>
+	email -> ${Prefix()}@${Suffix()}
+	username -> N_2|<function user at 0x101ead8c8>|<function group at 0x101cc4a60>
+	Prefix -> N_1|${username()}|<function rand_str at 0x100756f28>
 	*** ------ ***
 	'''
 	def __init__(self, grammar):
@@ -128,7 +131,7 @@ def isValidEmail(addressToVerify):
 	print("\tserver is {}".format(server))
 	try:
 		server.connect(mxRecord)
-	except TimeoutError:
+	except (TimeoutError, ConnectionRefusedError):
 		return False
 	server.helo(host)
 	server.mail('me@domain.com')  # parameter is sender's address
@@ -143,11 +146,11 @@ def isValidEmail(addressToVerify):
 		return True
 	return False
 
-'''
+
 for _ in range(30):
 	email = g.gen("email")
 	print("{} {}".format(email.ljust(25), isValidEmail(email)))
-'''
+
 
 
 
