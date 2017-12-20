@@ -184,7 +184,7 @@ class Parm:
 
 
 
-times = Parm("normal", "many", "fixed-size-chunks", low=5, high=12, ave=8, dev=3, from_set=names(), per_row=5)
+times = Parm("normal", "many", "fixed-size-chunks", low=5, high=12, ave=8, dev=3, from_set=days_of_week(), per_row=5)
 times.setup()
 while True:
         try:
