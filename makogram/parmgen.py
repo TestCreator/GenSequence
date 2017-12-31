@@ -6,6 +6,19 @@ logging.basicConfig(format='%(levelname)s:%(message)s',
 log = logging.getLogger(__name__)
 
 MAX_GENS = 100
+SEPARATOR = ","
+
+def count_frequency(raw_data):
+        raw_data.sort()
+        raw_data.append('sentinel')
+        count = 0
+        for i in range(0, len(raw_data)-1):
+            if raw_data[i + 1] == raw_data[i]:
+                count += 1
+            else: #majors[major + 1] != majors[major]
+                count += 1
+                print ("Value {} has count {}".format(raw_data[i], count))
+                count = 0
 
 def many(gens):
         """
@@ -57,6 +70,8 @@ def slanted(args):
 
 def days_of_week():
         return [str(day + time) for day in ["M", "T", "W", "R", "F"] for time in ["10:00-12:00", "12:00-2:00", "2:00-4:00", "4:00-6:00"]]
+def sort_by_days():
+        
 def names():
         nameslist = []
         with open("pools/names.txt", 'r') as names:
@@ -71,9 +86,8 @@ typemap = {"many": many,
            "uniform": uni,
            "triangular": slanted}
 class Parm:
-        def __init__(self, distr_type, desired, generator_type, low=None, high=None, ave=None, dev=None, from_set=None, per_row=1):
+        def __init__(self, name, distr_type, desired, generator_type, low=None, high=None, ave=None, dev=None, from_set=None, per_row=1):
                 """
-                breakdown~
                 generator_type: string; "one by one" or "fixed-size-chunks"
                 generator: to be defined later; the generator object that yields data points, either one by one or at fixed size chunks
                 distr_type: string, how the accumulated data points are dispersed.
@@ -88,6 +102,7 @@ class Parm:
                         the arg can also be an int if the user wants it to be hardcoded
 
                 """
+                self.name = name
                 self.generator_type = generator_type
                 self.generator = None #to be defined in a later method
                 self.distr_type = distr_type
@@ -122,6 +137,25 @@ class Parm:
                         self.rows = self.desired
                         self.desired = self.desired * per_row
         
+        def setGeneratorType(self, gentype):
+                self.generator_type = gentype
+        def setGenerator(self, gene):
+                self.generator = gene
+        def setDistributionType(self, distr_type):
+                self.distr_type = distr_type
+        def setVerticalDistribution(self, vert_distribution):
+                self.vert_distribution = vert_distribution
+        def setFromSet(self, from_set):
+                self.from_set = from_set
+        def setDesired(self, desired):
+                if type(desired) == int:
+                        self.desired = desired
+                else:
+                        self.desired = typemap[desired](MAX_GENS)
+        def setFinalDataSet(self, final):
+                self.final_data_set = final
+        def setPerRow(self, per_row):
+                self.per_row = per_row
         def generate(self, k=100000):
                 """
                 generates the samples from either ints or a special set of data points like names or times
@@ -149,6 +183,9 @@ class Parm:
                 calls the creation of data points, shuffles them, and stores them as a class data member
                 """
                 items = self.generate()
+                self.final_data_set = items
+        def scramble(self):
+                items = self.final_data_set
                 self.final_data_set = sample(items, len(items))
  
         def distribute(self, data_set):
@@ -165,8 +202,9 @@ class Parm:
                 """
                 for _ in range(outer):
                         chunk = ""
-                        for _ in range(inner):
-                                chunk += " " +next(gene)
+                        for _ in range(inner-1):
+                                chunk += next(gene) + SEPARATOR
+                        chunk += next(gene)
                         yield chunk
         def next(self):
                 """
@@ -181,20 +219,6 @@ class Parm:
                                 self.generator = self.multipart_distribute(self.distribute(self.final_data_set), self.rows, self.per_row)
                         self.generated = 1
                 return next(self.generator)
-
-
-
-times = Parm("normal", "many", "fixed-size-chunks", low=5, high=12, ave=8, dev=3, from_set=days_of_week(), per_row=5)
-times.setup()
-while True:
-        try:
-                print(times.next() + ",")
-        except StopIteration:
-                break
-print("done")
-
-
-
 
 
 
