@@ -15,6 +15,7 @@ php_skill = Parm("php_skill", "normal", "many", "one-by-one", low=0, high=5, ave
 html_skill = Parm("html_skill", "normal", "many", "one-by-one", low=0, high=5, ave=3, dev=2)
 sql_skill = Parm("sql_skill", "normal", "many", "one-by-one", low=0, high=5, ave=3, dev=2)
 bashunix_skill = Parm("bashunix_skill", "normal", "many", "one-by-one", low=0, high=5, ave=3, dev=2)
+
 available_times = Parm("available free times", "normal", "many", "fixed-size-chunks", low=0, high=19, ave=9, dev=6, from_set=days_of_week(), per_row=5)
 
 python_skill.setup()
@@ -43,7 +44,12 @@ def namelist(li):
                 yield thing
 n = namelist(names())
 
+guy = available_times.next()
+thing = sort_by_days(guy)
+print("got res: {}".format(thing))
 
+
+"""
 tg = Grammar()
 tg.prod("Classroom", "${Student()}", reps=many(MAX_GENS)) #reps should be class_size
 tg.prod("Student", "${name()},${python_skill()},${java_skill()},${js_skill()},${c_skill()},${cpp_skill()},${php_skill()},${html_skill()},${sql_skill()},${bashunix_skill()},${free_times()}\n")
@@ -59,3 +65,4 @@ tg.prod("sql_skill", lambda: sql_skill.next())
 tg.prod("bashunix_skill", lambda: bashunix_skill.next())
 tg.prod("free_times", lambda: available_times.next())
 print(tg.gen("Classroom"))
+"""

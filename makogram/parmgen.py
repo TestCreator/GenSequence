@@ -69,9 +69,34 @@ def slanted(args):
         return triangular(low, high, peak)
 
 def days_of_week():
-        return [str(day + time) for day in ["M", "T", "W", "R", "F"] for time in ["10:00-12:00", "12:00-2:00", "2:00-4:00", "4:00-6:00"]]
-def sort_by_days():
-        
+        return [str(day + time) for day in ["M", "T", "W", "R", "F"] for time in ["10:00 - 12:00", "12:00 - 2:00", "2:00 - 4:00", "4:00 - 6:00"]]
+
+dayorder = {"M": 1,
+            "T": 2,
+            "W": 3,
+            "R": 4,
+            "F": 5}
+def sort_by_days(dayset):
+        """
+        args:
+        (str) dayset - string representation of one student's availability, time slots separated by comma
+            ex: "T2:00-4:00,W4:00-6:00,T10:00-12:00,W12:00-2:00,R2:00-4:00"
+        reorders these time slot availabilities by day and then by time, deleting duplicates
+        implementation uses bubble sort
+        """
+        newset = list(set(dayset.split(","))) #sets delete duplicates
+        n = len(newset)
+        for i in range(n):
+            for j in range(1, n):
+                prev = dayorder[newset[j-1][0]]
+                curr = dayorder[newset[j][0]]
+                if prev > curr:
+                    temp = newset[j-1]
+                    newset[j-1] = newset[j]
+                    newset[j] = temp
+        return newset
+
+
 def names():
         nameslist = []
         with open("pools/names.txt", 'r') as names:
