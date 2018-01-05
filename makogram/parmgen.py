@@ -58,7 +58,7 @@ def uni(args):
         """
         low = args["low"]
         high = args["high"]
-        return uniform(low, high)
+        return round(uniform(low, high))
 def slanted(args):
         """
         creates a data point with slant, triangular probability
@@ -66,7 +66,7 @@ def slanted(args):
         low = args["low"]
         high = args["high"]
         peak = args["ave"]
-        return triangular(low, high, peak)
+        return round(triangular(low, high, peak))
 
 def days_of_week():
         return [str(day + time) for day in ["M", "T", "W", "R", "F"] for time in ["10:00 - 12:00", "12:00 - 2:00", "2:00 - 4:00", "4:00 - 6:00"]]
@@ -96,6 +96,14 @@ def sort_by_days(dayset):
                     newset[j] = temp
         return newset
 
+def translate_desired(des):
+        try:
+            return int(des)
+        except ValueError: #if the arg is of type string - hopefully it is "many" or "few" to accurately key into the typemap
+            try:
+                return typemap[des](MAX_GENS)
+            except KeyError: #if the arg is not mapped to a function in typemap - passed in something bad as a symbolic test vector
+                log.debug("*** You goose! you passed {} as a map into type map".format(des))
 
 def names():
         nameslist = []
@@ -111,7 +119,7 @@ typemap = {"many": many,
            "uniform": uni,
            "triangular": slanted}
 class Parm:
-        def __init__(self, name, distr_type, desired, generator_type, low=None, high=None, ave=None, dev=None, from_set=None, per_row=1):
+        def __init__(self, name, generator_type, distr_type="uniform", desired="many", low=None, high=None, ave=None, dev=None, from_set=None, per_row=1):
                 """
                 generator_type: string; "one by one" or "fixed-size-chunks"
                 generator: to be defined later; the generator object that yields data points, either one by one or at fixed size chunks
@@ -168,15 +176,22 @@ class Parm:
                 self.generator = gene
         def setDistributionType(self, distr_type):
                 self.distr_type = distr_type
-        def setVerticalDistribution(self, vert_distribution):
-                self.vert_distribution = vert_distribution
+                self.vert_distribution = typemap[distr_type]
+        def setLow(self, low):
+                self.dist_args[low] = low
+        def setHigh(self, high):
+                self.dist_args[high] = high
+        def setAve(self, ave):
+                self.dist_args[ave] = ave
+        def setDev(self, dev):
+                self.dist_args[dev] = dev
         def setFromSet(self, from_set):
                 self.from_set = from_set
         def setDesired(self, desired):
-                if type(desired) == int:
-                        self.desired = desired
-                else:
-                        self.desired = typemap[desired](MAX_GENS)
+                self.desired = translate_desired(desired)
+                if self.generator_type != "one-by-one":
+                    self.rows = self.desired
+                    self.desired = self.desired * self.per_row
         def setFinalDataSet(self, final):
                 self.final_data_set = final
         def setPerRow(self, per_row):
@@ -209,6 +224,7 @@ class Parm:
                 """
                 items = self.generate()
                 self.final_data_set = items
+                self.generated = 0 #if reusing Parm object, pretend a generator hasn't been created before
         def scramble(self):
                 items = self.final_data_set
                 self.final_data_set = sample(items, len(items))
