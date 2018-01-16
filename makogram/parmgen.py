@@ -1,4 +1,4 @@
-from random import gauss, uniform, triangular, sample
+from random import gauss, uniform, triangular, sample, choice
 from math import ceil
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s',
@@ -7,7 +7,7 @@ log = logging.getLogger(__name__)
 
 MAX_GENS = 100
 SEPARATOR = ","
-
+THE_LIST = []
 def count_frequency(raw_data):
         raw_data.sort()
         raw_data.append('sentinel')
@@ -39,7 +39,7 @@ def norm(args):
         """
         creates a data point with normal (gaussian) distribution
         needs an average and devation (mu and sigma)
-        guarantees the point is in a certain range (low and high) if those args are specified
+        guarantees the point is in a certain range (low and high) if thgigiose args are specified
         """
         ave = args["ave"]
         dev = args["dev"]
@@ -111,6 +111,9 @@ def names():
                 for name in names:
                         nameslist.append(name.strip())
         return nameslist
+def names_generator(li):
+        for thing in li:
+                yield thing
 
 # typemap is a mapping from string specifiers passed into Parm initialization to function references
 typemap = {"many": many,
@@ -259,7 +262,48 @@ class Parm:
                         else:
                                 self.generator = self.multipart_distribute(self.distribute(self.final_data_set), self.rows, self.per_row)
                         self.generated = 1
-                return next(self.generator)
+                t = next(self.generator)
+                THE_LIST.append(t)
+                return t
+
+rangemap = {"L": range(0,2), "M": range(3,4), "H": range(4,6)}
+class Cardioid(Parm):
+        def __init__(self, name, generator_type, distr_type="uniform", desired="many", low=None, high=None, ave=None, 
+                    dev=None, from_set=None, per_row=1):
+                assert not from_set == None
+                super().__init__(name, generator_type, distr_type, desired, low, high, ave, dev, from_set, per_row)
+                print("done setting up a cardioid")
+
+        def generate(self, k=100000):
+                symbolic_samples = []
+                concrete_samples = []
+                column1 = [choice(self.from_set) for _ in range(k)]
+                # TODO: Fix everything about this pls
+                for point in column1:
+                        if point == "L":
+                            pair = (point, choice([pick for pick in "HHHML"]))
+                        elif point == "M":
+                            pair = (point, choice([pick for pick in "MMMLH"]))
+                        else:
+                            pair = (point, choice([pick for pick in "LLLMH"]))
+                        symbolic_samples.append(pair)
+                for pair in symbolic_samples:
+                        newpair = (choice(rangemap[pair[0]]), choice(rangemap[pair[1]]))
+                        concrete_samples.append(newpair)
+
+                # Now reduce the sample size
+                reduced = []
+                sample_size = len(concrete_samples) #How many initial data points are there?
+                interval_step = ceil(sample_size / self.desired)
+                concrete_samples.sort() #The sorted data points
+                reduced = []
+                for i in range(0, sample_size, interval_step):
+                        reduced.append(concrete_samples[i])
+
+                log.debug("original sample size is {} and desired is {}, so the interval step is {} and the final set is {}".format(sample_size, self.desired, interval_step, len(reduced)))
+                assert len(reduced) == self.desired
+                return reduced
+
 
 
 
