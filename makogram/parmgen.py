@@ -197,6 +197,8 @@ class Parm:
                     self.desired = self.desired * self.per_row
         def setFinalDataSet(self, final):
                 self.final_data_set = final
+        def getFinalDataSet(self):
+                return self.final_data_set
         def setPerRow(self, per_row):
                 self.per_row = per_row
         def generate(self, k=100000):
@@ -266,7 +268,7 @@ class Parm:
                 THE_LIST.append(t)
                 return t
 
-rangemap = {"L": range(0,2), "M": range(3,4), "H": range(4,6)}
+rangemap = {"L": range(0,3), "M": range(3,4), "H": range(4,6)}
 class Cardioid(Parm):
         def __init__(self, name, generator_type, distr_type="uniform", desired="many", low=None, high=None, ave=None, 
                     dev=None, from_set=None, per_row=1):
