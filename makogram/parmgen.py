@@ -285,7 +285,7 @@ class Cardioid(Parm):
                         if point == "L":
                             pair = (point, choice([pick for pick in "HHHML"]))
                         elif point == "M":
-                            pair = (point, choice([pick for pick in "MMMLH"]))
+                            pair = (point, choice([pick for pick in "MMLH"]))
                         else:
                             pair = (point, choice([pick for pick in "LLLMH"]))
                         symbolic_samples.append(pair)
