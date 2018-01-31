@@ -4,6 +4,7 @@ from makogram.parmgen import *
 from statistics import mean
 from math import ceil
 import csv
+from range import Range
 
 def frequency(raw_data):
         new_raw = sorted(raw_data)
@@ -16,6 +17,12 @@ def frequency(raw_data):
                 count += 1
                 print ("Value {} has count {}".format(new_raw[i], count))
                 count = 0
+
+def average(figures):
+        sum = 0
+        for point in figures:
+                sum += point
+        return sum/(len(figures))
 
 def within(pick, ranges):
         """
@@ -33,6 +40,7 @@ def within(pick, ranges):
 def hillclimb(points, favorite, l_iterations=10000):
         l = 0
         while l < l_iterations:
+                l += 1
                 # pick random tuple in list
                 i = random.randint(0, len(points)-1)
                 j = random.randint(0, len(points)-1)
@@ -41,7 +49,6 @@ def hillclimb(points, favorite, l_iterations=10000):
 
                 #if (1,5) and (0,5) or (0,4) and (2,4), swapping doesn't make sense
                 if pick1[0] == pick2[0] or pick1[1] == pick2[1]:
-                        #don't need to increment for a failed swap
                         continue
 
                 #if both points are of the same form HL & HL, or LH & LH
@@ -50,7 +57,6 @@ def hillclimb(points, favorite, l_iterations=10000):
                         if within(pick1, [favorite[x]]) and within(pick2, [favorite[x]]):
                                 skip = True
                 if skip:
-                        #don't need to increment for a failed step
                         continue
                 ######
 
@@ -63,17 +69,38 @@ def hillclimb(points, favorite, l_iterations=10000):
                         points[i] = new1
                         points[j] = new2
                         print("\tOriginally {} and {}, swapped to points[i] is {} and points[j] is {}".format(pick1, pick2, points[i], points[j]))
-                l += 1
+                
         return points
 
 pythonjava_skill = Cardioid("pythonjava_skill", "one-by-one", from_set=[c for c in "LMH"])
 pythonjava_skill.setup()
-stuff = pythonjava_skill.getFinalDataSet()
-print(stuff)
-#frequency(stuff)
+languages = pythonjava_skill.getFinalDataSet()
+print(languages)
 
+sqlbash_skill = Cardioid("sqlbash_skill", "one-by-one", from_set=[c for c in "LMH"])
+sqlbash_skill.setup()
+nicheskills = sqlbash_skill.getFinalDataSet()
+print(nicheskills)
+
+Laverage = Range(0.0, 2.6) # -> [0.0, 2.6]
+Maverage = Range(2.6, 3.7, exclusive_lower=True, exclusive_upper=True) # -> (2.6, 3.7)
+Haverage = Range(3.7, 5) # -> [3.7, 5]
+multi_column_favorites = [(Laverage, Laverage), (Laverage, Haverage), (Maverage, Laverage), (Maverage, Haverage)]
+print(multi_column_favorites)
+if 5 in Laverage:
+        print("yay")
+elif 5 in Haverage:
+        print("good here")
+
+
+"""
 newstuff = hillclimb(stuff, [(range(0,3),range(4,6)), (range(4,6),range(0,3))], l_iterations=100000)
 print(newstuff)
-#frequency(newstuff)
+
+print ("\nBreakdown ------ ")
+frequency(stuff)
+print()
+frequency(newstuff)
+"""
 
 
