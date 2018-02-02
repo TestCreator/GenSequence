@@ -19,6 +19,9 @@ def frequency(raw_data):
                 count = 0
 
 def average(figures):
+        """
+        :figures -> a list or tuple of points you want to average
+        """
         sum = 0
         for point in figures:
                 sum += point
@@ -28,6 +31,7 @@ def within(pick, ranges):
         """
         :pick: a tuple, i.e. (1,4)
         :ranges: a list of range tuples, i.e. [(range(0,3), range(4,6)), (range(4,6), range(0,3))]
+                or more likely, a list of Range tuples, i.e. [(Range(0.0,2.0), Range(3.4,5.6)), Range(1.3, 2.7), Range(3.9, 6.7))]
         returns true if pick[0] in range[i][0] and pick[1] in range[i][1]
         """
         isin = 0
@@ -44,9 +48,44 @@ def hillclimb(points, favorite, l_iterations=10000):
                 # pick random tuple in list
                 i = random.randint(0, len(points)-1)
                 j = random.randint(0, len(points)-1)
-                pick1 = points[i]
+                pick1 = points[i] #these points are a tuple of tuples - point sets from each multicol
                 pick2 = points[j]
+                #points[i][0] is point from languages
+                #points[i][1] is point from nicheskills
+                ave00 = average(pick1[0])
+                ave01 = average(pick1[1])
+                ave10 = average(pick2[0])
+                ave11 = average(pick2[1])
 
+                swap1 = (ave00, ave11)
+                swap2 = (ave10, ave01)
+
+                #if pairs of averages between multicols are of form (1,3) & (0,3)
+                #       example: ((0,2),(2,4)) and ((0,0),(1,5)) gives averages of (1,3) and (0,3)
+                #       swapping won't help
+                if ave00 == ave10 or ave01 == ave11:
+                        continue
+
+                #if of the same type, LH LH or HL HL, no swap
+
+
+                if within(swap2, favorite) and within(swap2, favorite):
+                        print("bang!")
+                        points[i] = (pick1[0], pick2[1])
+                        points[j] = (pick2[0], pick1[1])
+                        print("\tOriginally {} and {}, swapped to points[i] is {} and points[j] is {}".format((pick1[0], pick1[1]), (pick2[0], pick2[1]), points[i], points[j]))
+
+        return points
+
+def basic_hillclimb(points, favorite, l_iterations=10000):
+        l = 0
+        while (l < l_iterations):
+                l+=1
+                # pick random tuple in list
+                i = random.randint(0, len(points)-1)
+                j = random.randint(0, len(points)-1)
+                pick1 = points[i] #these points are a tuple of tuples - point sets from each multicol
+                pick2 = points[j]
                 #if (1,5) and (0,5) or (0,4) and (2,4), swapping doesn't make sense
                 if pick1[0] == pick2[0] or pick1[1] == pick2[1]:
                         continue
@@ -86,11 +125,11 @@ Laverage = Range(0.0, 2.6) # -> [0.0, 2.6]
 Maverage = Range(2.6, 3.7, exclusive_lower=True, exclusive_upper=True) # -> (2.6, 3.7)
 Haverage = Range(3.7, 5) # -> [3.7, 5]
 multi_column_favorites = [(Laverage, Laverage), (Laverage, Haverage), (Maverage, Laverage), (Maverage, Haverage)]
-print(multi_column_favorites)
-if 5 in Laverage:
-        print("yay")
-elif 5 in Haverage:
-        print("good here")
+thing = list(zip(languages, nicheskills))  #TODO define an __iter__ method for Parms and Cardioids!
+print("BREAKDOWN ---- ")
+print(thing)
+print(thing[0])
+#newstuff = hillclimb(zip(pythonjava_skill, sqlbash_skill), multi_column_favorites)
 
 
 """
