@@ -1,0 +1,127 @@
+#Globals
+MAX_GENS 100
+Laverage Range[0.0, 2.6]
+Maverage Range(2.6, 3.7)
+Haverage Range[3.7, 5.0]
+
+# how many rows in the csv?
+@Horizontal called ClassSize
+        float many .7
+        float few .3
+
+@Vertical
+        col Name
+        col DuckID
+        col Timestamp
+        multicol Languages
+        multicol Niche_Skills
+        multicol Available_Times
+
+Languages:
+        col python
+        col java
+
+python:
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+        type cardioid prop python_card
+
+java:
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+        type cardioid if python_card
+
+Niche_Skills:
+        col sql
+        col bash
+
+sql:
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+
+bash:
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+
+uniform:
+        int low 0
+        int high 5
+
+right_slanted:
+        int low 0
+        int high 5
+        int peak 4
+
+left_slanted:
+        int low 0
+        int high 5
+        int peak 2
+
+normal:
+        int low 0
+        int high 5
+        int ave 3
+        int dev 2
+
+# has to be listed by favorites (a majority) and outliers (very few). favorites will get 90% of spread and outliers 10%, 70/20/10 if occasional is specified 
+_cardioid: #single col distribution
+        favorites: L
+        occasional: M 
+        outliers: H
+
+cardioid: #necessary joint distribution - multicol
+        from_set: (L,M,H)^2 #cross product [pick1+pick2 for pick1 in "LMH" for pick2 in "LMH"]
+        favorites: LH, HL, MM
+        not: LL, HH
+
+Languages << Niche_Skills
+        using function even_average
+        Languages::Laverage -> Niche_Skills::Laverage
+        Languages::Maverage -> Niche_Skills::Laverage | Niche_Skills::Maverage
+        Languages::Haverage -> Niche_Skills::Laverage | Niche_Skills::Maverage | Niche_Skills::Haverage
+
+even_average:
+        """
+        sum = 0
+        for thing in input:
+                sum += thing
+        return sum/len(input)
+        """
+
+Available_Times:
+        type uni
+        type right_slant
+        type left_slant
+        type norm
+
+uni:
+        int low 0
+        int high 19
+
+right_slant:
+        int low 0
+        int high 19
+        int peak 15
+
+left_slant:
+        int low 0
+        int high 19
+        int peak 5
+
+norm:
+        int low 0
+        int high 19
+        int ave 10
+        int dev 6
