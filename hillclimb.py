@@ -129,7 +129,7 @@ nicheskills = sqlbash_skill.getFinalDataSet()
 Laverage = Range(0.0, 2.6) # -> [0.0, 2.6]
 Maverage = Range(2.6, 3.7, exclusive_lower=True, exclusive_upper=True) # -> (2.6, 3.7)
 Haverage = Range(3.7, 5) # -> [3.7, 5]
-multi_column_favorites = [(Laverage, Laverage), (Laverage, Haverage), (Maverage, Laverage), (Maverage, Haverage)] # LL, LH, ML, MH
+multi_column_favorites = [(Laverage, Laverage), (Haverage, Laverage), (Maverage, Laverage), (Maverage, Haverage)] # LL, LH, ML, MH
 thing = list(zip(languages, nicheskills))  #TODO define an __iter__ method for Parms and Cardioids!
 print("BEFORE ---- ")
 print(thing)
