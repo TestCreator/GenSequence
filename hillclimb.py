@@ -66,14 +66,21 @@ def hillclimb(points, favorite, l_iterations=10000):
                 if ave00 == ave10 or ave01 == ave11:
                         continue
 
-                #if of the same type, LH LH or HL HL, no swap
+                #if of the same type, LL LL or LH LH, no swap
+                skip = False
+                for x in range(len(favorite)):
+                        if within((ave00, ave01),[favorite[x]]) and within((ave10, ave11), [favorite[x]]):
+                                skip = True
+                if skip:
+                        continue
 
 
-                if within(swap2, favorite) and within(swap2, favorite):
+                if within(swap1, favorite) and within(swap2, favorite):
                         print("bang!")
                         points[i] = (pick1[0], pick2[1])
                         points[j] = (pick2[0], pick1[1])
-                        print("\tOriginally {} and {}, swapped to points[i] is {} and points[j] is {}".format((pick1[0], pick1[1]), (pick2[0], pick2[1]), points[i], points[j]))
+                        print("\tOriginally {} {} and {} {}, swapped to {} {} and {} {}"
+                                .format(ave00, ave01, ave10, ave11, swap1[0], swap1[1], swap2[0], swap2[1]))
 
         return points
 
@@ -114,32 +121,19 @@ def basic_hillclimb(points, favorite, l_iterations=10000):
 pythonjava_skill = Cardioid("pythonjava_skill", "one-by-one", from_set=[c for c in "LMH"])
 pythonjava_skill.setup()
 languages = pythonjava_skill.getFinalDataSet()
-print(languages)
 
 sqlbash_skill = Cardioid("sqlbash_skill", "one-by-one", from_set=[c for c in "LMH"])
 sqlbash_skill.setup()
 nicheskills = sqlbash_skill.getFinalDataSet()
-print(nicheskills)
 
 Laverage = Range(0.0, 2.6) # -> [0.0, 2.6]
 Maverage = Range(2.6, 3.7, exclusive_lower=True, exclusive_upper=True) # -> (2.6, 3.7)
 Haverage = Range(3.7, 5) # -> [3.7, 5]
-multi_column_favorites = [(Laverage, Laverage), (Laverage, Haverage), (Maverage, Laverage), (Maverage, Haverage)]
+multi_column_favorites = [(Laverage, Laverage), (Laverage, Haverage), (Maverage, Laverage), (Maverage, Haverage)] # LL, LH, ML, MH
 thing = list(zip(languages, nicheskills))  #TODO define an __iter__ method for Parms and Cardioids!
-print("BREAKDOWN ---- ")
+print("BEFORE ---- ")
 print(thing)
-print(thing[0])
-#newstuff = hillclimb(zip(pythonjava_skill, sqlbash_skill), multi_column_favorites)
-
-
-"""
-newstuff = hillclimb(stuff, [(range(0,3),range(4,6)), (range(4,6),range(0,3))], l_iterations=100000)
+print("HILLCLIMB RESULTS ----")
+newstuff = hillclimb(thing, multi_column_favorites)
 print(newstuff)
-
-print ("\nBreakdown ------ ")
-frequency(stuff)
-print()
-frequency(newstuff)
-"""
-
 
