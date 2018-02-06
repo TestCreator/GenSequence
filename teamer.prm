@@ -85,9 +85,9 @@ _cardioid: #single col distribution
         outliers: H
 
 cardioid: #necessary joint distribution - multicol
-        from_set: (L,M,H)^2 #cross product [pick1+pick2 for pick1 in "LMH" for pick2 in "LMH"]
-        favorites: LH, HL, MM
-        not: LL, HH
+        from_set: {L,M,H}^2 #cross product [pick1*pick2 for pick1 in "LMH" for pick2 in "LMH"]
+        favorites: L*H, H*L, M*M
+        not: L*L, H*H
 
 Translate:
         L 0,1,2
