@@ -18,7 +18,7 @@ def frequency(raw_data):
                 print ("Value {} has count {}".format(new_raw[i], count))
                 count = 0
 
-def average(figures):
+def even_average(figures):
         """
         :figures -> a list or tuple of points you want to average
         """
@@ -26,6 +26,8 @@ def average(figures):
         for point in figures:
                 sum += point
         return sum/(len(figures))
+
+def weighted_average()
 
 def within(pick, ranges):
         """
@@ -52,10 +54,10 @@ def hillclimb(points, favorite, l_iterations=10000):
                 pick2 = points[j]
                 #points[i][0] is point from languages
                 #points[i][1] is point from nicheskills
-                ave00 = average(pick1[0])
-                ave01 = average(pick1[1])
-                ave10 = average(pick2[0])
-                ave11 = average(pick2[1])
+                ave00 = even_average(pick1[0])
+                ave01 = even_average(pick1[1])
+                ave10 = even_average(pick2[0])
+                ave11 = even_average(pick2[1])
 
                 swap1 = (ave00, ave11)
                 swap2 = (ave10, ave01)
