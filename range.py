@@ -1,7 +1,7 @@
 """
-python's builting range object wasn't enough, so I built one that ranges floats instead of just ints.
+python's builtin range object wasn't enough, so I built one that ranges floats instead of just ints.
 It also has options for exclusive edge cases. By default, the Range is inclusive of both sides. Not very gracefully implemented, 
-but it suffices for now.
+but it suffices for now. Does not support iteration
 
 """
 
