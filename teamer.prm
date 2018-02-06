@@ -3,6 +3,7 @@ MAX_GENS 100
 Laverage Range[0.0, 2.6]
 Maverage Range(2.6, 3.7)
 Haverage Range[3.7, 5.0]
+days_of_week [(M, T, W, R, F)*(10:00-12:00, 12:00-2:00, 2:00-4:00, 4:00-6:00)]
 
 # how many rows in the csv?
 @Horizontal called ClassSize
@@ -16,6 +17,7 @@ Haverage Range[3.7, 5.0]
         multicol Languages
         multicol Niche_Skills
         multicol Available_Times
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Languages:
         col python
@@ -36,6 +38,7 @@ java:
         type normal
         type _cardioid
         type cardioid if python_card
+
 
 Niche_Skills:
         col sql
@@ -85,6 +88,7 @@ cardioid: #necessary joint distribution - multicol
         from_set: (L,M,H)^2 #cross product [pick1+pick2 for pick1 in "LMH" for pick2 in "LMH"]
         favorites: LH, HL, MM
         not: LL, HH
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Languages << Niche_Skills
         using function even_average
@@ -92,35 +96,36 @@ Languages << Niche_Skills
         Languages::Maverage -> Niche_Skills::Laverage | Niche_Skills::Maverage
         Languages::Haverage -> Niche_Skills::Laverage | Niche_Skills::Maverage | Niche_Skills::Haverage
 
-even_average:
-        """
-        sum = 0
-        for thing in input:
-                sum += thing
-        return sum/len(input)
-        """
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Available_Times:
-        type uni
-        type right_slant
-        type left_slant
-        type norm
+        col Monday sorted by M
+        col Tuesday sorted by T
+        col Wednesday sorted by T
+        col Thursday sorted by R
+        col Friday sorted by F
 
-uni:
+Monday+Tuesday+Wednesday+Thursday+Friday:
+        from_set: (M, T, W, R, F)*(10:00-12:00, 12:00-2:00, 2:00-4:00, 4:00-6:00) #TODO decide how to describe from_sets
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+
+uniform:
         int low 0
         int high 19
 
-right_slant:
+right_slanted:
         int low 0
         int high 19
         int peak 15
 
-left_slant:
+left_slanted:
         int low 0
         int high 19
         int peak 5
 
-norm:
+normal:
         int low 0
         int high 19
         int ave 10
