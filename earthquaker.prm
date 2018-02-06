@@ -1,0 +1,176 @@
+#Globals
+MAX_GENS 100
+#magnitudes ranges
+Micro Range(0.0, 2.0]
+Feelable Range[4.5, 7.9)
+Great Range[8.0, 9.5]
+#latitudes ranges
+East Range[42.2, 45.84]
+West Range[45.84, 49.48]
+#longitudes ranges
+North Range[42.2, 45.84]
+South Range[42.2, 45.84]
+#depths ranges
+Shallow Range[0.0 5.0]
+Deep Range[15.0, 30.0]
+
+# how many rows in the csv?
+@Horizontal called Recordings
+        float many 1
+        float few 2
+
+@Vertical
+        col Magnitude
+        col Latitude
+        col Longitude
+        col Depth
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+Magnitude:
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+        type _cardioid
+        type cardioid prop magnitude_card
+
+Latitude:
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+        type cardioid if python_card
+
+
+Longitude:
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+
+Depth:
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+        type cardioid if magnitude_card
+
+Magnitude~uniform:
+        float low 0.0
+        float high 10.0
+
+Magnitude~right_slanted:
+        float low 0.0
+        float high 10.0
+        float peak 7.5
+
+Magnitude~left_slanted:
+        float low 0.0
+        float high 10.0
+        float peak 2.5
+
+Magnitude~normal:
+        float low 0.0
+        float high 10.0
+        float ave 5.0
+        float dev 3.0
+
+Magnitude~_cardioid: #TODO the pairwise test vectors need to cover the opposite case
+        favorites: Micro
+        occasional:
+        outliers: Great
+
+Magnitude~cardioid: #necessary joint distribution - multicol
+        from_set: floats
+        favorites: LH, HL, MM
+        not: 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Latitude~uniform:
+        float low 42.2197 
+        float high 49.4817
+
+Latitude~right_slanted:
+        float low 42.2197
+        float high 49.4817
+        float peak 47.66
+
+Latitude~left_slanted:
+        float low 42.2197
+        float high 49.4817
+        float peak 44.02
+
+Latitude~normal:
+        float low 42.2197
+        float high 49.4817
+        float ave 45.84
+        float dev 1.3
+
+Latitude~_cardioid:
+        favorites: East
+        occasional: 
+        outliers: West
+
+cardioid: #necessary joint distribution - multicol
+        from_set: {North,South}*{East,West}
+        favorites: North*East
+        not: South*West
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Longtitude~uniform:
+        float low -124.8865
+        float high -119.1502
+
+Longtitude~right_slanted:
+        float low -124.8865
+        float high -119.1502
+        float peak 120.5843
+
+Longtitude~left_slanted:
+        float low -124.8865
+        float high -119.1502
+        float peak -123.4525
+
+Longtitude~normal:
+        float low -124.8865
+        float high -119.1502
+        float ave -122.0184
+        float dev 1.2
+
+Longtitude~_cardioid:
+        favorites: North
+        occasional: 
+        outliers: South
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Depth~uniform:
+        float low 0.0
+        float high 30.0
+
+Depth~right_slanted:
+        float low 0.0
+        float high 30.0
+        float peak 21.5
+
+Depth~left_slanted:
+        float low 0.0
+        float high 30.0
+        float peak 7.5
+
+Depth~normal:
+        float low 0.0
+        float high 30.0
+        float ave 15.0
+        float dev 5.0
+
+Depth~_cardioid: #TODO the pairwise test vectors need to cover the opposite case
+        favorites: Shallow
+        occasional:
+        outliers: Deep
