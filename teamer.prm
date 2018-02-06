@@ -88,6 +88,11 @@ cardioid: #necessary joint distribution - multicol
         from_set: (L,M,H)^2 #cross product [pick1+pick2 for pick1 in "LMH" for pick2 in "LMH"]
         favorites: LH, HL, MM
         not: LL, HH
+
+Translate:
+        L 0,1,2
+        M 3
+        H 4,5
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Languages << Niche_Skills

@@ -1,23 +1,30 @@
 #Globals
 MAX_GENS 100
+
 #magnitudes ranges
+Totalmags Range(0.0, 10.0)
 Micro Range(0.0, 2.0]
 Feelable Range[4.5, 7.9)
 Great Range[8.0, 9.5]
+
 #latitudes ranges
 East Range[42.2, 45.84]
 West Range[45.84, 49.48]
+
 #longitudes ranges
 North Range[42.2, 45.84]
 South Range[42.2, 45.84]
+
 #depths ranges
+Totaldepths Range(0.0, 30.0]
 Shallow Range[0.0 5.0]
+Mid Range(5.0, 15.0)
 Deep Range[15.0, 30.0]
 
 # how many rows in the csv?
 @Horizontal called Recordings
-        float many 1
-        float few 2
+        float many 2.5
+        float few 1.5
 
 @Vertical
         col Magnitude
@@ -42,7 +49,7 @@ Latitude:
         type left_slanted
         type normal
         type _cardioid
-        type cardioid if python_card
+        type cardioid prop latitude_card
 
 
 Longitude:
@@ -51,6 +58,7 @@ Longitude:
         type left_slanted
         type normal
         type _cardioid
+        type cardioid if latitude_card
 
 Depth:
         type uniform
@@ -86,9 +94,9 @@ Magnitude~_cardioid: #TODO the pairwise test vectors need to cover the opposite 
         outliers: Great
 
 Magnitude~cardioid: #necessary joint distribution - multicol
-        from_set: floats
-        favorites: LH, HL, MM
-        not: 
+        from_set: {Micro,Feelable,Great}*{Shallow,Mid,Deep} #(LMH)^2
+        favorites: Micro*Shallow, Great*Deep, Feelable*Mid #LL, HH, MM
+        not: Micro*Deep, Great*Shallow, Feelable*Deep, Feelable*Shallow #LH, HL, MH, ML
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Latitude~uniform:
