@@ -6,6 +6,13 @@ Globals are declared first, and of form <Symbol Name> <Value>
 Value can be any type, but the type will be inferred
 100 -> int, 100.0 -> float, or specialty objects (Range)
 
+**************TODO
+when declaring globals, particularly from_sets, should they be python-programatically defined or symbolic?
+ex: (M, T, W, R, F)*(10:00-12:00, 12:00-2:00, 2:00-4:00, 4:00-6:00)
+OR
+[str(day + time) for day in ["M", "T", "W", "R", "F"] for time in ["10:00 - 12:00", "12:00 - 2:00", "2:00 - 4:00", "4:00 - 6:00"]]
+***************
+
 #Dimensions
 @Horizontal and @Vertical begin to describe the columns and rows of the test case
 @Horizontal will describe the number of rows, and the parameter can be named something
