@@ -1,8 +1,11 @@
-#Comments
+## Comments
+
 
 "#" are comments. Anything beyond a "#" is a comment.
 
-##Globals
+
+## Globals
+
 
 Globals are declared first, and of form <Symbol Name> <Value>
 Value can be any type, but the type will be inferred
@@ -16,7 +19,9 @@ OR
 [str(day + time) for day in ["M", "T", "W", "R", "F"] for time in ["10:00 - 12:00", "12:00 - 2:00", "2:00 - 4:00", "4:00 - 6:00"]]
 ***************
 
-##Dimensions
+
+## Dimensions
+
 
 @Horizontal and @Vertical begin to describe the columns and rows of the test case
 
@@ -24,7 +29,9 @@ OR
 
 @Vertical is all the columns: Parameter Objects and their names
 
-##General Rules
+
+## General Rules
+
 
 Syntax imitates Grammar Production Rules
 X -> A | B turns into
@@ -38,19 +45,28 @@ Left and Right slant need a low and high bound, and a peak value
 Normal needs a low and high bound, plus a mu and sigma value.
 The words "low", "high", "ave", "dev", and "peak" are keywords for the arguments to these functions, but they can be any object type. For
 example:
+```
 int low 0
 int high 5
+```
+
 &
+
+```
 float low 0.1
 float high 5.5
+```
 
 are both valid. In a certain distribution type, the arguments should be similar types (both ints or both floats). It doesn't make sense to generate a uniform distribution ranging from 0 to 5.23555 - and what should the return type of the data point be, float or int?
 
 @Vertical must always be made of col or multicol objects. col will become a Parm object, and multicol will become a Cardioid object in the parmgen module. multicols that are dependent on each have a later subsection that describes their relationship. Each singular multicol must be created first and the joint distribution is enforced later, using a hillclimbing approach (see section on Hillclimbing).
 
-##Reusing types
+
+## Reusing types
+
 
 If multiple cols use the same type function, the arguments to type don't have to be redefined. For example, in cols python_skill and java_skill, they both will use types normal, left_slant, right_slant, normal, and _cardioid at some point when the test vector specifies it. Make sure to describe the arguments to the distribution type after the cols have been defined, for example:
+
 ```
 python_skill:
         type normal
@@ -80,13 +96,14 @@ Depth~uniform:
         float high 30.0 # a different argument was specified for a type function
 ```
 
+
 ## Special types
 
 
 The distribution types of normal, uniform, and two triangular distributions are built-in, but in case a special vaguely non-mathematical distribution is desired, the _cardioid provides for some input on what the most/least frequent data point should be. _cardioid is only used for singular cols (See section on Multiple columns).
 
 
-##Hillclimbing
+## Hillclimbing
 
 
 A hillclimbing approach is used to enforce distributions between multicols. So arguments must be supplied to identify more favorable
