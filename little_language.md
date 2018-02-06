@@ -1,7 +1,7 @@
 #Comments
 "#" are comments. Anything beyond a "#" is a comment.
 
-#Globals
+##Globals
 Globals are declared first, and of form <Symbol Name> <Value>
 Value can be any type, but the type will be inferred
 100 -> int, 100.0 -> float, or specialty objects (Range)
@@ -14,7 +14,7 @@ OR
 [str(day + time) for day in ["M", "T", "W", "R", "F"] for time in ["10:00 - 12:00", "12:00 - 2:00", "2:00 - 4:00", "4:00 - 6:00"]]
 ***************
 
-#Dimensions
+##Dimensions
 @Horizontal and @Vertical begin to describe the columns and rows of the test case
 
 @Horizontal will describe the number of rows, and the parameter can be named something
@@ -24,7 +24,7 @@ that has 70 rows. The number of rows is an int, despite .7 being a float - it me
 
 @Vertical is all the columns: Parameter Objects and their names
 
-#General Rules
+##General Rules
 Syntax imitates Grammar Production Rules
 X -> A | B turns into
 X:
@@ -48,7 +48,7 @@ are both valid. In a certain distribution type, the arguments should be similar 
 @Vertical must always be made of col or multicol objects. col will become a Parm object, and multicol will become a Cardioid object in 
 the parmgen module. multicols that are dependent on each have a later subsection that describes their relationship. Each singular multicol must be created first and the joint distribution is enforced later, using a hillclimbing approach (see section on Hillclimbing).
 
-#Reusing types
+##Reusing types
 If many cols use the same type function, the arguments to type don't have to be redefined. For example, in cols python_skill and java_skill, they both will use types normal, left_slant, right_slant, normal, and _cardioid at some point when the test vector specifies it. Make sure to describe the arguments to the distribution type after the cols have been defined, for example:
 python_skill:
         type normal
@@ -75,7 +75,7 @@ Depth~uniform:
         float low 0.0
         float high 30.0 
 
-#Hillclimbing
+##Hillclimbing
 A hillclimbing approach is used to enforce distributions between multicols. So arguments must be supplied to identify more favorable
 changes.
 parm1 "<<" parm2 denotes that parm2 has a dependency on parm1. A function must be supplied to combine cols in the multicol. Then 
