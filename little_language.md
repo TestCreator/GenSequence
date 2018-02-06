@@ -81,7 +81,7 @@ normal: ## this type is used for both python_skill:normal and java_skill:normal
         int high 5
 ```
 
-If multiple columns use the same type but supply different arguments, the type must be redefined, and the col it belongs to must be notated. For example, magnitudes and depths will both at some point be produced using a normal distribution, but the data points themselves are different. Magnitudes can only range from 0.0 to 10.0, but the depth of an earthquake can be recorded on a completely different scale (Richter points vs. miles below surface). So magnitudes and depths can use the same type keyword "uniform", but the two versions of "uniform" must be marked by <Column Name>~<\type>:
+If multiple columns use the same type but supply different arguments, the type must be redefined, and the col it belongs to must be notated. For example, magnitudes and depths will both at some point be produced using a normal distribution, but the data points themselves are different. Magnitudes can only range from 0.0 to 10.0, but the depth of an earthquake can be recorded on a completely different scale (Richter points vs. miles below surface). So magnitudes and depths can use the same type keyword "uniform", but the two versions of "uniform" must be marked by <Column Name>~<"type">:
 
 ```
 Magnitude:
