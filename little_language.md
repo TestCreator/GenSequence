@@ -174,13 +174,15 @@ The translation scheme will turn a tuple (L, H) and translate it into a tuple (u
 
 Two or more singular columns together may form a multicol, but two multicols that have an interdependency (temporarily called a Super Column) require special handling. A hillclimbing approach is used to enforce distributions between those multicols. So arguments must be supplied to identify more favorable changes. The hillclimbing improvement scheme only occurs after data for the two multicols have been generated; the hillclimbing will then make random swaps of data and evaluate if the swap improves the point spread.
 
-parm1 "<<" parm2 denotes that parm2 (a multicol) has a dependency on parm1 (a different multicol). A function must be supplied to combine cols in the multicol. The function can be as simple as an even averaging, where an average is calculated from a row of data points (alternative averaging options are still to come).
+parm1 "<<" parm2 denotes that parm2 (a multicol) has a dependency on parm1 (a different multicol). A function must be supplied to combine cols in the multicol. The function can be as simple as an even averaging, where an average is calculated from a row of data points. Alternative averaging options are still to come. If the two multicols are combined in different ways, two functions must be supplied, comma separated: ```using function even_averaging, weighted_average```.
 
-Then, relational properties are described using "->". A left column data point's classification should imply a right column data point's classification. So imagine that Weather multicol is composed of temperature and cloud_cover, and that Activities multicol can be categorized into collections: AtHome activities (stay inside your house type activities like read_book, cook_dinner, clean_room), Indoors activities (stay inside but at a public place like visit_library, drink_coffee_shop, etc.) and Outdoors activities (hike, run, bike). So the activities available are dependent on the state of the weather.
+Then, relational properties are described using "->". A left column data point's classification should imply a right column data point's classification. So imagine that Weather multicol is composed of cols temperature and cloud_cover, and that Activities multicol is composed of activity1 col and activity2 col, and activities can be categorized into collections: AtHome activities (stay inside your house type activities like read_book, cook_dinner, clean_room), Indoors activities (stay inside but at a public place like visit_library, drink_coffee_shop, etc.) and Outdoors activities (hike, run, bike). So the activities available are dependent on the state of the weather.
+
+If the weather is bad, the activities available are fairly limited. But if the weather is good, any activity is at your leisure. So the relational properties must describe what is more favorable to the entire set. Say that this imaginary program desires point spreads such that the activity pursued logically pairs with the outdoor conditions. The dependency rules describe that if a swap matches that relationship, keep the swap because it improves the data set.
 
 ```
 Weather << Activities
-        ...
+        using...
         Weather::Bad -> Activities::AtHome
         Weather::Okay -> Activities::AtHome | Activities::Indoors
         Weather::Excellent -> Activities::AtHome | Activities::Indoors | Activities::Outdoors
@@ -188,4 +190,36 @@ Weather << Activities
 
 
 ## Logical Separation
+A long %%%%%%%% is used both as a breakline (to help the writer logically separation parts of their syntax) but also as a tool for the preprocessor to separate definitions. Imagine two cols or multicols that, though they may have a joint cardioid distribution, don't use the same types (distribution types) or even the same kind of data points. A long %%%%%%% helps the preprocessor recognize that the first parm is finished defining itself, and can start understanding the next parm in a new scope.
+
+Example:
+```
+@Vertical
+        col x
+        col y
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+x:
+        type a
+        type b
+        type cardioid prop xcard
+
+cardioid:
+        from_set: ...
+        favorites: ...
+        not: ...
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+y:
+        type c
+        type d
+        type cardioid if xcard
+
+```
+
+The long %%%%%%%%% also separates logical spaces between declaration of @Verticals, Hillclimbing rules, and different parms.
+
+One special note is the use of the cardioid. A cardioid ties together two cols, but the type cardioid is defined in the scope of the first col. A long %%%%%%%%% can still be used after that definition, even though the second col of the cardioid creation is separated. This is okay because the from_set that is used for both the first col and second col has already been declared, likely a Global - perhaps a Range object or something different.
 
