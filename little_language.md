@@ -20,6 +20,9 @@ OR
 ***************
 
 
+# Range Objects
+
+
 ## Dimensions
 
 
@@ -169,7 +172,20 @@ The translation scheme will turn a tuple (L, H) and translate it into a tuple (u
 ## Hillclimbing
 
 
-A hillclimbing approach is used to enforce distributions between multicols. So arguments must be supplied to identify more favorable
-changes.
-parm1 "<<" parm2 denotes that parm2 has a dependency on parm1. A function must be supplied to combine cols in the multicol. Then 
-relational properties are described using "->". 
+Two or more singular columns together may form a multicol, but two multicols that have an interdependency (temporarily called a Super Column) require special handling. A hillclimbing approach is used to enforce distributions between those multicols. So arguments must be supplied to identify more favorable changes. The hillclimbing improvement scheme only occurs after data for the two multicols have been generated; the hillclimbing will then make random swaps of data and evaluate if the swap improves the point spread.
+
+parm1 "<<" parm2 denotes that parm2 (a multicol) has a dependency on parm1 (a different multicol). A function must be supplied to combine cols in the multicol. The function can be as simple as an even averaging, where an average is calculated from a row of data points (alternative averaging options are still to come).
+
+Then, relational properties are described using "->". A left column data point's classification should imply a right column data point's classification. So imagine that Weather multicol is composed of temperature and cloud_cover, and that Activities multicol can be categorized into collections: AtHome activities (stay inside your house type activities like read_book, cook_dinner, clean_room), Indoors activities (stay inside but at a public place like visit_library, drink_coffee_shop, etc.) and Outdoors activities (hike, run, bike). So the activities available are dependent on the state of the weather.
+
+```
+Weather << Activities
+        ...
+        Weather::Bad -> Activities::AtHome
+        Weather::Okay -> Activities::AtHome | Activities::Indoors
+        Weather::Excellent -> Activities::AtHome | Activities::Indoors | Activities::Outdoors
+```
+
+
+## Logical Separation
+
