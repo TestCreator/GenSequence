@@ -124,7 +124,7 @@ Latitude~_cardioid:
         occasional: 
         outliers: West
 
-cardioid: #necessary joint distribution - multicol
+Latitude~cardioid: #necessary joint distribution - multicol
         from_set: {North,South}*{East,West}
         favorites: North*East
         not: South*West
