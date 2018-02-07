@@ -102,7 +102,68 @@ Depth~uniform:
 ## Special types
 
 
-The distribution types of normal, uniform, and two triangular distributions are built-in, but in case a special vaguely non-mathematical distribution is desired, the _cardioid provides for some input on what the most/least frequent data point should be. _cardioid is only used for singular cols (See section on Multiple columns).
+The distribution types of normal, uniform, and two triangular distributions are built-in, but in case a special vaguely non-mathematical distribution is desired, the _cardioid provides for some input on what the most/least frequent data point should be. _cardioid is only used for singular cols (See section on Multiple columns for cols that depend on each other). The favorite, or most frequently occurring data point should be specified, as should the less frequent (occasional), and rare outliers. If no Range or data point is supplied to occasional, points from favorites will take up 90% of the data points, and outliers will take up 10% of the data points. If occasional is supplied, the point spread will be 70/20/10.
+
+The data points themselves can be either a hard value or a Range. If the data point is a Range, points are generated randomly from picks in the Range. The randomly selected value will be different on every data point in the parm, if favorites is Range(0.0, 5.5), the data points will be 4.108, 3.452, 2.890, 3.671, 3.449...
+If favorites is a concrete value (for example, 5, or 3.99), that value will occur in 70% (or 90%) of the rows.
+
+The same standard applies to occasional and outliers.
+Example:
+```
+Micro Range(0.0, 2.0] # a global Range object
+Magnitude~_cardioid:
+        favorites: Micro
+        occasional:
+        outliers: 3.22
+```
+
+## Multiple Columns
+
+
+If two singular cols have or can have interdependency, the type cardioid is used (different from _cardioid). An interdependency is defined using keywords "prop" and "if" in the definition of the col. If a property is satisfied in one column, the other column will be notified and data points will be generated for the two columns in the joint distribution.
+```
+magnitude:
+        ...
+        type cardioid prop magnitude_cardioid
+
+depth:
+        ...
+        type cardioid if magnitude_cardioid
+```
+The cardioid type need only be defined once, since both cols share it. The from_set must be a cross product of two sets of possible data points, even if it's the same one. For example {L,M,H}^2 is valid, since it is {L,M,H}*{L,M,H}, which creates all the combinations, LL, LM, LH, ML, MM, MH, HL, HM, HH.
+
+A translation scheme is only necessary if the from_set and favorites are not defined elsewhere. For example, if the from_set is a set of Range objects, a data point will be picked uniformly randomly from that range. For example,
+```
+North Range[42.2, 45.84]
+South Range[42.2, 45.84] # North and South are both Range objects
+...
+
+cardioid: #necessary joint distribution - multicol
+        from_set: {North,South}*{East,West}
+        favorites: North*East
+        not: South*West
+```
+the favorites data points will be a tuple of the form (uniform_pick(North), uniform_pick(East)).
+
+However, if the symbolic points in the from_set has not been defined, it must be.
+
+```
+_cardioid:
+        favorites: L
+        occasional: M 
+        outliers: H
+
+cardioid:
+        from_set: {L,M,H}^2
+        favorites: L*H, H*L, M*M
+        not: L*L, H*H
+
+Translate:
+        L 0,1,2
+        M 3
+        H 4,5
+```
+The translation scheme will turn a tuple (L, H) and translate it into a tuple (uniform_pick(0, 1, 2), uniform_pick(4, 5)) such that the first point will be a point in the first column parm and the second point a point in the second column parm.
 
 
 ## Hillclimbing
