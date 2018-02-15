@@ -1,8 +1,8 @@
 """
 Sample code using version 3 of makogram grammar
 """
-
-from ..makogram.grammar import Grammar, Proc
+import context
+from makogram.grammar import Grammar, Proc
 
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s',
