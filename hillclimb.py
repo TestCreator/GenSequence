@@ -27,7 +27,8 @@ def even_average(figures):
                 sum += point
         return sum/(len(figures))
 
-def weighted_average()
+def weighted_average():
+    pass
 
 def within(pick, ranges):
         """
