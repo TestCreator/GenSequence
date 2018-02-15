@@ -20,8 +20,8 @@ OR
 ***************
 
 
-# Range Objects
-
+## Range Objects
+Ranges are helpful objects that merely describe a range of possible values. It is similar to python's built-in range, but this has added functionality of ranging floats, exclusive bounds, and selection of a random point within (the selection type is limited to uniform distribution generation for right now).
 
 ## Dimensions
 
