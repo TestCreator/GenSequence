@@ -3,9 +3,10 @@ from range import Range #Range objects are declared, often as globals
 import ast #evaluation of strs into the objects the string represents
 
 def eval_global(strrep):
-        partition = strrep.split(' ')
-        rejoin = partition[0] + " = " + partition[1]
-        res = ast.literal_eval(rejoin) 
+        partition = strrep.split(' ') #['MAX_GENS', '100']
+        rejoin = partition[0] + "=" + partition[1] #'MAX_GENS=100'
+        tree = ast.parse(rejoin)
+        compilable = compile(tree, filename='<string>', mode="exec")
         return res
 
 
@@ -45,10 +46,11 @@ def open_and_print(filename):
 
         for i in range(len(sections)):
                 sections[i] = scrub_down(sections[i])
-        #for section in sections:
-                #print(section)
-        thingy = eval_global(sections[0])
-        print(thingy)
+        for section in sections:
+                print(section)
+        for declaration in sections[0]:
+                declare = eval_global(declaration)
+                print(thingy)
 
 
         ############################

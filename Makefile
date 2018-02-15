@@ -21,7 +21,8 @@ veryclean:  clean
 
 install:
 	python3 -m venv env
-	${ACTIVATE} ; pip3 install -r requirements.txt
+	${ACTIVATE}
+	pip3 install -r requirements.txt
 
 test:
 	notestests
