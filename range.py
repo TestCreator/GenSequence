@@ -4,13 +4,21 @@ It also has options for exclusive edge cases. By default, the Range is inclusive
 but it suffices for now. Does not support iteration
 
 """
-
+import random # for random picks in the range
 class Range:
         def __init__(self, lower, upper, exclusive_lower=False, exclusive_upper=False):
                 self.lower = lower
                 self.upper = upper
                 self.exclusive_lower = exclusive_lower
                 self.exclusive_upper = exclusive_upper
+                if self.exclusive_lower:
+                    self.low_epsilon = .000001
+                else:
+                    self.low_epsilon = 0 
+                if self.exclusive_upper:
+                    self.high_epsilon = .000001
+                else:
+                    self.high_epsilon = 0
 
         def __repr__(self):
                 if self.exclusive_lower:
@@ -47,3 +55,13 @@ class Range:
                         res2 ^= self.upper >= checkpoint
 
                 return res1 and res2
+
+        def uniform_pick(self):
+                low = self.lower + self.low_epsilon
+                high = self.upper - self.high_epsilon
+                return random.uniform(low, high)
+
+
+r = Range(3.7, 5.0)
+print(dir())
+print(dir(r))
