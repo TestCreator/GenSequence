@@ -122,17 +122,6 @@ class Grammar:
         log.debug("Initializing Grammar object")
         self.grammar_env = { }
         self.counts = { }
-        self.oracle_table = { }
-        self.oracle = {}
-
-    def add_oracle_possibility(self, column, input_type, output_type):
-        if column in self.oracle_table:
-            self.oracle_table[column][input_type] = output_type
-        else:
-            self.oracle_table[column] = {input_type: output_type}
-
-    def set_true_oracle(self, column, guess):
-        self.oracle[column] = self.oracle_table[column][guess]
 
     def _prod(self, name, rhs):
         """ 
@@ -206,10 +195,6 @@ class Grammar:
             to return a list. 
         """
 
-        if not type=="None":
-            # we know we have a predicted oracle
-            self.set_true_oracle(name, type)
-
         # If the right hand side isn't already a Renderable,
         # create a Renderable of the appropriate kind
         if isinstance(rhs,str):
@@ -271,10 +256,6 @@ class Grammar:
         A string derived from the non-terminal symbol 
         (typically through several recursive levels of expansion)
         """
-        # print the oracle, what we should expect from this test case
-        #testcase = {"oracle": self.oracle, "testsuite": self.grammar_env[name].render()}
-        #return testcase
-
 
         return self.grammar_env[name].render()
 
