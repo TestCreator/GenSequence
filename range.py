@@ -7,6 +7,8 @@ but it suffices for now. Does not support iteration
 import random # for random picks in the range
 class Range:
         def __init__(self, lower, upper, exclusive_lower=False, exclusive_upper=False):
+                assert lower < upper, "Bad Range: lower {} must be < upper {}".format(lower, upper)
+
                 self.lower = lower
                 self.upper = upper
                 self.exclusive_lower = exclusive_lower
@@ -61,7 +63,3 @@ class Range:
                 high = self.upper - self.high_epsilon
                 return random.uniform(low, high)
 
-
-r = Range(3.7, 5.0)
-print(dir())
-print(dir(r))
