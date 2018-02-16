@@ -3,7 +3,7 @@ MAX_GENS 100
 Laverage Range[0.0, 2.6]
 Maverage Range(2.6, 3.7)
 Haverage Range[3.7, 5.0]
-days_of_week [(M, T, W, R, F)*(10:00-12:00, 12:00-2:00, 2:00-4:00, 4:00-6:00)]
+timeslots [str(day+ " " +time) for day in ["M", "T", "W", "R", "F"] for time in ["10:00 - 12:00", "12:00 - 2:00", "2:00 - 4:00", "4:00 - 6:00"]]
 
 # how many rows in the csv?
 @Horizontal called ClassSize
@@ -16,7 +16,7 @@ days_of_week [(M, T, W, R, F)*(10:00-12:00, 12:00-2:00, 2:00-4:00, 4:00-6:00)]
         col Timestamp
         multicol Languages
         multicol Niche_Skills
-        multicol Available_Times
+        multicol Available_Times direct
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Languages:
@@ -106,12 +106,12 @@ Languages << Niche_Skills
 Available_Times:
         col Monday sorted by M
         col Tuesday sorted by T
-        col Wednesday sorted by T
+        col Wednesday sorted by W
         col Thursday sorted by R
         col Friday sorted by F
 
-Monday+Tuesday+Wednesday+Thursday+Friday:
-        from_set: (M, T, W, R, F)*(10:00-12:00, 12:00-2:00, 2:00-4:00, 4:00-6:00) #TODO decide how to describe from_sets
+Available_Times:
+        from_set: timeslots
         type uniform
         type right_slanted
         type left_slanted
