@@ -7,7 +7,7 @@
 ## Globals
 
 
-Globals are declared first, and of form <Symbol Name> <Value>
+Globals are declared first, and of form \<Symbol Name\> \<Value\>
 Value can be any type, but the type will be inferred
 100 -> int, 100.0 -> float, or specialty objects (Range)
 It's probably a good idea to define globals that describe particular parameters. For example, Magnitudes ranges in total from 0.0 to 10.0, but there are different classifications to the general sizes of earthquakes. It may be worth defining a Range object for the parm's total span and subsections of size, for example, a Range object for small earthquakes (0.0, 2.0), medium (4.0, 6.5), and devastating (8.0, 10.0).
