@@ -11,14 +11,8 @@ Globals are declared first, and of form <Symbol Name> <Value>
 Value can be any type, but the type will be inferred
 100 -> int, 100.0 -> float, or specialty objects (Range)
 It's probably a good idea to define globals that describe particular parameters. For example, Magnitudes ranges in total from 0.0 to 10.0, but there are different classifications to the general sizes of earthquakes. It may be worth defining a Range object for the parm's total span and subsections of size, for example, a Range object for small earthquakes (0.0, 2.0), medium (4.0, 6.5), and devastating (8.0, 10.0).
-The value can also be a custom-defined set, but it must be 
+The value can also be a custom-defined set, but it must be python-valid code. For example, if the desired data points are strings of days of the week, then it must be represented as a List or String. `[day for day in "MTWRF"]` or `"MTWRF"` would both be acceptable.
 
-**************TODO
-when declaring globals, particularly from_sets, should they be python-programatically defined or symbolic?
-ex: {M, T, W, R, F}*{10:00-12:00, 12:00-2:00, 2:00-4:00, 4:00-6:00}
-OR
-[str(day + time) for day in ["M", "T", "W", "R", "F"] for time in ["10:00 - 12:00", "12:00 - 2:00", "2:00 - 4:00", "4:00 - 6:00"]]
-***************
 
 
 ## Range Objects
@@ -168,6 +162,12 @@ Translate:
         H 4,5
 ```
 The translation scheme will turn a tuple (L, H) and translate it into a tuple (uniform_pick(0, 1, 2), uniform_pick(4, 5)) such that the first point will be a point in the first column parm and the second point a point in the second column parm.
+
+
+# Special Direct Multicols
+Some multicols are not multicols because their individual columns have a dependency; they can be a multicol because out of necessity the data points for those cols must be created together and then sorted into the columns the points need to be in. For example, AvailableTimes, which is a collection of columns Monday-Friday. A tester may want to test the trend of normally distributed time, where midday Wednesday is the most frequent freetime, and Mondays and Fridays are not so much free. Given a time range (5 days * 4 time slots per day), parmgen can choose the data points all at once, and then sort one student's free time into the necessary columns, organized by day.
+
+A multicol is noted in this way in the @Vertical declaration using the keyword `direct`. Then when the columns in the multicol need to be described, each column must describe what data points will be in it. For example a data point free time slot of "M 10:00 - 12:00" should be sorted into the Monday column because `col Monday sorted by M`. Columns must be sorted by the leading section of the data point.
 
 
 ## Hillclimbing
