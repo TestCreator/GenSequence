@@ -1,0 +1,112 @@
+#Globals
+MAX_GENS 100
+Months ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+Winter ["December", "January", "February"]
+Summer ["June", "July", "August"]
+Year Range(1500, 2500)
+Ancient Range(1500, 1800)
+Future Range[2019, 2500)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@Horizontal called Recordings
+        float few .01 #just one record
+
+@Vertical
+        col Month
+        col Year
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+Month:
+        from_set: Months
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+        type cardioid prop magnitude_card
+
+Year:
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+        type cardioid prop latitude_card
+
+
+Month~uniform:
+        float low 1
+        float high 12
+
+Month~right_slanted:
+        float low 1
+        float high 12
+        float peak 9
+
+Month~left_slanted:
+        float low 1
+        float high 12
+        float peak 3
+
+Month~normal:
+        float low 1
+        float high 12
+        float ave 6
+        float dev 3
+
+
+Month~_cardioid:
+        favorites: Winter
+        occasional:
+        outliers: "July"
+
+Month~cardioid: #necessary joint distribution - multicol
+        from_set: Month*Year
+        favorites: Summer*Ancient
+        not: Winter*Future
+
+Translate:
+        January 1
+        February 2
+        March 3
+        April 4
+        May 5
+        June 6
+        July 7
+        August 8
+        September 9
+        October 10
+        November 11
+        December 12
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+Year~uniform:
+        float low 1500
+        float high 2500
+
+Year~right_slanted:
+        float low 1500
+        float high 2500
+        float peak 2250
+
+Year~left_slanted:
+        float low 1500
+        float high 2500
+        float peak 1750
+
+Year~normal:
+        float low 1500
+        float high 2500
+        float ave 2000
+        float dev 1000
+
+Year~_cardioid:
+        favorites: Ancient
+        occasional: 
+        outliers: Future
+
+
