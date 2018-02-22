@@ -45,12 +45,12 @@ def norm(args):
         dev = args["dev"]
         low = args["low"]
         high = args["high"]
-        x = round(gauss(ave, dev))
+        x = gauss(ave, dev)
         if low==None and high == None:
                 return x
         else:
                 while not low <= x <= high:
-                        x = round(gauss(ave, dev))
+                        x = gauss(ave, dev)
                 return x
 def uni(args):
         """
@@ -58,15 +58,15 @@ def uni(args):
         """
         low = args["low"]
         high = args["high"]
-        return round(uniform(low, high))
+        return uniform(low, high)
 def slanted(args):
         """
         creates a data point with slant, triangular probability
         """
         low = args["low"]
         high = args["high"]
-        peak = args["ave"]
-        return round(triangular(low, high, peak))
+        peak = args["peak"]
+        return triangular(low, high, peak)
 
 def days_of_week():
         return [str(day + time) for day in ["M", "T", "W", "R", "F"] for time in ["10:00 - 12:00", "12:00 - 2:00", "2:00 - 4:00", "4:00 - 6:00"]]
@@ -120,9 +120,11 @@ typemap = {"many": many,
            "few": few,
            "normal": norm,
            "uniform": uni,
-           "triangular": slanted}
+           "right_slanted": slanted,
+           "left_slanted": slanted}
+
 class Parm:
-        def __init__(self, name, generator_type, distr_type="uniform", desired="many", low=None, high=None, ave=None, dev=None, from_set=None, per_row=1):
+        def __init__(self, name, generator_type, distr_type="uniform", desired="many", low=None, high=None, ave=None, dev=None, peak=None, from_set=None, per_row=1):
                 """
                 generator_type: string; "one by one" or "fixed-size-chunks"
                 generator: to be defined later; the generator object that yields data points, either one by one or at fixed size chunks
@@ -146,6 +148,7 @@ class Parm:
                 self.horiz_distribution = None; #TODO: implement this
                 self.dist_args = {"low": low, #these are the args passed to different distribution functions
                                   "high": high,
+                                  "peak": peak,
                                   "ave": ave,
                                   "dev": dev}
                 self.from_set = from_set
@@ -188,6 +191,8 @@ class Parm:
                 self.dist_args[ave] = ave
         def setDev(self, dev):
                 self.dist_args[dev] = dev
+        def setPeak(self, peak):
+                self.dist_args[peak] = peak
         def setFromSet(self, from_set):
                 self.from_set = from_set
         def setDesired(self, desired):
@@ -272,7 +277,7 @@ rangemap = {"L": range(0,3), "M": range(3,4), "H": range(4,6)}
 class Cardioid(Parm):
         def __init__(self, name, generator_type, distr_type="uniform", desired="many", low=None, high=None, ave=None, 
                     dev=None, from_set=None, per_row=1):
-                assert not from_set == None
+                assert not from_set == None #TODO - is this necessary for multi cols?
                 super().__init__(name, generator_type, distr_type, desired, low, high, ave, dev, from_set, per_row)
                 print("done setting up a cardioid")
 

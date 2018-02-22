@@ -4,14 +4,10 @@ built-in Python function 'sorted',
 as an example of grammar-based 
 test generation with an oracle built into the 
 test driver. 
-
-NOT run by nosetests.  
 """
-
-import context  # Hack to search in sibling directories
-
+import context 
 from makogram.grammar import Grammar
-import genseq
+from distribute import genseq
 
 g = Grammar()
 
@@ -61,10 +57,9 @@ assert ordered(output_str)
 #  draws names from a fixed sequence
 # 
 names = genseq.names()
-
+#@g.procdef("next_name")
 def next_name():
     return next(names)
-g.prod("next_name", next_name)
 
 print(g.gen("skel"))
 
