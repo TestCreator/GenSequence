@@ -3,7 +3,7 @@ Recordings:
         many
         few
 
-magntitudes:
+magnitudes:
         normal
         uniform
         right_slanted

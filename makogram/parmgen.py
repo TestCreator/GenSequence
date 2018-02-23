@@ -1,5 +1,6 @@
-from random import gauss, uniform, triangular, sample, choice
+from random import gauss, uniform, triangular, sample, choice, randint
 from math import ceil
+from range import Range # for cardioid generation
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s',
                         level=logging.WARNING)
@@ -200,6 +201,8 @@ class Parm:
                 if self.generator_type != "one-by-one":
                     self.rows = self.desired
                     self.desired = self.desired * self.per_row
+        def GetDesired(self):
+                return self.desired
         def setFinalDataSet(self, final):
                 self.final_data_set = final
         def getFinalDataSet(self):
@@ -273,44 +276,88 @@ class Parm:
                 THE_LIST.append(t)
                 return t
 
-rangemap = {"L": range(0,3), "M": range(3,4), "H": range(4,6)}
-class Cardioid(Parm):
-        def __init__(self, name, generator_type, distr_type="uniform", desired="many", low=None, high=None, ave=None, 
-                    dev=None, from_set=None, per_row=1):
-                assert not from_set == None #TODO - is this necessary for multi cols?
-                super().__init__(name, generator_type, distr_type, desired, low, high, ave, dev, from_set, per_row)
-                print("done setting up a cardioid")
 
-        def generate(self, k=100000):
-                symbolic_samples = []
-                concrete_samples = []
-                column1 = [choice(self.from_set) for _ in range(k)]
-                # TODO: Fix everything about this pls
-                for point in column1:
-                        if point == "L":
-                            pair = (point, choice([pick for pick in "HHHML"]))
-                        elif point == "M":
-                            pair = (point, choice([pick for pick in "MMLH"]))
-                        else:
-                            pair = (point, choice([pick for pick in "LLLMH"]))
-                        symbolic_samples.append(pair)
-                for pair in symbolic_samples:
-                        newpair = (choice(rangemap[pair[0]]), choice(rangemap[pair[1]]))
-                        concrete_samples.append(newpair)
+class Cardioid:
+        def __init__(self, first, second):
+            """" a cardioid is composed to two columns (two parms), so store them away as class variables"""
+            self.firstParm = first
+            self.secondParm = second
+        def setFromSet(self, new_set, favorites, non_favorites):
+            """
 
-                # Now reduce the sample size
-                reduced = []
-                sample_size = len(concrete_samples) #How many initial data points are there?
-                interval_step = ceil(sample_size / self.desired)
-                concrete_samples.sort() #The sorted data points
-                reduced = []
-                for i in range(0, sample_size, interval_step):
-                        reduced.append(concrete_samples[i])
+            """
+            self.from_set = new_set
+        def setFavorites(self, fav):
+            self.favorites = fav
+        def setNonFavorites(self, non):
+            self.non_favorites = non
 
-                log.debug("original sample size is {} and desired is {}, so the interval step is {} and the final set is {}".format(sample_size, self.desired, interval_step, len(reduced)))
-                assert len(reduced) == self.desired
-                return reduced
+        def generate(self):
+            """ if a test vector contains both columns having a joint distribution, generate them together
+            otherwise, generate the two parms disconnected
+            """
+            if self.firstParm.distr_type == "cardioid" and self.secondParm.distr_type == "cardioid":
+                self.double_generate(): #TODO - should return?
+            else:
+                firstParm.single_generate()
+                secondParm.single_generate()
+        def double_generate(self, k=10000):
+            """
+            from earthquaker.prm language:
+            from_set: {Micro,Feelable,Great}*{Shallow,Mid,Deep}
+            favorites: Micro*Shallow, Great*Deep, Feelable*Mid 
+            not: Micro*Deep, Great*Shallow, Feelable*Deep, Feelable*Shallow 
 
+            new_set is a list representing the cross product of all possibilities of the two columns
+                it is a list of tuples of Range objects
+
+            favorites is a list of desirable pairings, in the form of a list of tuples of Range objects
+
+            non_favorites is similarly a list of tuples of Range objects
+            """
+            desired = self.firstParm.GetDesired() #how many pairs should we generate?
+            num_favs = int(.9*desired) #90% of the sample is favorite
+            num_outliers = int(.1*desired) #10% of sample is outliers
+            while num_outliers + num_favs < desired:
+                num_outliers+= 1
+            assert num_outliers + num_favs == desired, "Uh-oh, cardioid distribution creating wrong size sample"
+            
+            # this will be a list of tuples of data points. 90% will be of favorites, and 10% outliers
+            # this set has to be created this way, since the paired points can't be scrambled in individual columns
+            # they must be scrambled before they are distributed out to the parms' final data sets
+            grand_set = []
+            # generate all the favorites pairings
+            for _ in range(num_favs):
+                #pick pair
+                select = self.favorites[randint(0, len(self.favorites))]
+                firstpick = select[0].uniform_pick()
+                secondpick = select[1].uniform_pick()
+
+                grand_set.append((firstpick, secondpick))
+
+            # now generate all the outliers
+            for _ in range(num_outliers):
+                select = self.non_favorites[randint(0, len(self.non_favorites))]
+                firstpick = select[0].uniform_pick()
+                secondpick = select[1].uniform_pick()
+
+                grand_set.append((firstpick, secondpick))
+
+            #Now shuffle all around
+            grand_set = sample(grand_set, len(grand_set))
+
+            set1 = map(lambda point: point[0], grand_set) #get only the first points for col1
+            set2 = map(lambda point: point[1], grand_set) #get only the second points for col2
+
+            self.firstParm.setFinalDataSet(set1)
+            self.secondParm.setFinalDataSet(set2)
+
+            #and the points in rows are still paired up according to favorites or outliers!
+        def single_generate(self):
+            self.firstParm.setup()
+            self.firstParm.scramble()
+            self.secondParm.setup()
+            self.secondParm.scramble()
 
 
 

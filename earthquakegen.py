@@ -1,6 +1,6 @@
 from makogram.grammar import Grammar
 from makogram.parmgen import *
-from random import gauss, triangular, choice, vonmisesvariate, uniform, sample
+from random import gauss, triangular, choice, vonmisesvariate, uniform, sample, randint
 from statistics import mean
 from math import ceil
 import csv
@@ -35,6 +35,8 @@ def regenerate_parm_data_points():
         depths.setup()
         depths.scramble()
 
+def placeholder():
+        return 100
 
 def declare_grammar_production_rules(repetitions):
         """
@@ -45,7 +47,7 @@ def declare_grammar_production_rules(repetitions):
         tg = Grammar()
         tg.prod("Recordings", "${Event()}", reps=repetitions) #reps should be class_size
         tg.prod("Event", "${EventId()},${Magnitude()},${Epoch},${Time},${TimeLocal},${Distance},${Latitude()},${Longitude()},${DepthKm()},${DepthMi()}\n")
-        tg.prod("EventId": lambda: random.randint(10000000, 70000000)) #TODO, specify in prm file?
+        tg.prod("EventId", lambda: randint(10000000, 70000000)) #TODO, specify in prm file?
         tg.prod("Magnitude", lambda: magnitudes.next())
         tg.prod("Epoch", "#####")
         tg.prod("Time", "12:00.0")
@@ -54,8 +56,7 @@ def declare_grammar_production_rules(repetitions):
         tg.prod("Latitude", lambda: latitudes.next())
         tg.prod("Longitude", lambda: longitudes.next())
         tg.prod("DepthKm", lambda: depths.next())
-        tg.prod("DepthMi", lamdba: 100) #TODO - this is critical! static data point conversion
-
+        tg.prod("DepthMi", lambda: placeholder()) #TODO - this is critical! static data point conversion
         return tg
 
 if __name__=="__main__":
@@ -66,7 +67,7 @@ if __name__=="__main__":
                 for vector in reader:
                         testcount += 1
                         #set all parms
-                        num_lines = translate_desired(vector['recordings']) #this is used for desired number in all parms
+                        num_lines = translate_desired(vector['Recordings']) #this is used for desired number in all parms
                         if num_lines == None:
                                 break
 
@@ -90,7 +91,7 @@ if __name__=="__main__":
 
                         #and dump into concrete data file
                         with open("{}.csv".format(test_case_file_name), 'w', newline='') as concretefile:
-                                fieldnames = ["EventId","Magnitude","Epoch","Time","TimeLocal","Distance","Latitude","Longitude","DepthKm","DepthMi"]
+                                fieldnames = ["#EventId","Magnitude","Epoch","Time","TimeLocal","Distance","Latitude","Longitude","DepthKm","DepthMi"]
                                 writer = csv.DictWriter(concretefile, fieldnames=fieldnames)
                                 writer.writeheader()
                                 for line in new_data:

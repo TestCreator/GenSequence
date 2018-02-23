@@ -29,11 +29,14 @@ Deep Range[15.0, 30.0]
         float few 1.5
 
 @Vertical
-        col Magnitude
-        col Latitude
-        col Longitude
-        col Depth
+        multicol MagnitudeDepth
+        multicol LatitudeLongitude
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+MagnitudeDepth:
+        col Magnitude
+        col Depth
 
 
 Magnitude:
@@ -44,23 +47,6 @@ Magnitude:
         type _cardioid
         type _cardioid
         type cardioid prop magnitude_card
-
-Latitude:
-        type uniform
-        type right_slanted
-        type left_slanted
-        type normal
-        type _cardioid
-        type cardioid prop latitude_card
-
-
-Longitude:
-        type uniform
-        type right_slanted
-        type left_slanted
-        type normal
-        type _cardioid
-        type cardioid if latitude_card
 
 Depth:
         type uniform
@@ -100,7 +86,60 @@ Magnitude~cardioid: #necessary joint distribution - multicol
         favorites: Micro*Shallow, Great*Deep, Feelable*Mid #LL, HH, MM
         not: Micro*Deep, Great*Shallow, Feelable*Deep, Feelable*Shallow #LH, HL, MH, ML
 
+
+Depth~uniform:
+        float low 0.0
+        float high 30.0
+
+Depth~right_slanted:
+        float low 0.0
+        float high 30.0
+        float peak 21.5
+
+Depth~left_slanted:
+        float low 0.0
+        float high 30.0
+        float peak 7.5
+
+Depth~normal:
+        float low 0.0
+        float high 30.0
+        float ave 15.0
+        float dev 5.0
+
+Depth~_cardioid:
+        favorites: Shallow
+        occasional:
+        outliers: Deep
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+### Latitude Longitude Parameters
+
+LatitudeLongitude:
+        col Latitude
+        col Longitude
+
+
+Latitude:
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+        type cardioid prop latitude_card
+
+
+Longitude:
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+        type cardioid if latitude_card
+
+
+
 Latitude~uniform:
         float low 42.2197 
         float high 49.4817
@@ -131,7 +170,6 @@ Latitude~cardioid: #necessary joint distribution - multicol
         favorites: North*East
         not: South*West
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Longtitude~uniform:
         float low -124.8865
@@ -158,29 +196,3 @@ Longtitude~_cardioid:
         occasional: 
         outliers: South
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Depth~uniform:
-        float low 0.0
-        float high 30.0
-
-Depth~right_slanted:
-        float low 0.0
-        float high 30.0
-        float peak 21.5
-
-Depth~left_slanted:
-        float low 0.0
-        float high 30.0
-        float peak 7.5
-
-Depth~normal:
-        float low 0.0
-        float high 30.0
-        float ave 15.0
-        float dev 5.0
-
-Depth~_cardioid: #TODO the pairwise test vectors need to cover the opposite case
-        favorites: Shallow
-        occasional:
-        outliers: Deep

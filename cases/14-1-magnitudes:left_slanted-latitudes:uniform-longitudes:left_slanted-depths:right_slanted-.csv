@@ -1,0 +1,3 @@
+#EventId,Magnitude,Epoch,Time,TimeLocal,Distance,Latitude,Longitude,DepthKm,DepthMi
+50245589,0.01031357680430301,#####,12:00.0,2012/09/22 09:46:45 PDT,30.0 km (  18.6 mi) WSW ( 240. azimuth) from Millican, OR,42.21973997893286,-124.87110922404811,"0.055395165254157205,100"
+,,,,,,,,,
