@@ -11,9 +11,25 @@ latitudes = Parm("latitudes", "one-by-one", low=42.2197, high=49.4817, ave=45.84
 longitudes = Parm("longitudes", "one-by-one", low=-124.8865, high=-119.1502, ave=-122.0184, dev=1.2)
 depths = Parm("depths", "one-by-one", low=0.0, high=30.0, ave=15.0, dev=5.0)
 
+#magnitudes ranges
+Micro = Range(0.0, 2.0)
+Feelable = Range(4.5, 7.9)
+Great = Range(8.0, 9.5)
+Shallow = Range(0.0, 5.0)
+Mid = Range(5.0, 15.0)
+Deep = Range(15.0, 30.0)
+
+magsdepths = Cardioid(magnitudes, depths)
+magsdepths.setFavorites([(Micro,Shallow), (Great,Deep), (Feelable,Mid)])
+magsdepths.setNonFavorites([(Micro,Deep), (Great,Shallow), (Feelable,Deep), (Feelable,Shallow)])
+#For now, let's just focus on magnitudes and depths relationship
+#latlong = Cardioid(latitudes, longitudes) #uncomment later
+
+
+
 def establish_magnitudes(disttype, des):
-        magnitudes.setDistributionType(disttype)
-        magnitudes.setDesired(des)
+        magsdepths.firstParm.setDistributionType(disttype)
+        magsdepths.firstParm.setDesired(des)
 def establish_latitudes(disttype, des):
         latitudes.setDistributionType(disttype)
         latitudes.setDesired(des)
@@ -21,22 +37,18 @@ def establish_longitudes(disttype, des):
         longitudes.setDistributionType(disttype)
         longitudes.setDesired(des)
 def establish_depths(disttype, des):
-        depths.setDistributionType(disttype)
-        depths.setDesired(des)
+        magsdepths.secondParm.setDistributionType(disttype)
+        magsdepths.secondParm.setDesired(des)
 
 
 def regenerate_parm_data_points():
-        magnitudes.setup()
-        magnitudes.scramble()
+        magsdepths.generate() #rewrites final data sets for both parms
         latitudes.setup()
         latitudes.scramble()
         longitudes.setup()
         longitudes.scramble()
-        depths.setup()
-        depths.scramble()
 
-def placeholder():
-        return 100
+
 
 def declare_grammar_production_rules(repetitions):
         """
@@ -48,15 +60,15 @@ def declare_grammar_production_rules(repetitions):
         tg.prod("Recordings", "${Event()}", reps=repetitions) #reps should be class_size
         tg.prod("Event", "${EventId()},${Magnitude()},${Epoch},${Time},${TimeLocal},${Distance},${Latitude()},${Longitude()},${DepthKm()},${DepthMi()}\n")
         tg.prod("EventId", lambda: randint(10000000, 70000000)) #TODO, specify in prm file?
-        tg.prod("Magnitude", lambda: magnitudes.next())
+        tg.prod("Magnitude", lambda: magsdepths.firstParm.next())
         tg.prod("Epoch", "#####")
         tg.prod("Time", "12:00.0")
         tg.prod("TimeLocal", "2012/09/22 09:46:45 PDT") #TODO, randomize date time choice?
         tg.prod("Distance", "30.0 km (  18.6 mi) WSW ( 240. azimuth) from Millican, OR") #TODO, randomize choice?
         tg.prod("Latitude", lambda: latitudes.next())
         tg.prod("Longitude", lambda: longitudes.next())
-        tg.prod("DepthKm", lambda: depths.next())
-        tg.prod("DepthMi", lambda: placeholder()) #TODO - this is critical! static data point conversion
+        tg.prod("DepthKm", lambda: magsdepths.secondParm.next())
+        tg.prod("DepthMi", "100") #TODO - this is critical! static data point conversion
         return tg
 
 if __name__=="__main__":

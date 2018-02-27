@@ -8,6 +8,7 @@ magnitudes:
         uniform
         right_slanted
         left_slanted
+        cardioid prop magnicard if depthicard
 
 latitudes:
         normal
@@ -26,4 +27,5 @@ depths:
         uniform
         right_slanted
         left_slanted
+        cardioid prop depthicard if magnicard
 

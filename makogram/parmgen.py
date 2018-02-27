@@ -69,6 +69,9 @@ def slanted(args):
         peak = args["peak"]
         return triangular(low, high, peak)
 
+def cardioid(args):
+        pass
+
 def days_of_week():
         return [str(day + time) for day in ["M", "T", "W", "R", "F"] for time in ["10:00 - 12:00", "12:00 - 2:00", "2:00 - 4:00", "4:00 - 6:00"]]
 
@@ -122,7 +125,8 @@ typemap = {"many": many,
            "normal": norm,
            "uniform": uni,
            "right_slanted": slanted,
-           "left_slanted": slanted}
+           "left_slanted": slanted,
+           "cardioid": cardioid}
 
 class Parm:
         def __init__(self, name, generator_type, distr_type="uniform", desired="many", low=None, high=None, ave=None, dev=None, peak=None, from_set=None, per_row=1):
@@ -209,6 +213,8 @@ class Parm:
                 return self.final_data_set
         def setPerRow(self, per_row):
                 self.per_row = per_row
+        def renew(self):
+                self.generated = 0
         def generate(self, k=100000):
                 """
                 generates the samples from either ints or a special set of data points like names or times
@@ -237,7 +243,7 @@ class Parm:
                 """
                 items = self.generate()
                 self.final_data_set = items
-                self.generated = 0 #if reusing Parm object, pretend a generator hasn't been created before
+                self.renew() #if reusing Parm object, pretend a generator hasn't been created before
         def scramble(self):
                 items = self.final_data_set
                 self.final_data_set = sample(items, len(items))
@@ -272,9 +278,7 @@ class Parm:
                         else:
                                 self.generator = self.multipart_distribute(self.distribute(self.final_data_set), self.rows, self.per_row)
                         self.generated = 1
-                t = next(self.generator)
-                THE_LIST.append(t)
-                return t
+                return next(self.generator)
 
 
 class Cardioid:
@@ -282,9 +286,8 @@ class Cardioid:
             """" a cardioid is composed to two columns (two parms), so store them away as class variables"""
             self.firstParm = first
             self.secondParm = second
-        def setFromSet(self, new_set, favorites, non_favorites):
+        def setFromSet(self, new_set):
             """
-
             """
             self.from_set = new_set
         def setFavorites(self, fav):
@@ -297,11 +300,11 @@ class Cardioid:
             otherwise, generate the two parms disconnected
             """
             if self.firstParm.distr_type == "cardioid" and self.secondParm.distr_type == "cardioid":
-                self.double_generate(): #TODO - should return?
+                self.double_generate() #TODO - should return?
             else:
-                firstParm.single_generate()
-                secondParm.single_generate()
-        def double_generate(self, k=10000):
+                self.single_generate()
+
+        def double_generate(self):
             """
             from earthquaker.prm language:
             from_set: {Micro,Feelable,Great}*{Shallow,Mid,Deep}
@@ -329,7 +332,7 @@ class Cardioid:
             # generate all the favorites pairings
             for _ in range(num_favs):
                 #pick pair
-                select = self.favorites[randint(0, len(self.favorites))]
+                select = self.favorites[randint(0, len(self.favorites)-1)]
                 firstpick = select[0].uniform_pick()
                 secondpick = select[1].uniform_pick()
 
@@ -337,7 +340,7 @@ class Cardioid:
 
             # now generate all the outliers
             for _ in range(num_outliers):
-                select = self.non_favorites[randint(0, len(self.non_favorites))]
+                select = self.non_favorites[randint(0, len(self.non_favorites)-1)]
                 firstpick = select[0].uniform_pick()
                 secondpick = select[1].uniform_pick()
 
@@ -350,7 +353,9 @@ class Cardioid:
             set2 = map(lambda point: point[1], grand_set) #get only the second points for col2
 
             self.firstParm.setFinalDataSet(set1)
+            self.firstParm.renew()
             self.secondParm.setFinalDataSet(set2)
+            self.secondParm.renew() #TODO pls fix omg bad
 
             #and the points in rows are still paired up according to favorites or outliers!
         def single_generate(self):
