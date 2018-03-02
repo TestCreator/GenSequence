@@ -1,0 +1,194 @@
+#Globals
+MAX_GENS 100
+
+#Mass ranges
+mass Range[1.314E+22, 1.9891E+30]
+
+#position ranges
+x Range[-4.55E+12, 1.08E+12]
+y Range[-3.89E+12, 8.51E+11]
+z Range[-5.79E+10, 1.28E+12]
+
+#velocity ranges
+vx Range[-6487.118, 635.998]
+vy Range[-11417.83, 41093.05]
+vz Range[-2031.506, 6918.461]
+
+#diameter ranges
+diam Range[2.0, 7.0]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# how many rows in the csv?
+@Horizontal called Planets
+        float many 30
+        float few 6
+
+@Vertical
+        multicol MassVelo
+        col Position
+        col Diam
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+MassVelo:
+        col Mass
+        col Velocity
+
+
+Mass:
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+        type cardioid prop mass_card if velo_card
+
+Velocity:
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+        type cardioid prop velo_card if mass_card
+
+Magnitude~uniform:
+        float low 0.0
+        float high 10.0
+
+Magnitude~right_slanted:
+        float low 0.0
+        float high 10.0
+        float peak 7.5
+
+Magnitude~left_slanted:
+        float low 0.0
+        float high 10.0
+        float peak 2.5
+
+Magnitude~normal:
+        float low 0.0
+        float high 10.0
+        float ave 5.0
+        float dev 3.0
+
+Magnitude~_cardioid: #TODO the pairwise test vectors need to cover the opposite case
+        favorites: Micro
+        occasional:
+        outliers: Great
+
+Magnitude~cardioid: #necessary joint distribution - multicol
+        from_set: {Micro,Feelable,Great}*{Shallow,Mid,Deep} #(LMH)^2
+        favorites: Micro*Shallow, Great*Deep, Feelable*Mid #LL, HH, MM
+        not: Micro*Deep, Great*Shallow, Feelable*Deep, Feelable*Shallow #LH, HL, MH, ML
+
+
+Depth~uniform:
+        float low 0.0
+        float high 30.0
+
+Depth~right_slanted:
+        float low 0.0
+        float high 30.0
+        float peak 21.5
+
+Depth~left_slanted:
+        float low 0.0
+        float high 30.0
+        float peak 7.5
+
+Depth~normal:
+        float low 0.0
+        float high 30.0
+        float ave 15.0
+        float dev 5.0
+
+Depth~_cardioid:
+        favorites: Shallow
+        occasional:
+        outliers: Deep
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+### Latitude Longitude Parameters
+
+LatitudeLongitude:
+        col Latitude
+        col Longitude
+
+
+Latitude:
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+        type cardioid prop latitude_card
+
+
+Longitude:
+        type uniform
+        type right_slanted
+        type left_slanted
+        type normal
+        type _cardioid
+        type cardioid if latitude_card
+
+
+
+Latitude~uniform:
+        float low 42.2197 
+        float high 49.4817
+
+Latitude~right_slanted:
+        float low 42.2197
+        float high 49.4817
+        float peak 47.66
+
+Latitude~left_slanted:
+        float low 42.2197
+        float high 49.4817
+        float peak 44.02
+
+Latitude~normal:
+        float low 42.2197
+        float high 49.4817
+        float ave 45.84
+        float dev 1.3
+
+Latitude~_cardioid:
+        favorites: East
+        occasional: 
+        outliers: West
+
+Latitude~cardioid: #necessary joint distribution - multicol
+        from_set: {North,South}*{East,West}
+        favorites: North*East
+        not: South*West
+
+
+Longtitude~uniform:
+        float low -124.8865
+        float high -119.1502
+
+Longtitude~right_slanted:
+        float low -124.8865
+        float high -119.1502
+        float peak 120.5843
+
+Longtitude~left_slanted:
+        float low -124.8865
+        float high -119.1502
+        float peak -123.4525
+
+Longtitude~normal:
+        float low -124.8865
+        float high -119.1502
+        float ave -122.0184
+        float dev 1.2
+
+Longtitude~_cardioid:
+        favorites: North
+        occasional: 
+        outliers: South
+
