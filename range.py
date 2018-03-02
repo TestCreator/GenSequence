@@ -63,3 +63,16 @@ class Range:
                 high = self.upper - self.high_epsilon
                 return random.uniform(low, high)
 
+        def normal_pick(self, ave, dev):
+                low = self.lower + self.low_epsilon
+                high = self.upper - self.high_epsilon
+                x = random.gauss(ave, dev)
+                while not low <= x <= high:
+                        x = random.sgauss(ave, dev)
+                return x
+
+        def slanted(self, peak):
+                low = self.lower + self.low_epsilon
+                high = self.upper - self.high_epsilon
+                return random.triangular(low, high, peak)
+
