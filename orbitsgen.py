@@ -7,7 +7,6 @@ import csv
 
 ## Parms
 mass = Parm("mass", "one-by-one", low=1.314E+22, high=1.9891E+30, ave=2.96E+26, dev=3.09E+26)
--1.01E+12, -3.55E+11, 1.56E+11
 x = Parm("position_x", "one-by-one", low=-4.55E+12, high=1.08E+12, ave=-9.07E+11, dev=5.00E+11)
 y = Parm("position_y", "one-by-one", low=-3.89E+12, high=8.51E+11, ave=-3.19E+11, dev=8.00E+11)
 z = Parm("position_z", "one-by-one", low=-5.79E+10, high=1.28E+12, ave=1.40E+11, dev=4.13E+10)
