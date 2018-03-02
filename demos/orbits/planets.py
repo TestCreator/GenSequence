@@ -119,12 +119,17 @@ def make_system(file):
     
     return body_list
 
-melon = Body(name='melon', mass=3.0, position=Vector(0,6371000,0))
-earth = Body(name='earth', mass=5.9736E+24)
-melon.add_force(earth)
-melon.force()
-print(melon.position())
-melon.move(3000)
-melon.position()
-ss = make_system('solarsystem.txt')
-print(ss)
+
+if __name__=="__main__":
+    melon = Body(name='melon', mass=3.0, position=Vector(0,6371000,0))
+    earth = Body(name='earth', mass=5.9736E+24)
+    melon.add_force(earth)
+    melon.force()
+    print(melon.position())
+    melon.move(3000)
+    melon.position()
+    ss = make_system('solarsystem.txt')
+    print(ss)
+
+
+    

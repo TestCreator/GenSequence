@@ -1,4 +1,8 @@
-from planets import Body
+from planets import *
+from copy import copy
+from time import sleep
+from Canvas import *
+
 
 def step_system(bodies, dt=86459, nsteps=1):
     for i in range(nsteps):
@@ -11,22 +15,20 @@ def step_system(bodies, dt=86459, nsteps=1):
             planet.move(dt)
             planet.clear_force()
 
-sys = make_system('solarsystem.txt')
-step_system(sys, nsteps = 2)
+def test():
+    sys = make_system('solarsystem.txt')
+    step_system(sys, nsteps = 2)
 
-from copy import copy
+    ss = make_system('solarsystem.txt')
+    mercury = copy(ss[1])
+    step_system(ss, nsteps=1000, dt=7600.5216)
 
-ss = make_system('solarsystem.txt')
-mercury = copy(ss[1])
-step_system(ss, nsteps=1000, dt=7600.5216)
-
-assert abs(mercury.position().x() - ss[1].position().x()) < 1e10
-assert abs(mercury.position().y() - ss[1].position().y()) < 1e10
-assert abs(mercury.position().z() - ss[1].position().z()) < 1e10
-assert 4900000 < ss[0].position().norm() < 4900100
+    assert abs(mercury.position().x() - ss[1].position().x()) < 1e10
+    assert abs(mercury.position().y() - ss[1].position().y()) < 1e10
+    assert abs(mercury.position().z() - ss[1].position().z()) < 1e10
+    assert 4900000 < ss[0].position().norm() < 4900100
 
 
-from Body import *
 
 def read_bodies(filename, cls):
     '''
@@ -65,7 +67,15 @@ def view_system(lst, size=1000):
         body.draw()
 
 
-
+class VBody(Body):
+    def __init__(self, mass, position, velocity, name, size, color):
+        Body.__init__(self, mass, position, velocity, name)
+        self._size = size
+        self._color = color
+        self._graphic = None
+    
+    def size(self):
+        return self._size
     def color(self):
         return self._color
     def graphic(self):
@@ -87,15 +97,7 @@ def view_system(lst, size=1000):
         loc = (self._position * VBody.scale) + VBody.center
         self._graphic = Canvas.Circle(self._size, (loc._x, loc._y), fill=self._color)
         
-class VBody(Body):
-    def __init__(self, mass, position, velocity, name, size, color):
-        Body.__init__(self, mass, position, velocity, name)
-        self._size = size
-        self._color = color
-        self._graphic = None
-    
-    def size(self):
-        return self._size
+        
     def move(self, dt):
         cur = self._position
         Body.move(self, dt)
@@ -103,3 +105,14 @@ class VBody(Body):
         
         if self._graphic != None:
             self._graphic.move(delta._x, delta._y, track=True)
+
+
+
+if __name__=="__main__":
+    bodies = read_bodies('solarsystem.txt', VBody)
+    view_system(bodies[:9])
+
+    for i in range(365):
+        step_system(bodies, nsteps = 1)
+        Canvas.update()
+        sleep(0.05)
