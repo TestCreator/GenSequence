@@ -24,9 +24,9 @@ velocity:
         left_slanted
         cardioid prop velocard if masscard 
 
-diam:
+diameter:
         normal
         uniform
         right_slanted
         left_slanted
-        cardioid
+        _cardioid
