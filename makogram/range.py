@@ -8,6 +8,7 @@ but it suffices for now. Does not support iteration. Provides for random generat
 EPSILON = .000001
 
 import random # for random picks in the range
+from statistics import mean
 class Range:
         def __init__(self, lower, upper, exclusive_lower=False, exclusive_upper=False, ave=None, dev=None, left_peak=None, right_peak=None):
                 assert lower < upper, "Bad Range: lower {} must be < upper {}".format(lower, upper)
@@ -26,22 +27,22 @@ class Range:
                     self.high_epsilon = 0
 
                 if ave == None: #if the user did not define
-                    self.ave = (self.upper - self.lower)/2
+                    self.ave = mean([self.upper, self.lower])
                 else:
                     self.ave = ave
 
                 if dev == None: #if the user did not define
-                    self.dev = (self.upper - self.ave)/4
+                    self.dev = mean([self.upper, self.ave])/2
                 else:
                     self.dev = dev
 
                 if left_peak == None:
-                    self.left_peak = (self.ave + self.lower)/2
+                    self.left_peak = mean([self.lower, self.ave])
                 else:
                     self.left_peak = left_peak
 
                 if right_peak == None:
-                    self.right_peak = (self.ave + self.upper)/2
+                    self.right_peak = mean([self.upper, self.ave])
                 else:
                     self.right_peak = right_peak
 
@@ -90,9 +91,9 @@ class Range:
                 low = self.lower + self.low_epsilon
                 high = self.upper - self.high_epsilon
                 ave = args['ave'] or self.ave #if args is not specified, use data members by default
-                dev = args['dev'] or self.dev 
+                dev = args['dev'] or self.dev
                 x = random.gauss(ave, dev)
-                while not low <= x <= high:
+                while not (low <= x <= high):
                         x = random.gauss(ave, dev)
                 return x
 
