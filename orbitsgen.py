@@ -44,6 +44,8 @@ velocity.setFavorites([(lowspeed_x, lowspeed_y, lowspeed_z)])
 velocity.setNonFavorites([(halfspeed_x, halfspeed_y, halfspeed_z)])
 
 diameter = Parm("diameter", "one-by-one", low=2.0, high=7.0, ave=4.66667, dev=1.1)
+diameter.setFavorites([smalldiam])
+diameter.setNonFavorites([largediam])
 
 
 massvelofavs = [(smallmass, (lowspeed_x, lowspeed_y, lowspeed_z)), #List[Tuple(Range, Tuple(Range, Range, Range))]
@@ -90,7 +92,7 @@ def declare_grammar_production_rules(repetitions):
         og = Grammar()
         og.prod("Planets", "${Planet()}", reps=repetitions) #reps should be class_size
         og.prod("Planet", "${Name()},${Mass()},${Position()},${Velocity()},${Diameter()},${Color}}\n")
-        og.prod("Name", "body")) #TODO, specify in prm file?
+        og.prod("Name", "body") #TODO, specify in prm file?
         og.prod("Mass", lambda: massvelo.firstParm.next())
         og.prod("Position", lambda: position.next())
         og.prod("Velocity", lambda: massvelo.secondParm.next())
