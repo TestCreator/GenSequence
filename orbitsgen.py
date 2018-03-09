@@ -1,58 +1,83 @@
 from makogram.grammar import Grammar
 from makogram.parmgen import *
+from makogram.vectorparm import *
+from makogram.range import Range
+from makogram.cardioid import Cardioid
 from random import gauss, triangular, choice, vonmisesvariate, uniform, sample, randint
 from statistics import mean
-from math import ceil
 import csv
 
+
+## Ranges
+smallmass = Range(1.314E+22, 2.96E+26)
+largemass = Range(2.96E+27, 1.9891E+30)
+
+andromeda_x = Range(-4.55E+12, -4.55E+10)
+andromeda_y = Range(-3.89E+12, -3.89E+10)
+andromeda_z = Range(-5.79E+10, -5.79E+8)
+
+pinwheel_x = Range(1.08E+4, 1.08E+8)
+pinwheel_y = Range(8.51E+3, 8.51E+7)
+pinwheel_z = Range(1.28E+4, 1.28E+8)
+
+lowspeed_x = Range(-100.0, 100.0)
+lowspeed_y = Range(-1000.0, 1000.0)
+lowspeed_z = Range(-100.0, 100.0)
+
+halfspeed_x = Range(-6487.118, -5000.0)
+halfspeed_y = Range(-11417.83, -8000.0)
+halfspeed_z = Range(-2031.506, -1000.0)
+
+smalldiam = Range(0.0, 2.4)
+largediam = Range(5.5, 7.0)
+
+
 ## Parms
-mass = Parm("mass", "one-by-one", low=1.314E+22, high=1.9891E+30, ave=2.96E+26, dev=3.09E+26)
-x = Parm("position_x", "one-by-one", low=-4.55E+12, high=1.08E+12, ave=-9.07E+11, dev=5.00E+11)
-y = Parm("position_y", "one-by-one", low=-3.89E+12, high=8.51E+11, ave=-3.19E+11, dev=8.00E+11)
-z = Parm("position_z", "one-by-one", low=-5.79E+10, high=1.28E+12, ave=1.40E+11, dev=4.13E+10)
-vx = Parm("velocity_x", "one-by-one", low=-6487.118, high=635.998, ave=-3.69E+03, dev=-5.09E+03)
-vy = Parm("velocity_y", "one-by-one", low=-11417.83, high=41093.05, ave=3.89E+03, dev=2.25E+04)
-vz = Parm("velocity_z", "one-by-one", low=-2031.506, high=6918.461, ave=600.9142856, dev=1559.687643)
+mass = Parm("mass", "one-by-one", low=1.314E+22, high=1.9891E+30, ave=2.96E+26, dev=3.09E+25)
+
+position = VectorParm("position", "one-by-one", from_set=[Range(-4.55E+12, 1.08E+12), Range(-3.89E+12, 8.51E+11), Range(-5.79E+10, 1.28E+12)])
+position.setFavorites([(andromeda_x, andromeda_y, andromeda_z)])
+position.setNonFavorites([(pinwheel_x, pinwheel_y, pinwheel_z)])
+
+velocity = VectorParm("velocity", "one-by-one", from_set=[Range(-6487.118, 635.998), Range(-11417.83, 41093.05), Range(-2031.506, 6918.461)])
+velocity.setFavorites([(lowspeed_x, lowspeed_y, lowspeed_z)])
+velocity.setNonFavorites([(halfspeed_x, halfspeed_y, halfspeed_z)])
+
 diameter = Parm("diameter", "one-by-one", low=2.0, high=7.0, ave=4.66667, dev=1.1)
 
-#magnitudes ranges
-Micro = Range(0.0, 2.0)
-Feelable = Range(4.5, 7.9)
-Great = Range(8.0, 9.5)
-Shallow = Range(0.0, 5.0)
-Mid = Range(5.0, 15.0)
-Deep = Range(15.0, 30.0)
 
-#massvelo = Cardioid(mass, velo)
-
-"""
-magsdepths.setFavorites([(Micro,Shallow), (Great,Deep), (Feelable,Mid)])
-magsdepths.setNonFavorites([(Micro,Deep), (Great,Shallow), (Feelable,Deep), (Feelable,Shallow)])
-#For now, let's just focus on magnitudes and depths relationship
-#latlong = Cardioid(latitudes, longitudes) #uncomment later
+massvelofavs = [(smallmass, (lowspeed_x, lowspeed_y, lowspeed_z)), #List[Tuple(Range, Tuple(Range, Range, Range))]
+                (largemass, (halfspeed_x, halfspeed_y, halfspeed_z))
+                ] 
+massvelooutliers = [(smallmass, (halfspeed_x, halfspeed_y, halfspeed_z)),
+                    (largemass, (lowspeed_x, lowspeed_y, lowspeed_z))
+                    ]
+massvelo = Cardioid(mass, velocity)
+massvelo.setFavorites(massvelofavs)
+massvelo.setNonFavorites(massvelooutliers)
 
 
 
-def establish_magnitudes(disttype, des):
-        magsdepths.firstParm.setDistributionType(disttype)
-        magsdepths.firstParm.setDesired(des)
-def establish_latitudes(disttype, des):
-        latitudes.setDistributionType(disttype)
-        latitudes.setDesired(des)
-def establish_longitudes(disttype, des):
-        longitudes.setDistributionType(disttype)
-        longitudes.setDesired(des)
-def establish_depths(disttype, des):
-        magsdepths.secondParm.setDistributionType(disttype)
-        magsdepths.secondParm.setDesired(des)
+def establish_mass(disttype, des):
+        massvelo.firstParm.setDistributionType(disttype)
+        massvelo.firstParm.setDesired(des)
+def establish_position(disttype, des):
+        position.setDistributionType(disttype)
+        position.setDesired(des)
+def establish_velocity(disttype, des):
+        massvelo.secondParm.setDistributionType(disttype)
+        massvelo.secondParm.setDesired(des)
+def establish_diameter(disttype, des):
+        diameter.setDistributionType(disttype)
+        diameter.setDesired(des)
 
 
 def regenerate_parm_data_points():
-        magsdepths.generate() #rewrites final data sets for both parms
-        latitudes.setup()
-        latitudes.scramble()
-        longitudes.setup()
-        longitudes.scramble()
+        massvelo.generate() #rewrites final data sets for both parms
+        position.setup()
+        position.scramble()
+        diameter.setup()
+        diameter.scramble()
 
 
 
@@ -62,58 +87,53 @@ def declare_grammar_production_rules(repetitions):
         gets passed into the reps argument of a grammar production rule
         the string is a proportion of MAX_GENS, a calibration point
         """
-        tg = Grammar()
-        tg.prod("Recordings", "${Event()}", reps=repetitions) #reps should be class_size
-        tg.prod("Event", "${EventId()},${Magnitude()},${Epoch},${Time},${TimeLocal},${Distance},${Latitude()},${Longitude()},${DepthKm()},${DepthMi()}\n")
-        tg.prod("EventId", lambda: randint(10000000, 70000000)) #TODO, specify in prm file?
-        tg.prod("Magnitude", lambda: magsdepths.firstParm.next())
-        tg.prod("Epoch", "#####")
-        tg.prod("Time", "12:00.0")
-        tg.prod("TimeLocal", "2012/09/22 09:46:45 PDT") #TODO, randomize date time choice?
-        tg.prod("Distance", "30.0 km (  18.6 mi) WSW ( 240. azimuth) from Millican, OR") #TODO, randomize choice?
-        tg.prod("Latitude", lambda: latitudes.next())
-        tg.prod("Longitude", lambda: longitudes.next())
-        tg.prod("DepthKm", lambda: magsdepths.secondParm.next())
-        tg.prod("DepthMi", "100") #TODO - this is critical! static data point conversion
-        return tg
+        og = Grammar()
+        og.prod("Planets", "${Planet()}", reps=repetitions) #reps should be class_size
+        og.prod("Planet", "${Name()},${Mass()},${Position()},${Velocity()},${Diameter()},${Color}}\n")
+        og.prod("Name", "body")) #TODO, specify in prm file?
+        og.prod("Mass", lambda: massvelo.firstParm.next())
+        og.prod("Position", lambda: position.next())
+        og.prod("Velocity", lambda: massvelo.secondParm.next())
+        og.prod("Diameter", lambda: diameter.next())
+        og.prod("Color", "#ffffbf") #TODO - colorize different every row
+        return og
 
 if __name__=="__main__":
         testcount = 0
-        with open("earthquakegentestvectors.csv", newline='') as vectorfile:
+        with open("orbitsgentestvectors.csv", newline='') as vectorfile:
                 reader = csv.DictReader(vectorfile)
                 #iterate through all vectors
                 for vector in reader:
                         testcount += 1
                         #set all parms
-                        num_lines = translate_desired(vector['Recordings']) #this is used for desired number in all parms
+                        num_lines = translate_desired(vector['Planets']) #this is used for desired number in all parms
                         if num_lines == None:
                                 break
 
-                        establish_magnitudes(vector['magnitudes'], num_lines)
-                        establish_latitudes(vector['latitudes'], num_lines)
-                        establish_longitudes(vector['longitudes'], num_lines)
-                        establish_depths(vector['depths'], num_lines)
-
+                        establish_mass(vector['mass'], num_lines)
+                        establish_position(vector['position'], num_lines)
+                        establish_velocity(vector['velocity'], num_lines)
+                        establish_diameter(vector['diameter'], num_lines)
 
                         #create new data sets
                         regenerate_parm_data_points()
 
                         #prepare the data file and file name
                         test_case_file_name = "cases/{}-{}-".format(testcount, num_lines)
-                        for parm in ["magnitudes", "latitudes", "longitudes", "depths"]:
+                        for parm in ["mass", "position", "velocity", "diameter"]:
                                 test_case_file_name += parm.split("_")[0] + ':' + vector[parm] + '-'
 
                         #generate new grammar
                         new_grammar = declare_grammar_production_rules(num_lines)
-                        new_data = new_grammar.gen("Recordings").split('\n')
+                        new_data = new_grammar.gen("Planets").split('\n')
 
                         #and dump into concrete data file
                         with open("{}.csv".format(test_case_file_name), 'w', newline='') as concretefile:
-                                fieldnames = ["#EventId","Magnitude","Epoch","Time","TimeLocal","Distance","Latitude","Longitude","DepthKm","DepthMi"]
+                                fieldnames = ["Name","Mass","Position","Velocity","Diameter","Color"]
                                 writer = csv.DictWriter(concretefile, fieldnames=fieldnames)
                                 writer.writeheader()
                                 for line in new_data:
                                         row = dict(zip(fieldnames, line.split(',', maxsplit=(len(fieldnames)-1))))
                                         writer.writerow(row)
                         print("[Log>: file #{:>2} complete, available for testing use".format(testcount, test_case_file_name))
-"""
+
