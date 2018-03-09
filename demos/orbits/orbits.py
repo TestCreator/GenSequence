@@ -110,7 +110,7 @@ class VBody(Body):
 
 if __name__=="__main__":
     bodies = read_bodies('solarsystem.txt', VBody)
-    view_system(bodies[:9])
+    view_system(bodies[:7])
 
     for i in range(365):
         step_system(bodies, nsteps = 1)
