@@ -1,6 +1,6 @@
 from random import gauss, uniform, triangular, sample, choice, randint
-from math import ceil
-from range import Range # for cardioid generation
+from math import floor
+from makogram.range import Range # for cardioid generation
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s',
                         level=logging.WARNING)
@@ -72,6 +72,9 @@ def slanted(args):
 def cardioid(args):
         pass
 
+def _cardioid(args):
+        pass
+
 def days_of_week():
         return [str(day + time) for day in ["M", "T", "W", "R", "F"] for time in ["10:00 - 12:00", "12:00 - 2:00", "2:00 - 4:00", "4:00 - 6:00"]]
 
@@ -126,7 +129,8 @@ typemap = {"many": many,
            "uniform": uni,
            "right_slanted": slanted,
            "left_slanted": slanted,
-           "cardioid": cardioid}
+           "cardioid": cardioid,
+           "_cardioid": _cardioid}
 
 class Parm:
         def __init__(self, name, generator_type, distr_type="uniform", desired="many", low=None, high=None, ave=None, dev=None, peak=None, from_set=None, per_row=1):
@@ -177,7 +181,7 @@ class Parm:
                         assert ((ave + dev <= high) and (ave - dev >= low)), "Deviation too great, extends beyond min and max values"
                 # if the generator type is specialized, it must have per_row specified
                 if generator_type != "one-by-one":
-                        assert not per_row == None, "Must supply from_set and per_row for specialty generators"
+                        assert per_row != None, "Must supply from_set and per_row for specialty generators"
                         self.rows = self.desired
                         self.desired = self.desired * per_row
         
@@ -215,12 +219,23 @@ class Parm:
                 self.per_row = per_row
         def renew(self):
                 self.generated = 0
+        def setFavorites(self, fav):
+                """ fav is a list of Range objects. it can be a list of one Range """
+                self.favorites = fav
+        def setNonFavorites(self, non):
+                """ non is a list of Range objects. it can be a list of one Range """
+                self.non_favorites = non
         def generate(self, k=100000):
                 """
                 generates the samples from either ints or a special set of data points like names or times
                 creates 100000 points, sorts them, and systematically picks points so that they are evenly dispersed
                 and maintains the distribution guaranteed by Law of Large Numbers
                 """
+                if self.distr_type == "_cardioid":
+                    sampling = self._cardioid_gen()
+                    return sampling
+
+                #Otherwise...
                 # Generate the large sample size
                 if self.from_set == None:
                         samples = [self.vert_distribution(self.dist_args) for _ in range(k)]
@@ -228,15 +243,44 @@ class Parm:
                         samples = [self.from_set[self.vert_distribution(self.dist_args)] for _ in range(k)]
                 # Now reduce down
                 sample_size = len(samples) #How many initial data points are there?
-                interval_step = ceil(sample_size / self.desired)
+                interval_step = floor(sample_size / self.desired)
                 samples.sort() #The sorted data points
                 reduced = []
                 for i in range(0, sample_size, interval_step):
                         reduced.append(samples[i])
 
+                while len(reduced) != self.desired:
+                    reduced.pop()
                 log.debug("original sample size is {} and desired is {}, so the interval step is {} and the final set is {}".format(sample_size, self.desired, interval_step, len(reduced)))
                 assert len(reduced) == self.desired
                 return reduced
+
+
+        def _cardioid_gen(self):
+                assert self.favorites != None, "Uh-oh, favorites set for _cardioid distribution is not set"
+                assert self.non_favorites != None, "Uh-oh, non_favorites set for _cardioid distribution is not set"
+                num_favs = int(.9*self.desired)
+                num_outliers = int(.1*self.desired)
+                while num_outliers + num_favs < self.desired:
+                    num_outliers+= 1
+                assert num_outliers + num_favs == self.desired, "Uh-oh, _cardioid distribution creating wrong size sample: {}".format(num_outliers+num_favs)
+                
+                grand_set = []
+                # generate all the favorites pairings
+                for _ in range(num_favs):
+                    #pick point
+                    select = self.favorites[randint(0, len(self.favorites)-1)] #Range object
+                    pt = select.uniform_pick(self.dist_args)
+                    grand_set.append(round(pt,2))
+
+                # now generate all the outliers
+                for _ in range(num_outliers):
+                    select = self.non_favorites[randint(0, len(self.non_favorites)-1)] #Range object
+                    pt = select.uniform_pick(self.dist_args)
+                    grand_set.append(round(pt,2))
+                
+                return grand_set
+
         def setup(self):
                 """
                 calls the creation of data points, shuffles them, and stores them as a class data member
@@ -279,90 +323,6 @@ class Parm:
                                 self.generator = self.multipart_distribute(self.distribute(self.final_data_set), self.rows, self.per_row)
                         self.generated = 1
                 return next(self.generator)
-
-
-class Cardioid:
-        def __init__(self, first, second):
-            """" a cardioid is composed to two columns (two parms), so store them away as class variables"""
-            self.firstParm = first
-            self.secondParm = second
-        def setFromSet(self, new_set):
-            """
-            """
-            self.from_set = new_set
-        def setFavorites(self, fav):
-            self.favorites = fav
-        def setNonFavorites(self, non):
-            self.non_favorites = non
-
-        def generate(self):
-            """ if a test vector contains both columns having a joint distribution, generate them together
-            otherwise, generate the two parms disconnected
-            """
-            if self.firstParm.distr_type == "cardioid" and self.secondParm.distr_type == "cardioid":
-                self.double_generate() #TODO - should return?
-            else:
-                self.single_generate()
-
-        def double_generate(self):
-            """
-            from earthquaker.prm language:
-            from_set: {Micro,Feelable,Great}*{Shallow,Mid,Deep}
-            favorites: Micro*Shallow, Great*Deep, Feelable*Mid 
-            not: Micro*Deep, Great*Shallow, Feelable*Deep, Feelable*Shallow 
-
-            new_set is a list representing the cross product of all possibilities of the two columns
-                it is a list of tuples of Range objects
-
-            favorites is a list of desirable pairings, in the form of a list of tuples of Range objects
-
-            non_favorites is similarly a list of tuples of Range objects
-            """
-            desired = self.firstParm.GetDesired() #how many pairs should we generate?
-            num_favs = int(.9*desired) #90% of the sample is favorite
-            num_outliers = int(.1*desired) #10% of sample is outliers
-            while num_outliers + num_favs < desired:
-                num_outliers+= 1
-            assert num_outliers + num_favs == desired, "Uh-oh, cardioid distribution creating wrong size sample"
-            
-            # this will be a list of tuples of data points. 90% will be of favorites, and 10% outliers
-            # this set has to be created this way, since the paired points can't be scrambled in individual columns
-            # they must be scrambled before they are distributed out to the parms' final data sets
-            grand_set = []
-            # generate all the favorites pairings
-            for _ in range(num_favs):
-                #pick pair
-                select = self.favorites[randint(0, len(self.favorites)-1)]
-                firstpick = select[0].uniform_pick()
-                secondpick = select[1].uniform_pick()
-
-                grand_set.append((firstpick, secondpick))
-
-            # now generate all the outliers
-            for _ in range(num_outliers):
-                select = self.non_favorites[randint(0, len(self.non_favorites)-1)]
-                firstpick = select[0].uniform_pick()
-                secondpick = select[1].uniform_pick()
-
-                grand_set.append((firstpick, secondpick))
-
-            #Now shuffle all around
-            grand_set = sample(grand_set, len(grand_set))
-
-            set1 = map(lambda point: point[0], grand_set) #get only the first points for col1
-            set2 = map(lambda point: point[1], grand_set) #get only the second points for col2
-
-            self.firstParm.setFinalDataSet(set1)
-            self.firstParm.renew()
-            self.secondParm.setFinalDataSet(set2)
-            self.secondParm.renew() #TODO pls fix omg bad
-
-            #and the points in rows are still paired up according to favorites or outliers!
-        def single_generate(self):
-            self.firstParm.setup()
-            self.firstParm.scramble()
-            self.secondParm.setup()
-            self.secondParm.scramble()
 
 
 
