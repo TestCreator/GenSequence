@@ -81,6 +81,33 @@ def regenerate_parm_data_points():
         diameter.setup()
         diameter.scramble()
 
+def scrub_data(in_data, remove):
+        """
+        in_data - List of strings
+        remove - string of chars to remove from each string in each list
+        """
+        for i in range(len(in_data)):
+                record = in_data[i].split(",")
+                for j in range(len(record)):
+                        record[j] = record[j].strip(remove)
+                in_data[i] = ",".join(record)
+        while in_data.remove("") != None:
+                continue
+
+def create_field_names(*args):
+        """ a variable amount of objects passed in -- only Strings, Parms and VectorParms! No Cardioid """
+        headers = []
+        for parm in args:
+                if isinstance(parm, VectorParm):
+                        for i in range(parm.per_row):
+                                column_name = "{}_{}".format(parm.name, (i+1))
+                                headers.append(column_name)
+                        continue
+                elif isinstance(parm, Parm):
+                        headers.append(parm.name)
+                else:
+                        headers.append(parm)
+        return headers
 
 
 def declare_grammar_production_rules(repetitions):
@@ -91,7 +118,7 @@ def declare_grammar_production_rules(repetitions):
         """
         og = Grammar()
         og.prod("Planets", "${Planet()}", reps=repetitions) #reps should be class_size
-        og.prod("Planet", "${Name()},${Mass()},${Position()},${Velocity()},${Diameter()},${Color}}\n")
+        og.prod("Planet", "${Name()},${Mass()},${Position()},${Velocity()},${Diameter()},${Color}\n")
         og.prod("Name", "body") #TODO, specify in prm file?
         og.prod("Mass", lambda: massvelo.firstParm.next())
         og.prod("Position", lambda: position.next())
@@ -121,21 +148,23 @@ if __name__=="__main__":
                         regenerate_parm_data_points()
 
                         #prepare the data file and file name
-                        test_case_file_name = "cases/{}-{}-".format(testcount, num_lines)
+                        test_case_file_name = "cases2/{}-{}-".format(testcount, num_lines)
                         for parm in ["mass", "position", "velocity", "diameter"]:
-                                test_case_file_name += parm.split("_")[0] + ':' + vector[parm] + '-'
+                                test_case_file_name += parm.split("_")[0] + '|' + vector[parm] + '-'
 
                         #generate new grammar
                         new_grammar = declare_grammar_production_rules(num_lines)
                         new_data = new_grammar.gen("Planets").split('\n')
 
+                        scrub_data(new_data, '()"')
+                        #print(new_data)
                         #and dump into concrete data file
                         with open("{}.csv".format(test_case_file_name), 'w', newline='') as concretefile:
-                                fieldnames = ["Name","Mass","Position","Velocity","Diameter","Color"]
-                                writer = csv.DictWriter(concretefile, fieldnames=fieldnames)
+                                new_fieldnames = create_field_names("#Name", mass, position, velocity, diameter, "Color")
+                                writer = csv.DictWriter(concretefile, fieldnames=new_fieldnames)
                                 writer.writeheader()
                                 for line in new_data:
-                                        row = dict(zip(fieldnames, line.split(',', maxsplit=(len(fieldnames)-1))))
+                                        row = dict(zip(new_fieldnames, line.split(',', maxsplit=(len(new_fieldnames)-1))))
                                         writer.writerow(row)
                         print("[Log>: file #{:>2} complete, available for testing use".format(testcount, test_case_file_name))
-
+                        
