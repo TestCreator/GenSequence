@@ -1,5 +1,6 @@
 from makogram.grammar import Grammar
 from makogram.parmgen import *
+from makogram.cardioid import Cardioid
 from random import gauss, triangular, choice, vonmisesvariate, uniform, sample, randint
 from statistics import mean
 from math import ceil
@@ -93,7 +94,7 @@ if __name__=="__main__":
                         regenerate_parm_data_points()
 
                         #prepare the data file and file name
-                        test_case_file_name = "cases/{}-{}-".format(testcount, num_lines)
+                        test_case_file_name = "cases1/{}-{}-".format(testcount, num_lines)
                         for parm in ["magnitudes", "latitudes", "longitudes", "depths"]:
                                 test_case_file_name += parm.split("_")[0] + ':' + vector[parm] + '-'
 
