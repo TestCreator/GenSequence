@@ -28,7 +28,11 @@ def test():
     assert abs(mercury.position().z() - ss[1].position().z()) < 1e10
     assert 4900000 < ss[0].position().norm() < 4900100
 
-
+"""
+#Name,mass,position_1,position_2,position_3,velocity_1,velocity_2,velocity_3,diameter,Color
+body,2.9587159771767398e+26,-1755178546759.3, 210310194670.73, 580076141483.48,-6486.89, -2417.21, 6698.43,2.0000690802966985,#ffffbf
+body,1.701583303983211e+26,-4549807980066.04, -2530791359836.99, 328790807142.88,-2887.5, -6300.17, 5268.5,4.503210783092609,#ffffbf
+"""
 
 def read_bodies(filename, cls):
     '''
@@ -45,7 +49,7 @@ def read_bodies(filename, cls):
             line = line.strip()
             if len(line) == 0 or line[0] == '#':  
                 continue
-            name, m, rx, ry, rz, vx, vy, vz, diam, color = line.split()
+            name, m, rx, ry, rz, vx, vy, vz, diam, color = line.split(",")
             args = {
                 'name': name,
                 'mass' : float(m),
@@ -53,7 +57,7 @@ def read_bodies(filename, cls):
                 'velocity' : Vector(float(vx), float(vy), float(vz)),
             }
             if cls == VBody:
-                args.update({ 'color' : color, 'size' : int(diam) })
+                args.update({ 'color' : color, 'size' : float(diam) })
             bodies.append(cls(**args))
 
     return bodies
@@ -109,10 +113,10 @@ class VBody(Body):
 
 
 if __name__=="__main__":
-    bodies = read_bodies('solarsystem.txt', VBody)
-    view_system(bodies[:7])
+    bodies = read_bodies('../../cases2/13-70-mass|right_slanted-position|right_slanted-velocity|uniform-diameter|left_slanted-.csv', VBody)
+    view_system(bodies[:2])
 
-    for i in range(365):
+    for i in range(665):
         step_system(bodies, nsteps = 1)
         Canvas.update()
         sleep(0.05)
