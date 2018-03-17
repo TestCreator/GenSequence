@@ -85,6 +85,8 @@ def scrub_data(in_data, remove):
         """
         in_data - List of strings
         remove - string of chars to remove from each string in each list
+
+        cleans up randomly floating around characters 
         """
         for i in range(len(in_data)):
                 record = in_data[i].split(",")
