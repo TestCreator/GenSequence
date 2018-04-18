@@ -1,7 +1,3 @@
-#Globals
-MAX_GENS 100
-
-#magnitudes ranges
 Totalmags Range(0.0, 10.0)
 Micro Range(0.0, 2.0]
 Feelable Range[4.5, 7.9)
