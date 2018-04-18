@@ -1,0 +1,136 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    EQUALS
+    RANGE
+
+Grammar
+
+Rule 0     S' -> rang
+Rule 1     rang -> NAME NAME opener NUMBER COMMA NUMBER closer
+Rule 2     opener -> OPENPAREN
+Rule 3     opener -> OPENBRACKET
+Rule 4     closer -> CLOSEPAREN
+Rule 5     closer -> CLOSEBRACKET
+
+Terminals, with rules where they appear
+
+CLOSEBRACKET         : 5
+CLOSEPAREN           : 4
+COMMA                : 1
+EQUALS               : 
+NAME                 : 1 1
+NUMBER               : 1 1
+OPENBRACKET          : 3
+OPENPAREN            : 2
+RANGE                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+closer               : 1
+opener               : 1
+rang                 : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . rang
+    (1) rang -> . NAME NAME opener NUMBER COMMA NUMBER closer
+
+    NAME            shift and go to state 2
+
+    rang                           shift and go to state 1
+
+state 1
+
+    (0) S' -> rang .
+
+
+
+state 2
+
+    (1) rang -> NAME . NAME opener NUMBER COMMA NUMBER closer
+
+    NAME            shift and go to state 3
+
+
+state 3
+
+    (1) rang -> NAME NAME . opener NUMBER COMMA NUMBER closer
+    (2) opener -> . OPENPAREN
+    (3) opener -> . OPENBRACKET
+
+    OPENPAREN       shift and go to state 5
+    OPENBRACKET     shift and go to state 4
+
+    opener                         shift and go to state 6
+
+state 4
+
+    (3) opener -> OPENBRACKET .
+
+    NUMBER          reduce using rule 3 (opener -> OPENBRACKET .)
+
+
+state 5
+
+    (2) opener -> OPENPAREN .
+
+    NUMBER          reduce using rule 2 (opener -> OPENPAREN .)
+
+
+state 6
+
+    (1) rang -> NAME NAME opener . NUMBER COMMA NUMBER closer
+
+    NUMBER          shift and go to state 7
+
+
+state 7
+
+    (1) rang -> NAME NAME opener NUMBER . COMMA NUMBER closer
+
+    COMMA           shift and go to state 8
+
+
+state 8
+
+    (1) rang -> NAME NAME opener NUMBER COMMA . NUMBER closer
+
+    NUMBER          shift and go to state 9
+
+
+state 9
+
+    (1) rang -> NAME NAME opener NUMBER COMMA NUMBER . closer
+    (4) closer -> . CLOSEPAREN
+    (5) closer -> . CLOSEBRACKET
+
+    CLOSEPAREN      shift and go to state 10
+    CLOSEBRACKET    shift and go to state 12
+
+    closer                         shift and go to state 11
+
+state 10
+
+    (4) closer -> CLOSEPAREN .
+
+    $end            reduce using rule 4 (closer -> CLOSEPAREN .)
+
+
+state 11
+
+    (1) rang -> NAME NAME opener NUMBER COMMA NUMBER closer .
+
+    $end            reduce using rule 1 (rang -> NAME NAME opener NUMBER COMMA NUMBER closer .)
+
+
+state 12
+
+    (5) closer -> CLOSEBRACKET .
+
+    $end            reduce using rule 5 (closer -> CLOSEBRACKET .)
+
