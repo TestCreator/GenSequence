@@ -3,7 +3,9 @@ import ply.yacc as yacc
 
 tokens = ('RANGE', 'NAME', 'OPENBRACKET', 'CLOSEBRACKET', 'OPENPAREN', 'CLOSEPAREN', 'NUMBER', 'COMMA', 'EQUALS') #all the possible tokens
 
-t_RANGE = r'Range'
+def t_RANGE(t):
+    r'Range'
+    return t
 t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
 t_OPENBRACKET = r'\['
 t_CLOSEBRACKET = r'\]'
@@ -22,7 +24,7 @@ def t_error(t):
 lex.lex()
 
 def p_Rangeobj(p):
-        "rang : NAME NAME opener NUMBER COMMA NUMBER closer" #NUMBER COMMA NUMBER CLOSEPAREN"
+        "rang : NAME RANGE opener NUMBER COMMA NUMBER closer"
         l = False;
         u = False
         if p[3] == '(':
@@ -30,8 +32,7 @@ def p_Rangeobj(p):
         if p[7] == ')':
                 u = True
 
-        if p[2] == 'Range':
-                p[0] = {"varname": p[1], "Rangeobj": "Range({lower_bound}, {upper_bound}, exclusive_lower=l, exclusive_upper=u)".format(lower_bound=p[4], upper_bound=p[6])}
+        p[0] = {"varname": p[1], "Rangeobj": "Range({lower_bound}, {upper_bound}, exclusive_lower={l}, exclusive_upper={u})".format(lower_bound=p[4], upper_bound=p[6], l=l, u=u)}
 
 def p_opener(p):
         """
@@ -58,12 +59,10 @@ def establish_parses(in_file, parse_engine):
 
     #TODO: iterate over lines - for now just stop at Global Declarations
     one_line = parse_engine.parse(f.readline().strip())
+    print(one_line)
     collected_parses.append(one_line)
     #TODO: return list of parses, not just the one
     return one_line
 
 PARSED_TOKENS = establish_parses("/Users/jamiezimmerman/Documents/GenSequence/simple_earthquaker.prm", parser)
-
-#line = "mass Range(0.57, 5.99]"
-#b = parser.parse(line)
 

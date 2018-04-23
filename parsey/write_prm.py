@@ -7,7 +7,8 @@ from parse_ranges import PARSED_TOKENS
 #print(mytemplate.render(b))
 
 
-mylookup = TemplateLookup(directories=['/Users/jamiezimmerman/Documents/GenSequence/parsey/prm-blueprints'], module_directory='/Users/jamiezimmerman/Documents/GenSequence/parsey/junk')
+mylookup = TemplateLookup(directories=['/Users/jamiezimmerman/Documents/GenSequence/parsey/prm-blueprints'], 
+        module_directory='/Users/jamiezimmerman/Documents/GenSequence/parsey/junk')
 
 def serve_template(templatename, *args, **kwargs):
     mytemplate = mylookup.get_template(templatename)
