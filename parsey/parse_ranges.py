@@ -31,7 +31,7 @@ def p_Rangeobj(p):
                 l = True
         if p[7] == ')':
                 u = True
-
+        #p[0] = {"varname": p[1], "Rangeobj": "".join(str(n) for n in p[2:])} #varname, Range descriptor
         p[0] = {"varname": p[1], "Rangeobj": "Range({lower_bound}, {upper_bound}, exclusive_lower={l}, exclusive_upper={u})".format(lower_bound=p[4], upper_bound=p[6], l=l, u=u)}
 
 def p_opener(p):
@@ -39,7 +39,7 @@ def p_opener(p):
         opener : OPENPAREN
         opener : OPENBRACKET
         """
-        p[0] = p[1]#
+        p[0] = p[1]
 def p_closer(p):
         """
         closer : CLOSEPAREN
@@ -57,12 +57,14 @@ def establish_parses(in_file, parse_engine):
     collected_parses = []
     f = open(in_file, 'r')
 
-    #TODO: iterate over lines - for now just stop at Global Declarations
-    one_line = parse_engine.parse(f.readline().strip())
-    print(one_line)
-    collected_parses.append(one_line)
-    #TODO: return list of parses, not just the one
-    return one_line
+    one_line = f.readline()
+    while not one_line.startswith(("#", " ", "\n")):
+        tokens = parse_engine.parse(one_line.strip())
+        collected_parses.append(tokens)
+        one_line = f.readline()
+    return collected_parses
 
 PARSED_TOKENS = establish_parses("/Users/jamiezimmerman/Documents/GenSequence/simple_earthquaker.prm", parser)
 
+info = {"key1": PARSED_TOKENS}
+#print(info)
