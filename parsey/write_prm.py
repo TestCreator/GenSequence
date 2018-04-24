@@ -1,17 +1,18 @@
 from mako.template import Template
 from mako.lookup import TemplateLookup
+from mako.runtime import Context
+import io
 
-from parse_ranges import PARSED_TOKENS
-
-#mytemplate = Template(filename='template')
-#print(mytemplate.render(b))
-
+from parse_ranges import info
 
 mylookup = TemplateLookup(directories=['/Users/jamiezimmerman/Documents/GenSequence/parsey/prm-blueprints'], 
         module_directory='/Users/jamiezimmerman/Documents/GenSequence/parsey/junk')
 
 def serve_template(templatename, *args, **kwargs):
     mytemplate = mylookup.get_template(templatename)
-    print(mytemplate.render(**kwargs))
+    buf = io.StringIO()
+    ctx = Context(buf, info=kwargs)
+    mytemplate.render_context(ctx)
+    print(buf.getvalue())
 
-serve_template("/info.txt", **PARSED_TOKENS)
+serve_template("/info.txt", **info)
