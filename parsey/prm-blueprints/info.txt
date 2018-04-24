@@ -1,1 +1,3 @@
-${varname} = ${Rangeobj}
+% for decl in info['key1']:
+${decl['varname']} = ${decl['Rangeobj']}
+% endfor
