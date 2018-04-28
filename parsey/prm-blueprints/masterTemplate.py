@@ -7,32 +7,37 @@ from math import ceil
 import csv
 
 #magnitudes ranges
-TotalMags = Range(0.0, 10.0, exclusive_upper=True, ave=3.3, dev=1.1)
+
+## % for entry in keys[Ranges]: %
+## ${varname} = ${Rangeobj}
+## % end for
+
+TotalMags = Range(0.0, 10.0, exclusive_upper=True)
 Micro = Range(0.0, 2.0, exclusive_upper=True)
 Feelable = Range(4.5, 7.9, exclusive_lower=True)
 Great = Range(8.0, 9.5, exclusive_lower=True, exclusive_upper=True)
 
 #depths ranges
-Totaldepths = Range(0.0, 30.0, exclusive_upper=True, ave=15.0, dev=5.0)
+TotalDepths = Range(0.0, 30.0, exclusive_upper=True)
 Shallow = Range(0.0, 5.0, exclusive_lower=True, exclusive_upper=True)
 Mid = Range(5.0, 15.0)
 Deep = Range(15.0, 30.0, exclusive_lower=True)
 
 #latitudes ranges
-TotalLats = Range(42.2, 49.48, exclusive_lower=True, exclusive_upper=True, ave=45.84, dev=1.3)
+TotalLats = Range(42.2, 49.48, exclusive_lower=True, exclusive_upper=True)
 East = Range(42.2, 45.84, exclusive_lower=True, exclusive_upper=True)
 West = Range(45.84, 49.48, exclusive_lower=True, exclusive_upper=True)
 
 #longitudes ranges
-TotalLongs = Range(-124.8865, -119.1502, exclusive_lower=True, exclusive_upper=True, ave=-122.0184, dev=1.2)
+TotalLongs = Range(-124.8865, -119.1502, exclusive_lower=True, exclusive_upper=True)
 North = Range(-124.8865, -122.0184, exclusive_lower=True, exclusive_upper=True)
 South = Range(-122.0184, -119.1502, exclusive_lower=True, exclusive_upper=True)
 
 ## Parms
-magnitudes = Parm("magnitudes", "one-by-one", TotalMags)
-latitudes = Parm("latitudes", "one-by-one", TotalLats)
-longitudes = Parm("longitudes", "one-by-one", TotalLongs)
-depths = Parm("depths", "one-by-one", Totaldepths)
+magnitudes = Parm("Mags", "one-by-one", TotalMags, ave=3.3, dev=1.1)
+latitudes = Parm("Lats", "one-by-one", TotalLats, ave=45.84, dev=1.3)
+longitudes = Parm("Longs", "one-by-one", TotalLongs, ave=-122.0184, dev=1.2)
+depths = Parm("Depths", "one-by-one", Totaldepths, ave=15.0, dev=5.0)
 
 
 magsdepths = Cardioid(magnitudes, depths)

@@ -1,4 +1,4 @@
-Created by PLY version 3.8 (http://www.dabeaz.com/ply)
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
@@ -39,21 +39,21 @@ state 0
     (0) S' -> . rang
     (1) rang -> . NAME RANGE opener NUMBER COMMA NUMBER closer
 
-    NAME            shift and go to state 2
+    NAME            shift and go to state 1
 
-    rang                           shift and go to state 1
+    rang                           shift and go to state 2
 
 state 1
-
-    (0) S' -> rang .
-
-
-
-state 2
 
     (1) rang -> NAME . RANGE opener NUMBER COMMA NUMBER closer
 
     RANGE           shift and go to state 3
+
+
+state 2
+
+    (0) S' -> rang .
+
 
 
 state 3
@@ -63,9 +63,9 @@ state 3
     (3) opener -> . OPENBRACKET
 
     OPENPAREN       shift and go to state 4
-    OPENBRACKET     shift and go to state 5
+    OPENBRACKET     shift and go to state 6
 
-    opener                         shift and go to state 6
+    opener                         shift and go to state 5
 
 state 4
 
@@ -76,16 +76,16 @@ state 4
 
 state 5
 
-    (3) opener -> OPENBRACKET .
+    (1) rang -> NAME RANGE opener . NUMBER COMMA NUMBER closer
 
-    NUMBER          reduce using rule 3 (opener -> OPENBRACKET .)
+    NUMBER          shift and go to state 7
 
 
 state 6
 
-    (1) rang -> NAME RANGE opener . NUMBER COMMA NUMBER closer
+    (3) opener -> OPENBRACKET .
 
-    NUMBER          shift and go to state 7
+    NUMBER          reduce using rule 3 (opener -> OPENBRACKET .)
 
 
 state 7
@@ -108,28 +108,28 @@ state 9
     (4) closer -> . CLOSEPAREN
     (5) closer -> . CLOSEBRACKET
 
-    CLOSEPAREN      shift and go to state 11
-    CLOSEBRACKET    shift and go to state 10
+    CLOSEPAREN      shift and go to state 10
+    CLOSEBRACKET    shift and go to state 12
 
-    closer                         shift and go to state 12
+    closer                         shift and go to state 11
 
 state 10
-
-    (5) closer -> CLOSEBRACKET .
-
-    $end            reduce using rule 5 (closer -> CLOSEBRACKET .)
-
-
-state 11
 
     (4) closer -> CLOSEPAREN .
 
     $end            reduce using rule 4 (closer -> CLOSEPAREN .)
 
 
-state 12
+state 11
 
     (1) rang -> NAME RANGE opener NUMBER COMMA NUMBER closer .
 
     $end            reduce using rule 1 (rang -> NAME RANGE opener NUMBER COMMA NUMBER closer .)
+
+
+state 12
+
+    (5) closer -> CLOSEBRACKET .
+
+    $end            reduce using rule 5 (closer -> CLOSEBRACKET .)
 

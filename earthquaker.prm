@@ -57,22 +57,15 @@ Depth:
         type cardioid if magnitude_card
 
 Magnitude~uniform:
-        float low 0.0
-        float high 10.0
+        ## does this need to be defined??
 
 Magnitude~right_slanted:
-        float low 0.0
-        float high 10.0
         float peak 7.5
 
 Magnitude~left_slanted:
-        float low 0.0
-        float high 10.0
         float peak 2.5
 
 Magnitude~normal:
-        float low 0.0
-        float high 10.0
         float ave 5.0
         float dev 3.0
 

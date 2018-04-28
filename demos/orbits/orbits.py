@@ -113,10 +113,12 @@ class VBody(Body):
 
 
 if __name__=="__main__":
-    bodies = read_bodies('../../cases2/11-30-mass|uniform-position|right_slanted-velocity|uniform-diameter|_cardioid-.csv', VBody)
-    view_system(bodies[:8])
+    bodies = read_bodies('../../cases2/13-70-mass|right_slanted-position|right_slanted-velocity|uniform-diameter|left_slanted-.csv', VBody)
+    view_system(bodies[:70])
 
     for i in range(665):
         step_system(bodies, nsteps = 1)
         Canvas.update()
-        sleep(0.05)
+        sleep(20)
+
+    sleep(20)

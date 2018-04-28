@@ -36,38 +36,6 @@ def posint(x):
         returns no negative numbers
         """
         return 0 if x<0 else x
-def norm(args):
-        """
-        creates a data point with normal (gaussian) distribution
-        needs an average and devation (mu and sigma)
-        guarantees the point is in a certain range (low and high) if thgigiose args are specified
-        """
-        ave = args["ave"]
-        dev = args["dev"]
-        low = args["low"]
-        high = args["high"]
-        x = gauss(ave, dev)
-        if low==None and high == None:
-                return x
-        else:
-                while not low <= x <= high:
-                        x = gauss(ave, dev)
-                return x
-def uni(args):
-        """
-        creates a data point with uniform distribution
-        """
-        low = args["low"]
-        high = args["high"]
-        return uniform(low, high)
-def slanted(args):
-        """
-        creates a data point with slant, triangular probability
-        """
-        low = args["low"]
-        high = args["high"]
-        peak = args["peak"]
-        return triangular(low, high, peak)
 
 def cardioid(args):
         pass
@@ -125,15 +93,15 @@ def names_generator(li):
 # typemap is a mapping from string specifiers passed into Parm initialization to function references
 typemap = {"many": many,
            "few": few,
-           "normal": norm,
-           "uniform": uni,
-           "right_slanted": slanted,
-           "left_slanted": slanted,
-           "cardioid": cardioid,
-           "_cardioid": _cardioid}
+           "normal": Range.functions['normal'],
+           "uniform": Range.functions['uniform'],
+           "right_slanted": Range.functions['right_slanted'],
+           "left_slanted": Range.functions['left_slanted'],
+           "_cardioid": _cardioid,
+           "cardioid": cardioid}
 
 class Parm:
-        def __init__(self, name, generator_type, distr_type="uniform", desired="many", low=None, high=None, ave=None, dev=None, peak=None, from_set=None, per_row=1):
+        def __init__(self, name, generator_type, valuerange, distr_type="uniform", desired="many", from_set=None, per_row=1):
                 """
                 generator_type: string; "one by one" or "fixed-size-chunks"
                 generator: to be defined later; the generator object that yields data points, either one by one or at fixed size chunks
@@ -151,15 +119,11 @@ class Parm:
                 """
                 self.name = name
                 self.generator_type = generator_type
+                self.valuerange = valuerange
                 self.generator = None #to be defined in a later method
                 self.distr_type = distr_type
-                self.vert_distribution = typemap[distr_type] #this is a function reference
+                self.vert_distribution = Range.functions[distr_type] #this is a function reference
                 self.horiz_distribution = None; #TODO: implement this
-                self.dist_args = {"low": low, #these are the args passed to different distribution functions
-                                  "high": high,
-                                  "peak": peak,
-                                  "ave": ave,
-                                  "dev": dev}
                 self.from_set = from_set
                 if type(desired) == int:
                         self.desired = desired
@@ -171,14 +135,6 @@ class Parm:
                 self.generated = 0 # Marks if the generator object yield data points has been created
 
                 # Error checking
-                # if low or high is specified, the other must be specified as well
-                assert ((low==None and high==None) or (not low==None and not high==None)), "low and high arguments must both be specified"
-                # ave must be between low and high
-                if not ave==None:
-                        assert (low <= ave <= high), "Bad statistical arguments, must be low <= ave <= high"
-                #the deviation from average must be between low and high to make statistical sense
-                if not dev==None and not ave==None:
-                        assert ((ave + dev <= high) and (ave - dev >= low)), "Deviation too great, extends beyond min and max values"
                 # if the generator type is specialized, it must have per_row specified
                 if generator_type != "one-by-one":
                         assert per_row != None, "Must supply from_set and per_row for specialty generators"
@@ -191,17 +147,9 @@ class Parm:
                 self.generator = gene
         def setDistributionType(self, distr_type):
                 self.distr_type = distr_type
-                self.vert_distribution = typemap[distr_type]
-        def setLow(self, low):
-                self.dist_args[low] = low
-        def setHigh(self, high):
-                self.dist_args[high] = high
-        def setAve(self, ave):
-                self.dist_args[ave] = ave
-        def setDev(self, dev):
-                self.dist_args[dev] = dev
-        def setPeak(self, peak):
-                self.dist_args[peak] = peak
+                self.vert_distribution = Range.functions[self.distr_type]
+        def setValueRange(self, rang):
+                self.valuerange = rang
         def setFromSet(self, from_set):
                 self.from_set = from_set
         def setDesired(self, desired):
@@ -238,11 +186,11 @@ class Parm:
                 #Otherwise...
                 # Generate the large sample size
                 if self.from_set == None:
-                        samples = [self.vert_distribution(self.dist_args) for _ in range(k)]
+                        samples = [self.valuerange.functions[self.distr_type](self.valuerange) for _ in range(k)]
                 else:
-                        samples = [self.from_set[self.vert_distribution(self.dist_args)] for _ in range(k)]
+                        samples = [self.from_set[self.valuerange.functions[self.distr_type](self.valuerange)] for _ in range(k)]
                 # Now reduce down
-                sample_size = len(samples) #How many initial data points are there?
+                sample_size = k #How many initial data points are there?
                 interval_step = floor(sample_size / self.desired)
                 samples.sort() #The sorted data points
                 reduced = []

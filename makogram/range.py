@@ -11,6 +11,7 @@ import random # for random picks in the range
 from statistics import mean
 class Range:
         def __init__(self, lower, upper, exclusive_lower=False, exclusive_upper=False, ave=None, dev=None, left_peak=None, right_peak=None):
+                
                 assert lower < upper, "Bad Range: lower {} must be < upper {}".format(lower, upper)
 
                 self.lower = lower
@@ -21,31 +22,16 @@ class Range:
                     self.low_epsilon = EPSILON
                 else:
                     self.low_epsilon = 0 
-                if self.exclusive_upper:
+                if self.exclusive_upper == True:
                     self.high_epsilon = EPSILON
                 else:
                     self.high_epsilon = 0
 
-                if ave == None: #if the user did not define
-                    self.ave = mean([self.upper, self.lower])
-                else:
-                    self.ave = ave
-
-                if dev == None: #if the user did not define
-                    self.dev = mean([self.upper, self.ave])/2
-                else:
-                    self.dev = dev
-
-                if left_peak == None:
-                    self.left_peak = mean([self.lower, self.ave])
-                else:
-                    self.left_peak = left_peak
-
-                if right_peak == None:
-                    self.right_peak = mean([self.upper, self.ave])
-                else:
-                    self.right_peak = right_peak
-
+                self.ave = ave or mean([self.upper, self.lower])
+                self.dev = dev or mean([self.upper, self.ave])/2
+                self.left_peak = left_peak or mean([self.lower, self.ave])
+                self.right_peak = right_peak or mean([self.upper, self.ave])
+                
         def __repr__(self):
                 if self.exclusive_lower:
                         lowkey = "("
@@ -82,33 +68,48 @@ class Range:
 
                 return res1 and res2
 
-        def uniform_pick(self, args):
+        #Getter Functions
+        def low(self):
+                return self.lower
+        def high(self):
+                return self.upper
+        
+        #Random functions
+        def uniform_pick(self):
                 low = self.lower + self.low_epsilon
                 high = self.upper - self.high_epsilon
                 return random.uniform(low, high)
         
-        def normal_pick(self, args):
+        def normal_pick(self):
                 low = self.lower + self.low_epsilon
                 high = self.upper - self.high_epsilon
-                ave = args['ave'] or self.ave #if args is not specified, use data members by default
-                dev = args['dev'] or self.dev
-                x = random.gauss(ave, dev)
+                x = random.gauss(self.ave, self.dev)
                 while not (low <= x <= high):
-                        x = random.gauss(ave, dev)
+                        x = random.gauss(self.ave, self.dev)
                 return x
 
-        def right_slanted_pick(self, args):
+        def right_slanted_pick(self):
                 low = self.lower + self.low_epsilon
                 high = self.upper - self.high_epsilon
-                peak = args['peak'] or self.right_peak
-                return random.triangular(low, high, peak)
+                return random.triangular(low, high, self.right_peak)
 
-        def left_slanted_pick(self, args):
+        def left_slanted_pick(self):
                 low = self.lower + self.low_epsilon
                 high = self.upper - self.high_epsilon
-                peak = args['peak'] or self.left_peak
-                return random.triangular(low, high, peak)
+                return random.triangular(low, high, self.left_peak)
 
-        def cardioid(self, args):
+        def cardioid(self):
                 pass
+        def _cardioid(self):
+                pass
+
+
+        functions = {
+            'uniform' : uniform_pick,
+            'normal' : normal_pick,
+            'right_slanted': right_slanted_pick,
+            'left_slanted': left_slanted_pick,
+            'cardioid': cardioid,
+            '_cardioid': _cardioid
+        }
 

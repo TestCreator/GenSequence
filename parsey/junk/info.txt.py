@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1524029548.340488
+_modified_time = 1524534289.06853
 _enable_loop = True
 _template_filename = '/Users/jamiezimmerman/Documents/GenSequence/parsey/prm-blueprints/info.txt'
 _template_uri = '/info.txt'
@@ -17,13 +17,13 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        Rangeobj = context.get('Rangeobj', UNDEFINED)
-        varname = context.get('varname', UNDEFINED)
+        info = context.get('info', UNDEFINED)
         __M_writer = context.writer()
-        __M_writer(str(varname))
-        __M_writer(' = ')
-        __M_writer(str(Rangeobj))
-        __M_writer('\n')
+        for decl in info['key1']:
+            __M_writer(str(decl['varname']))
+            __M_writer(' = ')
+            __M_writer(str(decl['Rangeobj']))
+            __M_writer('\n')
         return ''
     finally:
         context.caller_stack._pop_frame()
@@ -31,6 +31,6 @@ def render_body(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"uri": "/info.txt", "line_map": {"16": 0, "32": 26, "23": 1, "24": 1, "25": 1, "26": 1}, "filename": "/Users/jamiezimmerman/Documents/GenSequence/parsey/prm-blueprints/info.txt", "source_encoding": "ascii"}
+{"source_encoding": "ascii", "line_map": {"16": 0, "32": 26, "22": 1, "23": 2, "24": 2, "25": 2, "26": 2}, "uri": "/info.txt", "filename": "/Users/jamiezimmerman/Documents/GenSequence/parsey/prm-blueprints/info.txt"}
 __M_END_METADATA
 """

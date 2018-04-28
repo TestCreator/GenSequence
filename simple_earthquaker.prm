@@ -1,21 +1,26 @@
-Totalmags Range(0.5, 10.0]
+#Magnitude Ranges
+TotalMagnitude Range(0.5, 10.0]
 Micro Range(0.0, 2.0]
 Feelable Range[4.5, 7.9)
 Great Range[8.0, 9.5]
 
+#depths ranges
+TotalDepth Range(0.0, 30.0]
+Shallow Range[0.0 5.0]
+Mid Range(5.0, 15.0)
+Deep Range[15.0, 30.0]
+
 #latitudes ranges
+TotalLatitude
 East Range[42.2, 45.84]
 West Range[45.84, 49.48]
 
 #longitudes ranges
+TotalLongitude
 North Range[42.2, 45.84]
 South Range[42.2, 45.84]
 
-#depths ranges
-Totaldepths Range(0.0, 30.0]
-Shallow Range[0.0 5.0]
-Mid Range(5.0, 15.0)
-Deep Range[15.0, 30.0]
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -32,36 +37,36 @@ Deep Range[15.0, 30.0]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+## I think this section may be unnecessary
+// Magnitude:
+//         type uniform
+//         type right_slanted
+//         type left_slanted
+//         type normal
+//         type _cardioid
+//         type _cardioid// 
 
-Magnitude:
-        type uniform
-        type right_slanted
-        type left_slanted
-        type normal
-        type _cardioid
-        type _cardioid
+// Depth:
+//         type uniform
+//         type right_slanted
+//         type left_slanted
+//         type normal
+//         type _cardioid// 
 
-Depth:
-        type uniform
-        type right_slanted
-        type left_slanted
-        type normal
-        type _cardioid
+// Latitude:
+//         type uniform
+//         type right_slanted
+//         type left_slanted
+//         type normal
+//         type _cardioid// 
+// 
 
-Latitude:
-        type uniform
-        type right_slanted
-        type left_slanted
-        type normal
-        type _cardioid
-
-
-Longitude:
-        type uniform
-        type right_slanted
-        type left_slanted
-        type normal
-        type _cardioid
+// Longitude:
+//         type uniform
+//         type right_slanted
+//         type left_slanted
+//         type normal
+//         type _cardioid
 
 
 Magnitude~uniform:
