@@ -64,16 +64,16 @@ class Cardioid:
             for _ in range(num_favs):
                 #pick pair
                 select = self.favorites[randint(0, len(self.favorites)-1)]
-                firstpick = pick(select[0], self.firstParm.dist_args) #sometimes a range object
-                secondpick = pick(select[1], self.secondParm.dist_args) #sometimes a tuple of ranges, but always a data set
+                firstpick = round(select[0].uniform_pick(), 2) #sometimes a range object
+                secondpick = round(select[1].uniform_pick(), 2) #sometimes a tuple of ranges, but always a data set
 
                 grand_set.append((firstpick, secondpick))
 
             # now generate all the outliers
             for _ in range(num_outliers):
                 select = self.non_favorites[randint(0, len(self.non_favorites)-1)]
-                firstpick = pick(select[0], self.firstParm.dist_args) #sometimes a range object
-                secondpick = pick(select[1], self.secondParm.dist_args) #sometimes a tuple of ranges, but always a data set
+                firstpick = round(select[0].uniform_pick(), 2) #sometimes a range object
+                secondpick = round(select[1].uniform_pick(), 2) #sometimes a tuple of ranges, but always a data set
 
                 grand_set.append((firstpick, secondpick))
 
