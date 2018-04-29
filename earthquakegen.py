@@ -19,14 +19,14 @@ Mid = Range(5.0, 15.0)
 Deep = Range(15.0, 30.0, exclusive_lower=True)
 
 #latitudes ranges
-TotalLats = Range(42.2, 49.48, exclusive_lower=True, exclusive_upper=True, ave=45.84, dev=1.3)
-East = Range(42.2, 45.84, exclusive_lower=True, exclusive_upper=True)
-West = Range(45.84, 49.48, exclusive_lower=True, exclusive_upper=True)
+TotalLats = Range(38.58, 51.23, exclusive_lower=True, exclusive_upper=True, ave=44.9, dev=1.8)
+East = Range(45.0, 51.23, exclusive_lower=True, exclusive_upper=True)
+West = Range(38.58, 44.0, exclusive_lower=True, exclusive_upper=True)
 
 #longitudes ranges
-TotalLongs = Range(-124.8865, -119.1502, exclusive_lower=True, exclusive_upper=True, ave=-122.0184, dev=1.2)
-North = Range(-124.8865, -122.0184, exclusive_lower=True, exclusive_upper=True)
-South = Range(-122.0184, -119.1502, exclusive_lower=True, exclusive_upper=True)
+TotalLongs = Range(-128.6085, -114.0844, exclusive_lower=True, exclusive_upper=True, ave=-121.347, dev=2.2)
+North = Range(-128.3444, -121.0184, exclusive_lower=True, exclusive_upper=True)
+South = Range(-122.0184, -114.0333, exclusive_lower=True, exclusive_upper=True)
 
 ## Parms
 magnitudes = Parm("magnitudes", "one-by-one", TotalMags)
@@ -80,7 +80,7 @@ def declare_grammar_production_rules(repetitions):
         tg.prod("Epoch", "#####")
         tg.prod("Time", "12:00.0")
         tg.prod("TimeLocal", "2012/09/22 09:46:45 PDT") #TODO, randomize date time choice?
-        tg.prod("Distance", "30.0 km (  18.6 mi) WSW ( 240. azimuth) from Millican, OR") #TODO, randomize choice?
+        tg.prod("Distance", "30.0 km (  18.6 mi) WSW ( 240. azimuth) from Millican OR") #TODO, randomize choice?
         tg.prod("Latitude", lambda: latitudes.next())
         tg.prod("Longitude", lambda: longitudes.next())
         tg.prod("DepthKm", lambda: magsdepths.secondParm.next())
@@ -111,11 +111,11 @@ if __name__=="__main__":
                         #prepare the data file and file name
                         test_case_file_name = "cases1/{}-{}-".format(testcount, num_lines)
                         for parm in ["magnitudes", "latitudes", "longitudes", "depths"]:
-                                test_case_file_name += parm.split("_")[0] + ':' + vector[parm] + '-'
-
+                                test_case_file_name += parm.split("_")[0] + '|' + vector[parm] + '-'
                         #generate new grammar
                         new_grammar = declare_grammar_production_rules(num_lines)
-                        new_data = new_grammar.gen("Recordings").split('\n')
+                        new_data = new_grammar.gen("Recordings").split("\n")
+                        new_data = new_data[0:len(new_data)-1]
 
                         #and dump into concrete data file
                         with open("{}.csv".format(test_case_file_name), 'w', newline='') as concretefile:
