@@ -1,4 +1,4 @@
-#Magnitude Ranges
+# mags ranges
 TotalMagnitude Range(0.5, 10.0]
 Micro Range(0.0, 2.0]
 Feelable Range[4.5, 7.9)
@@ -6,7 +6,7 @@ Great Range[8.0, 9.5]
 
 #depths ranges
 TotalDepth Range(0.0, 30.0]
-Shallow Range[0.0 5.0]
+Shallow Range[0.0, 5.0]
 Mid Range(5.0, 15.0)
 Deep Range[15.0, 30.0]
 

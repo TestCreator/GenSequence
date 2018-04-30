@@ -1,0 +1,84 @@
+from makogram.grammar import Grammar
+from makogram.parmgen import *
+from makogram.cardioid import Cardioid
+from random import gauss, triangular, choice, vonmisesvariate, uniform, sample, randint
+from statistics import mean
+from math import ceil
+import csv
+
+% for entry in data['key1']:
+${entry['varname']} = ${entry['Rangeobj']}
+% endfor
+
+
+magsdepths = Cardioid(magnitudes, depths)
+magsdepths.setFavorites([(Micro,Shallow), (Great,Deep), (Feelable,Mid)])
+magsdepths.setNonFavorites([(Micro,Deep), (Great,Shallow), (Feelable,Deep), (Feelable,Shallow)])
+#For now, let's just focus on magnitudes and depths relationship
+#latlong = Cardioid(latitudes, longitudes) #uncomment later
+
+
+
+def establish_magnitudes(disttype, des):
+        magsdepths.firstParm.setDistributionType(disttype)
+        magsdepths.firstParm.setDesired(des)
+def establish_latitudes(disttype, des):
+        latitudes.setDistributionType(disttype)
+        latitudes.setDesired(des)
+def establish_longitudes(disttype, des):
+        longitudes.setDistributionType(disttype)
+        longitudes.setDesired(des)
+def establish_depths(disttype, des):
+        magsdepths.secondParm.setDistributionType(disttype)
+        magsdepths.secondParm.setDesired(des)
+
+
+def regenerate_parm_data_points():
+        magsdepths.generate() #rewrites final data sets for both parms
+        latitudes.setup()
+        latitudes.scramble()
+        longitudes.setup()
+        longitudes.scramble()
+
+
+
+if __name__=="__main__":
+        testcount = 0
+        with open("earthquakegentestvectors.csv", newline='') as vectorfile:
+                reader = csv.DictReader(vectorfile)
+                #iterate through all vectors
+                for vector in reader:
+                        testcount += 1
+                        #set all parms
+                        num_lines = translate_desired(vector['Recordings']) #this is used for desired number in all parms
+                        if num_lines == None:
+                                break
+
+                        establish_magnitudes(vector['magnitudes'], num_lines)
+                        establish_latitudes(vector['latitudes'], num_lines)
+                        establish_longitudes(vector['longitudes'], num_lines)
+                        establish_depths(vector['depths'], num_lines)
+
+
+                        #create new data sets
+                        regenerate_parm_data_points()
+
+                        #prepare the data file and file name
+                        test_case_file_name = "cases1/{}-{}-".format(testcount, num_lines)
+                        for parm in ["magnitudes", "latitudes", "longitudes", "depths"]:
+                                test_case_file_name += parm.split("_")[0] + ':' + vector[parm] + '-'
+
+                        #generate new grammar
+                        new_grammar = declare_grammar_production_rules(num_lines)
+                        new_data = new_grammar.gen("Recordings").split('\n')
+
+                        #and dump into concrete data file
+                        with open("{}.csv".format(test_case_file_name), 'w', newline='') as concretefile:
+                                fieldnames = ["#EventId","Magnitude","Epoch","Time","TimeLocal","Distance","Latitude","Longitude","DepthKm","DepthMi"]
+                                writer = csv.DictWriter(concretefile, fieldnames=fieldnames)
+                                writer.writeheader()
+                                for line in new_data:
+                                        row = dict(zip(fieldnames, line.split(',', maxsplit=(len(fieldnames)-1))))
+                                        writer.writerow(row)
+                        print("[Log>: file #{:>2} complete, available for testing use".format(testcount, test_case_file_name))
+

@@ -1,18 +1,28 @@
 from mako.template import Template
-from mako.lookup import TemplateLookup
-from mako.runtime import Context
-import io
 
 from parse_ranges import info
 
-mylookup = TemplateLookup(directories=['/Users/jamiezimmerman/Documents/GenSequence/parsey/prm-blueprints'], 
-        module_directory='/Users/jamiezimmerman/Documents/GenSequence/parsey/junk')
+import argparse
 
-def serve_template(templatename, *args, **kwargs):
-    mytemplate = mylookup.get_template(templatename)
-    buf = io.StringIO()
-    ctx = Context(buf, info=kwargs)
-    mytemplate.render_context(ctx)
-    print(buf.getvalue())
 
-serve_template("/info.txt", **info)
+def serve_template(tempname, dest, **kwargs):
+    
+    mytemplate = Template(filename=tempname)
+    print(mytemplate.render(data=kwargs), file=dest)
+    #b = mytemplate.render(data=kwargs)
+    #print(b)
+
+
+def cli():
+    """Get arguments from command line"""
+    parser = argparse.ArgumentParser(description="Preprocessor")
+    parser.add_argument("-t", "--template", help="Template name blueprint")
+    parser.add_argument("-d", "--destination", help="Destination output filename", type=argparse.FileType('w'))
+    args = parser.parse_args()
+    return args
+
+
+if __name__=="__main__":
+        args = cli()
+        print(info)
+        serve_template(args.template, args.destination, **info)

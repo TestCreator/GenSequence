@@ -57,11 +57,16 @@ def establish_parses(in_file, parse_engine):
     collected_parses = []
     f = open(in_file, 'r')
 
-    one_line = f.readline()
-    while not one_line.startswith(("#", " ", "\n")):
-        tokens = parse_engine.parse(one_line.strip())
-        collected_parses.append(tokens)
-        one_line = f.readline()
+    for one_line in f:
+        if one_line.startswith("%%"):
+            break
+        if not one_line.startswith(("#", " ", "\n")):
+            print(one_line)
+            try:
+                tokens = parse_engine.parse(one_line.strip())
+                collected_parses.append(tokens)
+            except (TypeError, AttributeError) as e:
+                pass
     return collected_parses
 
 PARSED_TOKENS = establish_parses("/Users/jamiezimmerman/Documents/GenSequence/simple_earthquaker.prm", parser)
