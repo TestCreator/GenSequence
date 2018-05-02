@@ -1,25 +1,24 @@
 # mags ranges
-TotalMagnitude Range(0.5, 10.0]
-Micro Range(0.0, 2.0]
-Feelable Range[4.5, 7.9)
-Great Range[8.0, 9.5]
+TotalMagnitude Range(low: 0.5, lp: 2.5, ave: 5.0, dev: 1.2, rp: 7.5, high: 10.0]
+Micro Range(low: 0.0, high: 2.0]
+Feelable Range[low: 4.5, high: 7.9)
+Great Range[low: 8.0, high: 9.5]
 
 #depths ranges
-TotalDepth Range(0.0, 30.0]
-Shallow Range[0.0, 5.0]
-Mid Range(5.0, 15.0)
-Deep Range[15.0, 30.0]
+TotalDepth Range(low: 0.1, lp: 4.5, ave: 15.0, dev: 4.8, rp: 23.0, high: 30.0]
+Shallow Range[low: 0.0, high: 5.0]
+Mid Range(low: 5.0, high: 15.0)
+Deep Range[low: 15.0, high: 30.0]
 
 #latitudes ranges
-TotalLatitude
-East Range[42.2, 45.84]
-West Range[45.84, 49.48]
+TotalLatitude Range(low: 38.58, lp: 43.3, ave: 45.84, dev: 1.8, rp: 48.8, high: 51.23]
+East Range[low: 38.58, high: 45.84]
+West Range[low: 45.84, high: 51.23]
 
 #longitudes ranges
-TotalLongitude
-North Range[42.2, 45.84]
-South Range[42.2, 45.84]
-
+TotalLongitude Range(low: -128.6085, lp: -124.22, ave: -121.347, dev: 2.2, rp: -117.8, high: -114.0844]
+North Range[low: -128.6085, high: -121.0184]
+South Range[low: -121.347, high: -114.0844]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -35,59 +34,6 @@ South Range[42.2, 45.84]
         col Latitude
         col Longitude
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## I think this section may be unnecessary
-// Magnitude:
-//         type uniform
-//         type right_slanted
-//         type left_slanted
-//         type normal
-//         type _cardioid
-//         type _cardioid// 
-
-// Depth:
-//         type uniform
-//         type right_slanted
-//         type left_slanted
-//         type normal
-//         type _cardioid// 
-
-// Latitude:
-//         type uniform
-//         type right_slanted
-//         type left_slanted
-//         type normal
-//         type _cardioid// 
-// 
-
-// Longitude:
-//         type uniform
-//         type right_slanted
-//         type left_slanted
-//         type normal
-//         type _cardioid
-
-
-Magnitude~uniform:
-        float low 0.0
-        float high 10.0
-
-Magnitude~right_slanted:
-        float low 0.0
-        float high 10.0
-        float peak 7.5
-
-Magnitude~left_slanted:
-        float low 0.0
-        float high 10.0
-        float peak 2.5
-
-Magnitude~normal:
-        float low 0.0
-        float high 10.0
-        float ave 5.0
-        float dev 3.0
 
 Magnitude~_cardioid: #TODO the pairwise test vectors need to cover the opposite case
         favorites: Micro
