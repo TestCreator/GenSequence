@@ -21,5 +21,5 @@ def cli():
 
 if __name__=="__main__":
         args = cli()
-        print(info)
+        #print(info)
         serve_template(args.template, args.destination, **info)

@@ -1,44 +1,26 @@
 import ply.lex as lex
 import ply.yacc as yacc
 
-tokens = ('RANGE', 'ARGDATA', 'NAME', 'OPENBRACKET', 'CLOSEBRACKET', 'OPENPAREN', 'CLOSEPAREN', 'NUMBER', 'COMMA', 'EQUALS', 'COLON') #all the possible tokens
+tokens = ('RANGE', 'ARGDATA', 'NAME', 'OPENBRACKET', 'CLOSEBRACKET', 'OPENPAREN', 'CLOSEPAREN', 'NUMBER', 'COMMA', 'COLON') #all the possible tokens
 
-def t_RANGE(t):
-    r'Range'
-    return t
 def t_ARGDATA(t):
     r'low|lp|ave|dev|rp|high'
     return t
+def t_RANGE(t):
+    r'Range'
+    return t
+
 t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
 t_OPENBRACKET = r'\['
 t_CLOSEBRACKET = r'\]'
 t_OPENPAREN = r'\('
 t_CLOSEPAREN = r'\)'
-t_EQUALS = r'='
+#t_EQUALS = r'='
 def t_NUMBER(t):
         r'\d+[.,]?\d*'
         t.value = float(t.value)
         return t
 t_COMMA = r'\,'
-
-#def t_LOW(t):
-#    r'low'
-#    return t
-#def t_LP(t):
-#    r'lp'
-#    return t
-#def t_AVE(t):
-#    r'ave'
-#    return t
-#def t_DEV(t):
-#    r'dev'
-#    return t
-#def t_RP(t):
-#    r'rp'
-#    return t
-#def t_HIGH(t):
-#    r'high'
-#    return t
 t_COLON = r':'
 t_ignore = ' \t'
 def t_error(t):
@@ -46,17 +28,17 @@ def t_error(t):
 
 lex.lex()
 
-def p_Rangeobj(p):
+def p_rang(p):
         "rang : NAME RANGE opener argset closer"
-        l = False;
-        u = False
-        if p[3] == '(':
-                l = True
-        if p[5] == ')':
-                u = True
-        #p[0] = {"varname": p[1], "Rangeobj": "".join(str(n) for n in p[2:])} #varname, Range descriptor
+        l = True if p[3] == '(' else False
+        u = True if p[5] == ')' else False
         argset = p[4]
-        construct = "Range({low}, {high}, exclusive_lower={l}, exclusive_upper={u}, ave={ave}, dev={dev}, right_peak={rp}, left_peak={lp}".format(l=l, u=u, **argset)
+        construct = "Range({}, {}, ".format(argset['low'], argset['high'])
+        del argset['low'], argset['high']
+        for key in argset:
+            construct += "{}={}, ".format(key, argset[key])
+        construct += "exclusive_lower={l}, ".format(l=l)
+        construct += "exclusive_upper={u})".format(u=u)
         p[0] = {"varname": p[1], "Rangeobj": construct}
 
 def p_opener(p):
@@ -72,17 +54,17 @@ def p_closer(p):
         """
         p[0] = p[1]
 
-def p_allargs(p):
+def p_argset(p):
         """
         argset : argset dp
         argset : dp
         """
-        if len(p) == 2:
+        if len(p) == 3:
             p[0] = {**p[1], **p[2]}
         else:
             p[0] = p[1]
 
-def p_arg(p):
+def p_dp(p):
         """
         dp : ARGDATA COLON NUMBER
         dp : ARGDATA COLON NUMBER COMMA
@@ -98,25 +80,19 @@ parser = yacc.yacc()
 def establish_parses(in_file, parse_engine):
     collected_parses = []
     f = open(in_file, 'r')
-
     for one_line in f:
-        if one_line.startswith("%%"):
+        if one_line.startswith("%%"): #just stop here for now
             break
         if not one_line.startswith(("#", " ", "\n")):
-            print(one_line)
+            #print(one_line)
             try:
-                tokens = parse_engine.parse(one_line.strip())
-                collected_parses.append(tokens)
+                t = parse_engine.parse(one_line.strip())
+                collected_parses.append(t)
             except (TypeError, AttributeError) as e:
                 pass
     return collected_parses
 
-#PARSED_TOKENS = establish_parses("/Users/jamiezimmerman/Documents/GenSequence/simple_earthquaker.prm", parser)
+PARSED_TOKENS = establish_parses("/Users/jamiezimmerman/Documents/GenSequence/simple_earthquaker.prm", parser)
+info = {"key1": PARSED_TOKENS}
 
-#info = {"key1": PARSED_TOKENS}
-
-NEW_TOKENS = parser.parse("low : 0.5")
-
-
-print(NEW_TOKENS)
 

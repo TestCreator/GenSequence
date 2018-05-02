@@ -2,7 +2,6 @@ from makogram.grammar import Grammar
 from makogram.parmgen import *
 from makogram.cardioid import Cardioid
 from random import gauss, triangular, choice, vonmisesvariate, uniform, sample, randint
-from statistics import mean
 from math import ceil
 import csv
 
