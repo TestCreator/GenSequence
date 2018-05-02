@@ -10,7 +10,7 @@ EPSILON = .000001
 import random # for random picks in the range
 from statistics import mean
 class Range:
-        def __init__(self, lower, upper, exclusive_lower=False, exclusive_upper=False, ave=None, dev=None, left_peak=None, right_peak=None):
+        def __init__(self, lower, upper, exclusive_lower=False, exclusive_upper=False, ave=None, dev=None, lp=None, rp=None):
                 
                 assert lower < upper, "Bad Range: lower {} must be < upper {}".format(lower, upper)
 
@@ -29,8 +29,8 @@ class Range:
 
                 self.ave = ave or mean([self.upper, self.lower])
                 self.dev = dev or mean([self.upper, self.ave])/2
-                self.left_peak = left_peak or mean([self.lower, self.ave])
-                self.right_peak = right_peak or mean([self.upper, self.ave])
+                self.lp = lp or mean([self.lower, self.ave])
+                self.rp = rp or mean([self.upper, self.ave])
                 
         def __repr__(self):
                 if self.exclusive_lower:
@@ -91,12 +91,12 @@ class Range:
         def right_slanted_pick(self):
                 low = self.lower + self.low_epsilon
                 high = self.upper - self.high_epsilon
-                return random.triangular(low, high, self.right_peak)
+                return random.triangular(low, high, self.rp)
 
         def left_slanted_pick(self):
                 low = self.lower + self.low_epsilon
                 high = self.upper - self.high_epsilon
-                return random.triangular(low, high, self.left_peak)
+                return random.triangular(low, high, self.lp)
 
         def cardioid(self):
                 pass
