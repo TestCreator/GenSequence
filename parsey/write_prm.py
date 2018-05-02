@@ -7,7 +7,7 @@ import argparse
 
 def serve_template(tempname, dest, **kwargs):
     mytemplate = Template(filename=tempname)
-    print(mytemplate.render(data=kwargs), file=dest)
+    print(mytemplate.render(ranges=kwargs), file=dest)
 
 
 def cli():
