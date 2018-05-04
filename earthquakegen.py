@@ -13,7 +13,7 @@ Feelable = Range(4.5, 7.9, exclusive_lower=True)
 Great = Range(8.0, 9.5, exclusive_lower=True, exclusive_upper=True)
 
 #depths ranges
-Totaldepths = Range(0.0, 30.0, exclusive_upper=True, ave=15.0, dev=5.0)
+TotalDepths = Range(0.0, 30.0, exclusive_upper=True, ave=15.0, dev=5.0)
 Shallow = Range(0.0, 5.0, exclusive_lower=True, exclusive_upper=True)
 Mid = Range(5.0, 15.0)
 Deep = Range(15.0, 30.0, exclusive_lower=True)
@@ -29,41 +29,39 @@ North = Range(-128.3444, -121.0184, exclusive_lower=True, exclusive_upper=True)
 South = Range(-122.0184, -114.0333, exclusive_lower=True, exclusive_upper=True)
 
 ## Parms
-magnitudes = Parm("magnitudes", "one-by-one", TotalMags)
-latitudes = Parm("latitudes", "one-by-one", TotalLats)
-longitudes = Parm("longitudes", "one-by-one", TotalLongs)
-depths = Parm("depths", "one-by-one", Totaldepths)
+Mags = Parm("magnitudes", "one-by-one", TotalMags)
+Lats = Parm("latitudes", "one-by-one", TotalLats)
+Longs = Parm("longitudes", "one-by-one", TotalLongs)
+Depths = Parm("depths", "one-by-one", TotalDepths)
 
 
-magsdepths = Cardioid(magnitudes, depths)
-magsdepths.setFavorites([(Micro,Shallow), (Great,Deep), (Feelable,Mid)])
-magsdepths.setNonFavorites([(Micro,Deep), (Great,Shallow), (Feelable,Deep), (Feelable,Shallow)])
-#For now, let's just focus on magnitudes and depths relationship
-#latlong = Cardioid(latitudes, longitudes) #uncomment later
+MagsDepths = Cardioid(Mags, Depths)
+MagsDepths.setFavorites([(Micro,Shallow), (Great,Deep), (Feelable,Mid)])
+MagsDepths.setNonFavorites([(Micro,Deep), (Great,Shallow), (Feelable,Deep), (Feelable,Shallow)])
+
+LatsLongs = Cardioid(Lats, Longs)
+LatsLongs.setFavorites([(North,East)])
+LatsLongs.setNonFavorites([(South,West)])
 
 
 
-def establish_magnitudes(disttype, des):
-        magsdepths.firstParm.setDistributionType(disttype)
-        magsdepths.firstParm.setDesired(des)
-def establish_latitudes(disttype, des):
-        latitudes.setDistributionType(disttype)
-        latitudes.setDesired(des)
-def establish_longitudes(disttype, des):
-        longitudes.setDistributionType(disttype)
-        longitudes.setDesired(des)
-def establish_depths(disttype, des):
-        magsdepths.secondParm.setDistributionType(disttype)
-        magsdepths.secondParm.setDesired(des)
+def establish_Mags(disttype, des):
+        MagsDepths.firstParm.setDistributionType(disttype)
+        MagsDepths.firstParm.setDesired(des)
+def establish_Lats(disttype, des):
+        LatsLongs.firstParm.setDistributionType(disttype)
+        LatsLongs.firstParm.setDesired(des)
+def establish_Longs(disttype, des):
+        LatsLongs.secondParm.setDistributionType(disttype)
+        LatsLongs.secondParm.setDesired(des)
+def establish_Depths(disttype, des):
+        MagsDepths.secondParm.setDistributionType(disttype)
+        MagsDepths.secondParm.setDesired(des)
 
 
 def regenerate_parm_data_points():
-        magsdepths.generate() #rewrites final data sets for both parms
-        latitudes.setup()
-        latitudes.scramble()
-        longitudes.setup()
-        longitudes.scramble()
-
+        MagsDepths.generate() #rewrites final data sets for both parms
+        LatsLongs.generate()
 
 
 def declare_grammar_production_rules(repetitions):
@@ -99,10 +97,10 @@ if __name__=="__main__":
                         if num_lines == None:
                                 break
 
-                        establish_magnitudes(vector['magnitudes'], num_lines)
-                        establish_latitudes(vector['latitudes'], num_lines)
-                        establish_longitudes(vector['longitudes'], num_lines)
-                        establish_depths(vector['depths'], num_lines)
+                        establish_magnitudes(vector['Mags'], num_lines)
+                        establish_latitudes(vector['Lats'], num_lines)
+                        establish_longitudes(vector['Longs'], num_lines)
+                        establish_depths(vector['Depths'], num_lines)
 
 
                         #create new data sets
@@ -110,7 +108,7 @@ if __name__=="__main__":
 
                         #prepare the data file and file name
                         test_case_file_name = "cases1/{}-{}-".format(testcount, num_lines)
-                        for parm in ["magnitudes", "latitudes", "longitudes", "depths"]:
+                        for parm in ["Mags", "Lats", "Longs", "Depths"]:
                                 test_case_file_name += parm.split("_")[0] + '|' + vector[parm] + '-'
                         #generate new grammar
                         new_grammar = declare_grammar_production_rules(num_lines)
