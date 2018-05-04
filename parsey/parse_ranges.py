@@ -79,8 +79,8 @@ parser = yacc.yacc()
 
 def establish_parses(in_file, parse_engine):
     collected_parses = []
-    f = open(in_file, 'r')
-    for one_line in f:
+    #f = open(in_file, 'r')
+    for one_line in in_file:
         if one_line.startswith("%%"): #just stop here for now
             break
         if not one_line.startswith(("#", " ", "\n")):
@@ -90,9 +90,10 @@ def establish_parses(in_file, parse_engine):
                 collected_parses.append(t)
             except (TypeError, AttributeError) as e:
                 pass
-    return collected_parses
+    mapping = {"ranges": collected_parses}
+    return mapping
 
-PARSED_TOKENS = establish_parses("/Users/jamiezimmerman/Documents/GenSequence/simple_earthquaker.prm", parser)
-info = {"key1": PARSED_TOKENS}
+#PARSED_TOKENS = establish_parses("/Users/jamiezimmerman/Documents/GenSequence/simple_earthquaker.prm", parser)
+#info = {"ranges": PARSED_TOKENS}
 
 

@@ -5,16 +5,21 @@ from random import gauss, triangular, choice, vonmisesvariate, uniform, sample, 
 from math import ceil
 import csv
 
-% for entry in ranges['key1']:
+% for entry in data['ranges']:
 ${entry['varname']} = ${entry['Rangeobj']}
 % endfor
 
+% for rang in data['parms']:
+${rang['parm_varname']} = Parm(${rang['construct_name']}, "one-by-one", Total${rang['parm_varname']})
+% endfor
 
-magsdepths = Cardioid(magnitudes, depths)
+% for card in data['cards']:
+${card['card_varname']} = Cardioid(${card['first']}, ${card['seconds']})
+% endfor
+
+
 magsdepths.setFavorites([(Micro,Shallow), (Great,Deep), (Feelable,Mid)])
 magsdepths.setNonFavorites([(Micro,Deep), (Great,Shallow), (Feelable,Deep), (Feelable,Shallow)])
-#For now, let's just focus on magnitudes and depths relationship
-#latlong = Cardioid(latitudes, longitudes) #uncomment later
 
 
 
