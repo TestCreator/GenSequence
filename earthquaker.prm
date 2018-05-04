@@ -1,25 +1,24 @@
-#Globals
-MAX_GENS 100
-
-#magnitudes ranges
-Totalmags Range(0.0, 10.0)
-Micro Range(0.0, 2.0]
-Feelable Range[4.5, 7.9)
-Great Range[8.0, 9.5]
-
-#latitudes ranges
-East Range[42.2, 45.84]
-West Range[45.84, 49.48]
-
-#longitudes ranges
-North Range[42.2, 45.84]
-South Range[42.2, 45.84]
+# mags ranges
+TotalMagnitude Range(low: 0.5, lp: 2.5, ave: 5.0, dev: 1.2, rp: 7.5, high: 10.0]
+Micro Range(low: 0.0, high: 2.0]
+Feelable Range[low: 4.5, high: 7.9)
+Great Range[low: 8.0, high: 9.5]
 
 #depths ranges
-Totaldepths Range(0.0, 30.0]
-Shallow Range[0.0 5.0]
-Mid Range(5.0, 15.0)
-Deep Range[15.0, 30.0]
+TotalDepth Range(low: 0.1, lp: 4.5, ave: 15.0, dev: 4.8, rp: 23.0, high: 30.0]
+Shallow Range[low: 0.0, high: 5.0]
+Mid Range(low: 5.0, high: 15.0)
+Deep Range[low: 15.0, high: 30.0]
+
+#latitudes ranges
+TotalLatitude Range(low: 38.58, high: 51.23, lp: 43.3, ave: 45.84, dev: 1.8, rp: 48.8]
+East Range[low: 38.58, high: 45.84]
+West Range[low: 45.84, high: 51.23]
+
+#longitudes ranges
+TotalLongitude Range(low: -128.6085, lp: -124.22, ave: -121.347, dev: 2.2, rp: -117.8, high: -114.0844]
+North Range[low: -128.6085, high: -121.0184]
+South Range[low: -121.347, high: -114.0844]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -32,7 +31,6 @@ Deep Range[15.0, 30.0]
         multicol MagnitudeDepth
         multicol LatitudeLongitude
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 MagnitudeDepth:
         col Magnitude
