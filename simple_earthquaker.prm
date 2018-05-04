@@ -1,27 +1,27 @@
 # mags ranges
-TotalMagnitude Range(low: 0.5, lp: 2.5, ave: 5.0, dev: 1.2, rp: 7.5, high: 10.0]
+TotalMags Range(low: 0.5, lp: 2.5, ave: 5.0, dev: 1.2, rp: 7.5, high: 10.0]
 Micro Range(low: 0.0, high: 2.0]
 Feelable Range[low: 4.5, high: 7.9)
 Great Range[low: 8.0, high: 9.5]
 
 #depths ranges
-TotalDepth Range(low: 0.1, lp: 4.5, ave: 15.0, dev: 4.8, rp: 23.0, high: 30.0]
+TotalDepths Range(low: 0.1, lp: 4.5, ave: 15.0, dev: 4.8, rp: 23.0, high: 30.0]
 Shallow Range[low: 0.0, high: 5.0]
 Mid Range(low: 5.0, high: 15.0)
 Deep Range[low: 15.0, high: 30.0]
 
 #latitudes ranges
-TotalLatitude Range(low: 38.58, lp: 43.3, ave: 45.84, dev: 1.8, rp: 48.8, high: 51.23]
+TotalLats Range(low: 38.58, high: 51.23, lp: 43.3, ave: 45.84, dev: 1.8, rp: 48.8]
 East Range[low: 38.58, high: 45.84]
 West Range[low: 45.84, high: 51.23]
 
 #longitudes ranges
-TotalLongitude Range(low: -128.6085, lp: -124.22, ave: -121.347, dev: 2.2, rp: -117.8, high: -114.0844]
+TotalLongs Range(low: -128.6085, lp: -124.22, ave: -121.347, dev: 2.2, rp: -117.8, high: -114.0844]
 North Range[low: -128.6085, high: -121.0184]
 South Range[low: -121.347, high: -114.0844]
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 # how many rows in the csv?
 @Horizontal called Recordings
@@ -29,10 +29,17 @@ South Range[low: -121.347, high: -114.0844]
         float few 1.5
 
 @Vertical
-        col Magnitude
-        col Depth
-        col Latitude
-        col Longitude
+        multicol MagsDepths
+        multicol LatsLongs
+        col Activities
+
+MagsDepths:
+        col Mags
+        col Depths
+
+LatsLongs:
+        col Lats
+        col Longs
 
 
 Magnitude~_cardioid: #TODO the pairwise test vectors need to cover the opposite case
@@ -40,86 +47,25 @@ Magnitude~_cardioid: #TODO the pairwise test vectors need to cover the opposite 
         occasional:
         outliers: Great
 
-
-Depth~uniform:
-        float low 0.0
-        float high 30.0
-
-Depth~right_slanted:
-        float low 0.0
-        float high 30.0
-        float peak 21.5
-
-Depth~left_slanted:
-        float low 0.0
-        float high 30.0
-        float peak 7.5
-
-Depth~normal:
-        float low 0.0
-        float high 30.0
-        float ave 15.0
-        float dev 5.0
+MagnitudeDepth~cardioid:
+        favorites: Micro*Shallow, Great*Deep, Feelable*Mid
+        occasional:
+        not: Micro*Deep, Great*Shallow, Feelable*Deep, Feelable*Shallow
 
 Depth~_cardioid:
         favorites: Shallow
         occasional:
         outliers: Deep
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-Latitude~uniform:
-        float low 42.2197 
-        float high 49.4817
-
-Latitude~right_slanted:
-        float low 42.2197
-        float high 49.4817
-        float peak 47.66
-
-Latitude~left_slanted:
-        float low 42.2197
-        float high 49.4817
-        float peak 44.02
-
-Latitude~normal:
-        float low 42.2197
-        float high 49.4817
-        float ave 45.84
-        float dev 1.3
-
 Latitude~_cardioid:
         favorites: East
         occasional: 
         outliers: West
 
-Latitude~cardioid: #necessary joint distribution - multicol
-        from_set: {North,South}*{East,West}
+LatitudeLongitude~cardioid: #necessary joint distribution - multicol
         favorites: North*East
+        occasional:
         not: South*West
-
-
-Longtitude~uniform:
-        float low -124.8865
-        float high -119.1502
-
-Longtitude~right_slanted:
-        float low -124.8865
-        float high -119.1502
-        float peak 120.5843
-
-Longtitude~left_slanted:
-        float low -124.8865
-        float high -119.1502
-        float peak -123.4525
-
-Longtitude~normal:
-        float low -124.8865
-        float high -119.1502
-        float ave -122.0184
-        float dev 1.2
 
 Longtitude~_cardioid:
         favorites: North
