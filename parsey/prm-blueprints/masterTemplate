@@ -10,11 +10,11 @@ ${entry['varname']} = ${entry['Rangeobj']}
 % endfor
 
 % for rang in data['parms']:
-${rang['parm_varname']} = Parm(${rang['construct_name']}, "one-by-one", Total${rang['parm_varname']})
+${rang['parm_varname']} = Parm('${rang['construct_name']}', "one-by-one", Total${rang['parm_varname']})
 % endfor
 
 % for card in data['cards']:
-${card['card_varname']} = Cardioid(${card['first']}, ${card['seconds']})
+${card['card_varname']} = Cardioid(${card['first']}, ${card['second']})
 % endfor
 
 
