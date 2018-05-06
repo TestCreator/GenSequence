@@ -25,8 +25,8 @@ South Range[low: -121.347, high: -114.0844]
 
 # how many rows in the csv?
 @Horizontal called Recordings
-        float many 2.5
-        float few 1.5
+        float many .7
+        float few .3
 
 @Vertical
         multicol MagsDepths
