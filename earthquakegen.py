@@ -6,6 +6,17 @@ from statistics import mean
 from math import ceil
 import csv
 
+MAX_GENS = 100
+
+def map_desired(ident):
+        if ident == "many":
+                return int(2.5 * MAX_GENS)
+        if ident == "few":
+                return int(1.5 * MAX_GENS)
+        else:
+                return MAX_GENS
+
+
 #magnitudes ranges
 TotalMags = Range(0.0, 10.0, exclusive_upper=True, ave=3.3, dev=1.1)
 Micro = Range(0.0, 2.0, exclusive_upper=True)
@@ -108,7 +119,7 @@ if __name__=="__main__":
                 for vector in reader:
                         testcount += 1
                         #set all parms
-                        num_lines = translate_desired(vector['Recordings']) #this is used for desired number in all parms
+                        num_lines = map_desired(vector['Recordings']) #this is used for desired number in all parms
                         if num_lines == None:
                                 break
 
