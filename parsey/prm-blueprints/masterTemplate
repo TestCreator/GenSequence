@@ -5,6 +5,17 @@ from random import gauss, triangular, choice, vonmisesvariate, uniform, sample, 
 from math import ceil
 import csv
 
+MAX_GENS = 100
+
+def map_desired(ident):
+% for mapping in data['quantifiers']:
+        if ident == "${mapping['name']}":
+                return int(${mapping['value']} * MAX_GENS)
+% endfor
+        else:
+                return MAX_GENS
+
+
 # Declaring all the range objects
 % for entry in data['ranges']:
 ${entry['varname']} = ${entry['Rangeobj']}
@@ -64,6 +75,29 @@ def regenerate_parm_data_points(): #rewrites final data sets for both parms
 % endfor
 
 
+###################################################################################################################
+###################################################################################################################
+#
+# YOUR CODE HERE!!!
+# You'll have to define your own grammar for your csv file, especially if it has more columns than the number of params
+# See docs for how to do this
+# But here are a few production rules generated for you that you can use, and will certainly have to add to.
+
+def declare_grammar_production_rules(repetitions):
+        tg = Grammar()
+        tg.prod("${data['rowinstances']}", "${Row()}", reps=repetitions)
+        tg.prod("Row", "${${parm['varname']}()},${${parm['varname']}()},${${parm['varname']}()},${${parm['varname']}()}\n")
+% for card in data['something']:        
+        tg.prod("${card['first']}", lambda: ${card['varname']}.firstParm.next())
+        tg.prod("${card['second']", lambda: ${card['varname']}.secondParm.next())
+% endfor
+% for parm in data['somethingelse']:
+        tg.prod("${parm['varname']}", lambda: ${parm['varname']}.next())
+% endfor
+        return tg
+
+###################################################################################################################
+###################################################################################################################
 
 
 if __name__=="__main__":
@@ -74,7 +108,7 @@ if __name__=="__main__":
                 for vector in reader:
                         testcount += 1
                         #set all parms
-                        num_lines = translate_desired(vector['Recordings']) #this is used for desired number in all parms
+                        num_lines = map_desired(vector['Recordings']) #this is used for desired number in all parms
                         if num_lines == None:
                                 break
 
@@ -89,7 +123,7 @@ if __name__=="__main__":
 
                         #prepare the data file and file name
                         test_case_file_name = "cases1/{}-{}-".format(testcount, num_lines)
-                        for parm in ["magnitudes", "latitudes", "longitudes", "depths"]:
+                        for parm in ${data['iter_names']}:
                                 test_case_file_name += parm.split("_")[0] + ':' + vector[parm] + '-'
 
                         #generate new grammar
