@@ -169,13 +169,13 @@ class Parm:
                 self.generated = 0
         def setFavorites(self, fav):
                 """ fav is a list of Range objects. it can be a list of one Range """
-                if isinstance(fav, List):
+                if isinstance(fav, list):
                     self.favorites = fav
                 elif isinstance(fav, Range):
                     self.favorites = [fav]
         def setNonFavorites(self, non):
                 """ non is a list of Range objects. it can be a list of one Range """
-                if isinstance(non, List):
+                if isinstance(non, list):
                     self.non_favorites = non
                 elif isinstance(non, Range):
                     self.non_favorites = [non]
@@ -224,13 +224,13 @@ class Parm:
                 for _ in range(num_favs):
                     #pick point
                     select = self.favorites[randint(0, len(self.favorites)-1)] #Range object
-                    pt = select.uniform_pick(self.dist_args)
+                    pt = select.uniform_pick()
                     grand_set.append(round(pt,2))
 
                 # now generate all the outliers
                 for _ in range(num_outliers):
                     select = self.non_favorites[randint(0, len(self.non_favorites)-1)] #Range object
-                    pt = select.uniform_pick(self.dist_args)
+                    pt = select.uniform_pick()
                     grand_set.append(round(pt,2))
                 
                 return grand_set
