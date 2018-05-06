@@ -92,6 +92,36 @@ def search_for_parm_decs(fp):
 
 
 #####
+# SEARCH_FOR_HORIZ
+# find the arguments for horizontal - the number of recordings
+# how many rows in the csv file?
+# returns a list of dictionaries
+# Ex:
+# [ {'name' : 'many',
+#    'value': '2.5'},
+#   {'name' : 'few',
+#    'value': '1.5'}
+# ]
+#####
+def search_for_horiz(fp):
+    quantifiers = []
+    line = fp.readline()
+    while line:
+        if line.startswith("@Horizontal"):
+            line = fp.readline()
+            while not line.startswith("\n"):
+                ident = {}
+                # here would be a good PLY pattern matching!! TODO
+                fields = line.strip().split(" ") #['float', 'many', '2.5']
+                ident['name'] = fields[1]
+                ident['value'] = float(fields[2])
+                quantifiers.append(ident)
+                line = fp.readline()
+        line = fp.readline()
+    return quantifiers
+
+
+#####
 # PROCESS_RANGES
 # input is a string representing the pairs of or lists of or single range object names
 # turns the input into a list of tuples of range objects for (cardioid), 
@@ -280,30 +310,38 @@ def cli():
 
 
 if __name__=="__main__":
-        args = cli()
-        scrub_down(args.source)
-        source = open("NO-COMMENTS-"+args.source, 'r')
-        
-        #get the ranges
-        PARSED_TOKENS = parse_ranges.establish_parses(source, parse_ranges.parser)
+    args = cli()
+    scrub_down(args.source)
+    source = open("NO-COMMENTS-"+args.source, 'r')
+    
+    #get the ranges
+    PARSED_TOKENS = parse_ranges.establish_parses(source, parse_ranges.parser)
 
-        parms, cards, curLinePointer, file_reader = search_for_parm_decs(source)
-        print(cards)
-        PARSED_TOKENS['parms'] = format_parm_decs(parms)
-        PARSED_TOKENS['cards'] = format_card_decs(cards, parms)
+    # Initialization of Range and Parm Declarations
+    parms, cards, curLinePointer, file_reader = search_for_parm_decs(source)
+    PARSED_TOKENS['parms'] = format_parm_decs(parms)
+    PARSED_TOKENS['cards'] = format_card_decs(cards, parms)
 
-        card_specs, parm_specs = search_for_cardioid_specs(curLinePointer, file_reader, len(parms)+len(cards))
-        PARSED_TOKENS['special_card'] = card_specs
-        PARSED_TOKENS['special_parm'] = parm_specs
+    # File name params - can be reused from above
+    PARSED_TOKENS['iter_names'] = parms
 
-        print(PARSED_TOKENS['cards'])
-        parmys, cardys = partition_parms(parms, cards)
-        print(cardys)
-        PARSED_TOKENS['est_parms'] = format_parm_decs(parmys)
-        PARSED_TOKENS['est_cards'] = format_card_decs(cardys, parms)
+    # Setting favorite and non-favorites for parm's _cardioid function and cardioid's cardioid function
+    card_specs, parm_specs = search_for_cardioid_specs(curLinePointer, file_reader, len(parms)+len(cards))
+    PARSED_TOKENS['special_card'] = card_specs
+    PARSED_TOKENS['special_parm'] = parm_specs
+
+    # Partition parms and card to write the establish distType and desired num functions
+    parmys, cardys = partition_parms(parms, cards)
+    PARSED_TOKENS['est_parms'] = format_parm_decs(parmys)
+    PARSED_TOKENS['est_cards'] = format_card_decs(cardys, parms)
+
+    #Get the horizontal recordings
+    source.close() #start from the beginning
+    source = open("NO-COMMENTS-"+args.source, 'r')
+    PARSED_TOKENS['quantifiers'] = search_for_horiz(source)
 
 
-        serve_template(args.template, args.destination, **PARSED_TOKENS)
+    serve_template(args.template, args.destination, **PARSED_TOKENS)
         
         
 
