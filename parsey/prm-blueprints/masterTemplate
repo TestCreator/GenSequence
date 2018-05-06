@@ -8,13 +8,15 @@ import csv
 MAX_GENS = 100
 
 def map_desired(ident):
+        try:
+                x = int(ident)
+                return x
+        except ValueError as e:
 % for mapping in data['quantifiers']:
-        if ident == "${mapping['name']}":
-                return int(${mapping['value']} * MAX_GENS)
+                if ident == "${mapping['name']}":
+                        return int(${mapping['value']} * MAX_GENS)
 % endfor
-        else:
-                return MAX_GENS
-
+        return MAX_GENS
 
 # Declaring all the range objects
 % for entry in data['ranges']:
@@ -75,29 +77,27 @@ def regenerate_parm_data_points(): #rewrites final data sets for both parms
 % endfor
 
 
-###################################################################################################################
-###################################################################################################################
+#~#################################################################################################################
+#~#################################################################################################################
 #
 # YOUR CODE HERE!!!
 # You'll have to define your own grammar for your csv file, especially if it has more columns than the number of params
 # See docs for how to do this
 # But here are a few production rules generated for you that you can use, and will certainly have to add to.
-
 def declare_grammar_production_rules(repetitions):
         tg = Grammar()
-        tg.prod("${data['rowinstances']}", "${Row()}", reps=repetitions)
-        tg.prod("Row", "${${parm['varname']}()},${${parm['varname']}()},${${parm['varname']}()},${${parm['varname']}()}\n")
-% for card in data['something']:        
-        tg.prod("${card['first']}", lambda: ${card['varname']}.firstParm.next())
-        tg.prod("${card['second']", lambda: ${card['varname']}.secondParm.next())
+        tg.prod("Row", "Something Here!!!!\n")
+% for card in data['est_cards']:        
+        tg.prod("${card['first']}", lambda: ${card['card_varname']}.firstParm.next())
+        tg.prod("${card['second']}", lambda: ${card['card_varname']}.secondParm.next())
 % endfor
-% for parm in data['somethingelse']:
-        tg.prod("${parm['varname']}", lambda: ${parm['varname']}.next())
+% for parm in data['est_parms']:
+        tg.prod("${parm['parm_varname']}", lambda: ${parm['parm_varname']}.next())
 % endfor
         return tg
 
-###################################################################################################################
-###################################################################################################################
+#~#################################################################################################################
+#~#################################################################################################################
 
 
 if __name__=="__main__":
@@ -112,27 +112,28 @@ if __name__=="__main__":
                         if num_lines == None:
                                 break
 
-                        establish_magnitudes(vector['magnitudes'], num_lines)
-                        establish_latitudes(vector['latitudes'], num_lines)
-                        establish_longitudes(vector['longitudes'], num_lines)
-                        establish_depths(vector['depths'], num_lines)
-
+% for parm in data['parms']:
+                        establish_${parm['parm_varname']}(vector['${parm['parm_varname']}'], num_lines)
+% endfor
 
                         #create new data sets
                         regenerate_parm_data_points()
 
                         #prepare the data file and file name
-                        test_case_file_name = "cases1/{}-{}-".format(testcount, num_lines)
-                        for parm in ${data['iter_names']}:
-                                test_case_file_name += parm.split("_")[0] + ':' + vector[parm] + '-'
-
+                        test_case_file_name = "cases/{}-{}-".format(testcount, num_lines)
+                        for parm in ["Mags", "Lats", "Longs", "Depths"]:
+                                test_case_file_name += parm.split("_")[0] + '|' + vector[parm] + '-'
                         #generate new grammar
                         new_grammar = declare_grammar_production_rules(num_lines)
-                        new_data = new_grammar.gen("Recordings").split('\n')
+                        new_data = new_grammar.gen("Recordings").split("\n")
+                        new_data = new_data[0:len(new_data)-1]
 
                         #and dump into concrete data file
                         with open("{}.csv".format(test_case_file_name), 'w', newline='') as concretefile:
-                                fieldnames = ["#EventId","Magnitude","Epoch","Time","TimeLocal","Distance","Latitude","Longitude","DepthKm","DepthMi"]
+                                #~################## YOUR CODE HERE!!! ##########################################
+                                #~#  See docs for how to do this, but these fieldname strings should match the order of your grammar
+                                fieldnames = []   ## fieldnames = ['something', 'goes', 'here']
+                                #~###############################################################################
                                 writer = csv.DictWriter(concretefile, fieldnames=fieldnames)
                                 writer.writeheader()
                                 for line in new_data:
