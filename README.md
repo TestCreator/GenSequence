@@ -25,3 +25,8 @@ And maybe ...
 
 The last, grammar-based text file production, is very general and might subsume the others, but it might not be the easiest to learn and use. 
 
+
+## Desired (and eventual) Feature List
+
++ cardioid and _cardioid distributions will take "occasional" samples into account. Currently that does nothing, the cardioids are 90% favorites and 10% outliers
++ 
