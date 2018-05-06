@@ -9,12 +9,15 @@ import csv
 MAX_GENS = 100
 
 def map_desired(ident):
-        if ident == "many":
-                return int(2.5 * MAX_GENS)
-        if ident == "few":
-                return int(1.5 * MAX_GENS)
-        else:
-                return MAX_GENS
+        try:
+                x = int(ident)
+                return x
+        except ValueError as e:
+                if ident == "many":
+                        return int(.7 * MAX_GENS)
+                if ident == "few":
+                        return int(.3 * MAX_GENS)
+        return MAX_GENS
 
 
 #magnitudes ranges
@@ -100,14 +103,14 @@ def declare_grammar_production_rules(repetitions):
         tg.prod("Recordings", "${Event()}", reps=repetitions) #reps should be class_size
         tg.prod("Event", "${EventId()},${Magnitude()},${Epoch},${Time},${TimeLocal},${Distance},${Latitude()},${Longitude()},${DepthKm()},${DepthMi()}\n")
         tg.prod("EventId", lambda: randint(10000000, 70000000)) #TODO, specify in prm file?
-        tg.prod("Magnitude", lambda: magsdepths.firstParm.next())
+        tg.prod("Magnitude", lambda: MagsDepths.firstParm.next())
         tg.prod("Epoch", "#####")
         tg.prod("Time", "12:00.0")
         tg.prod("TimeLocal", "2012/09/22 09:46:45 PDT") #TODO, randomize date time choice?
         tg.prod("Distance", "30.0 km (  18.6 mi) WSW ( 240. azimuth) from Millican OR") #TODO, randomize choice?
-        tg.prod("Latitude", lambda: latitudes.next())
-        tg.prod("Longitude", lambda: longitudes.next())
-        tg.prod("DepthKm", lambda: magsdepths.secondParm.next())
+        tg.prod("Latitude", lambda: LatsLongs.firstParm.next())
+        tg.prod("Longitude", lambda: LatsLongs.secondParm.next())
+        tg.prod("DepthKm", lambda: MagsDepths.secondParm.next())
         tg.prod("DepthMi", "100") #TODO - this is critical! static data point conversion
         return tg
 
@@ -123,10 +126,10 @@ if __name__=="__main__":
                         if num_lines == None:
                                 break
 
-                        establish_magnitudes(vector['Mags'], num_lines)
-                        establish_latitudes(vector['Lats'], num_lines)
-                        establish_longitudes(vector['Longs'], num_lines)
-                        establish_depths(vector['Depths'], num_lines)
+                        establish_Mags(vector['Mags'], num_lines)
+                        establish_Lats(vector['Lats'], num_lines)
+                        establish_Longs(vector['Longs'], num_lines)
+                        establish_Depths(vector['Depths'], num_lines)
 
 
                         #create new data sets
@@ -135,7 +138,7 @@ if __name__=="__main__":
                         #prepare the data file and file name
                         test_case_file_name = "cases1/{}-{}-".format(testcount, num_lines)
                         for parm in ["Mags", "Lats", "Longs", "Depths"]:
-                                test_case_file_name += parm.split("_")[0] + '|' + vector[parm] + '-'
+                                test_case_file_name += parm.split("_")[0] + ':' + vector[parm] + '-'
                         #generate new grammar
                         new_grammar = declare_grammar_production_rules(num_lines)
                         new_data = new_grammar.gen("Recordings").split("\n")
