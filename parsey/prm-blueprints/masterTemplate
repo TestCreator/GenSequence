@@ -38,7 +38,7 @@ ${parm['parm_varname']}.setNonFavorites(${parm['nonfavs']})
 % endfor
 
 # Establish Cardioid functions
-% for card in data['cards']:
+% for card in data['est_cards']:
 def establish_${card['first']}(disttype, des):
         ${card['card_varname']}.firstParm.setDistributionType(disttype)
         ${card['card_varname']}.firstParm.setDesired(des)
@@ -47,19 +47,22 @@ def establish_${card['second']}(disttype, des):
         ${card['card_varname']}.secondParm.setDesired(des)
 % endfor
 
-% for parm in data['parms']:
+% for parm in data['est_parms']:
 def establish_${parm['parm_varname']}(disttype, des):
         ${parm['parm_varname']}.setDistributionType(disttype)
         ${parm['parm_varname']}.setDesired(des)
 % endfor
 
+#Regenerate function
+def regenerate_parm_data_points(): #rewrites final data sets for both parms
+% for c in data['est_cards']:
+        ${c['card_varname']}.generate()
+% endfor 
+% for p in data['est_parms']:
+        ${p['parm_varname']}.setup()
+        ${p['parm_varname']}.scramble()
+% endfor
 
-def regenerate_parm_data_points():
-        magsdepths.generate() #rewrites final data sets for both parms
-        latitudes.setup()
-        latitudes.scramble()
-        longitudes.setup()
-        longitudes.scramble()
 
 
 
