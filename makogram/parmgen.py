@@ -169,10 +169,16 @@ class Parm:
                 self.generated = 0
         def setFavorites(self, fav):
                 """ fav is a list of Range objects. it can be a list of one Range """
-                self.favorites = fav
+                if isinstance(fav, List):
+                    self.favorites = fav
+                elif isinstance(fav, Range):
+                    self.favorites = [fav]
         def setNonFavorites(self, non):
                 """ non is a list of Range objects. it can be a list of one Range """
-                self.non_favorites = non
+                if isinstance(non, List):
+                    self.non_favorites = non
+                elif isinstance(non, Range):
+                    self.non_favorites = [non]
         def generate(self, k=100000):
                 """
                 generates the samples from either ints or a special set of data points like names or times
