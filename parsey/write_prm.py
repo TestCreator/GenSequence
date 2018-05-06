@@ -105,9 +105,19 @@ def search_for_parm_decs(fp):
 #####
 def search_for_horiz(fp):
     quantifiers = []
+    rowTitle = {}
     line = fp.readline()
     while line:
         if line.startswith("@Horizontal"):
+            #grab the horizontal name
+            res = list(filter(lambda x: x!="" and x!="\t", line.split(" ")))
+            #here would also be a good PLY pattern match!
+            if len(res) == 1:
+                rowTitle['name'] = "Rows"
+            else:
+                rowTitle['name'] = res[2]
+
+            # then get the args
             line = fp.readline()
             while not line.startswith("\n"):
                 ident = {}
@@ -118,7 +128,7 @@ def search_for_horiz(fp):
                 quantifiers.append(ident)
                 line = fp.readline()
         line = fp.readline()
-    return quantifiers
+    return rowTitle, quantifiers
 
 
 #####
@@ -338,8 +348,9 @@ if __name__=="__main__":
     #Get the horizontal recordings
     source.close() #start from the beginning
     source = open("NO-COMMENTS-"+args.source, 'r')
-    PARSED_TOKENS['quantifiers'] = search_for_horiz(source)
-
+    rt, q = search_for_horiz(source)
+    PARSED_TOKENS['rowTitle'] = rt
+    PARSED_TOKENS['quantifiers'] = q 
 
     serve_template(args.template, args.destination, **PARSED_TOKENS)
         
