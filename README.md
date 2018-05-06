@@ -29,4 +29,4 @@ The last, grammar-based text file production, is very general and might subsume 
 ## Desired (and eventual) Feature List
 
 + cardioid and _cardioid distributions will take "occasional" samples into account. Currently that does nothing, the cardioids are 90% favorites and 10% outliers
-+ 
++ fix distribution selection for 0 or 1 cases - pick from middle
