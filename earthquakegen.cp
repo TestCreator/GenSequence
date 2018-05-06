@@ -3,29 +3,33 @@ Recordings:
         many
         few
 
-magnitudes:
+Mags:
         normal
         uniform
         right_slanted
         left_slanted
+        _cardioid
         cardioid prop magnicard if depthicard
 
-latitudes:
+Lats:
         normal
         uniform
         right_slanted
         left_slanted
+        _cardioid
 
-longitudes:
+Longs:
         normal
         uniform
         right_slanted
         left_slanted
+        _cardioid
 
-depths:
+Depths:
         normal
         uniform
         right_slanted
         left_slanted
+        _cardioid
         cardioid prop depthicard if magnicard
 
