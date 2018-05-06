@@ -31,7 +31,6 @@ South Range[low: -121.347, high: -114.0844]
 @Vertical
         multicol MagsDepths
         multicol LatsLongs
-        col Activities
 
 MagsDepths:
         col Mags
@@ -41,33 +40,32 @@ LatsLongs:
         col Lats
         col Longs
 
-
-Magnitude~_cardioid: #TODO the pairwise test vectors need to cover the opposite case
-        favorites: Micro
-        occasional:
-        outliers: Great
-
-MagnitudeDepth~cardioid:
+MagsDepths~cardioid:
         favorites: Micro*Shallow, Great*Deep, Feelable*Mid
         occasional:
         not: Micro*Deep, Great*Shallow, Feelable*Deep, Feelable*Shallow
 
-Depth~_cardioid:
+Mags~_cardioid: #TODO the pairwise test vectors need to cover the opposite case
+        favorites: Micro,Feelable,Great
+        occasional:
+        outliers: Great
+
+Depths~_cardioid:
         favorites: Shallow
         occasional:
         outliers: Deep
 
-Latitude~_cardioid:
+Lats~_cardioid:
         favorites: East
         occasional: 
         outliers: West
 
-LatitudeLongitude~cardioid: #necessary joint distribution - multicol
+LatsLongs~cardioid: #necessary joint distribution - multicol
         favorites: North*East
         occasional:
         not: South*West
 
-Longtitude~_cardioid:
+Longs~_cardioid:
         favorites: North
         occasional: 
         outliers: South
