@@ -113,7 +113,6 @@ def process_ranges(rangecross):
         x = reduce(lambda a,b: a+b, x)
 
     x = "".join(list(filter(lambda y: y != "'", str(x))))
-    print(x)
     return x
     
 
@@ -202,7 +201,7 @@ def format_parm_decs(parm_group):
 
 
 #####
-#
+# SMART_SPLIT
 #
 #
 #####
@@ -242,6 +241,24 @@ def format_card_decs(card_group, parm_group):
         the_cards.append(temp)
     return the_cards
 
+
+
+#####
+# PARTITION_PARMS
+# figure out which parms are in a multicol, and which are not!
+#
+#####
+def partition_parms(parms_list, cards_list):
+    parms_partition = set(parms_list)
+    cards_partition = set()
+    for card in cards_list:
+        cards_partition.add(card)
+        first, second = smart_split(card, parms_list)
+        parms_partition -= set([first, second])
+    return list(parms_partition), list(cards_partition)
+
+
+
 #####
 # SERVE_TEMPLATE
 # does the writing!! the output is the executable
@@ -271,12 +288,20 @@ if __name__=="__main__":
         PARSED_TOKENS = parse_ranges.establish_parses(source, parse_ranges.parser)
 
         parms, cards, curLinePointer, file_reader = search_for_parm_decs(source)
+        print(cards)
         PARSED_TOKENS['parms'] = format_parm_decs(parms)
         PARSED_TOKENS['cards'] = format_card_decs(cards, parms)
 
         card_specs, parm_specs = search_for_cardioid_specs(curLinePointer, file_reader, len(parms)+len(cards))
         PARSED_TOKENS['special_card'] = card_specs
         PARSED_TOKENS['special_parm'] = parm_specs
+
+        print(PARSED_TOKENS['cards'])
+        parmys, cardys = partition_parms(parms, cards)
+        print(cardys)
+        PARSED_TOKENS['est_parms'] = format_parm_decs(parmys)
+        PARSED_TOKENS['est_cards'] = format_card_decs(cardys, parms)
+
 
         serve_template(args.template, args.destination, **PARSED_TOKENS)
         
