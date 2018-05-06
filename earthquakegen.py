@@ -34,14 +34,29 @@ Lats = Parm("latitudes", "one-by-one", TotalLats)
 Longs = Parm("longitudes", "one-by-one", TotalLongs)
 Depths = Parm("depths", "one-by-one", TotalDepths)
 
-
 MagsDepths = Cardioid(Mags, Depths)
+LatsLongs = Cardioid(Lats, Longs)
+
+
+#Cardioid cardioid
 MagsDepths.setFavorites([(Micro,Shallow), (Great,Deep), (Feelable,Mid)])
 MagsDepths.setNonFavorites([(Micro,Deep), (Great,Shallow), (Feelable,Deep), (Feelable,Shallow)])
 
-LatsLongs = Cardioid(Lats, Longs)
 LatsLongs.setFavorites([(North,East)])
 LatsLongs.setNonFavorites([(South,West)])
+
+#Parm _cardioid
+Mags.setFavorites(Micro)
+Mags.setNonFavorites(Great)
+
+Depths.setFavorites(Shallow)
+Depths.setNonFavorites(Deep)
+
+Lats.setFavorites(East)
+Lats.setNonFavorites(West)
+
+Longs.setFavorites(North)
+Longs.setNonFavorites(South) 
 
 
 
