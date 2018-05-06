@@ -5,36 +5,53 @@ from random import gauss, triangular, choice, vonmisesvariate, uniform, sample, 
 from math import ceil
 import csv
 
+# Declaring all the range objects
 % for entry in data['ranges']:
 ${entry['varname']} = ${entry['Rangeobj']}
 % endfor
 
+# Declaring all the parm objects
 % for rang in data['parms']:
 ${rang['parm_varname']} = Parm('${rang['construct_name']}', "one-by-one", Total${rang['parm_varname']})
 % endfor
 
+# Declaring all the cardioids
 % for card in data['cards']:
 ${card['card_varname']} = Cardioid(${card['first']}, ${card['second']})
 % endfor
 
 
-magsdepths.setFavorites([(Micro,Shallow), (Great,Deep), (Feelable,Mid)])
-magsdepths.setNonFavorites([(Micro,Deep), (Great,Shallow), (Feelable,Deep), (Feelable,Shallow)])
+
+#Cardioid cardioid
+% for card in data['special_card']:
+${card['card_varname']}.setFavorites(${card['favs']})
+${card['card_varname']}.setNonFavorites(${card['nonfavs']})
+
+% endfor
 
 
+#Parm _cardioid
+% for parm in data['special_parm']:
+${parm['parm_varname']}.setFavorites(${parm['favs']})
+${parm['parm_varname']}.setNonFavorites(${parm['nonfavs']})
 
-def establish_magnitudes(disttype, des):
-        magsdepths.firstParm.setDistributionType(disttype)
-        magsdepths.firstParm.setDesired(des)
-def establish_latitudes(disttype, des):
-        latitudes.setDistributionType(disttype)
-        latitudes.setDesired(des)
-def establish_longitudes(disttype, des):
-        longitudes.setDistributionType(disttype)
-        longitudes.setDesired(des)
-def establish_depths(disttype, des):
-        magsdepths.secondParm.setDistributionType(disttype)
-        magsdepths.secondParm.setDesired(des)
+% endfor
+
+# Establish Cardioid functions
+% for card in data['cards']:
+def establish_${card['first']}(disttype, des):
+        ${card['card_varname']}.firstParm.setDistributionType(disttype)
+        ${card['card_varname']}.firstParm.setDesired(des)
+def establish_${card['second']}(disttype, des):
+        ${card['card_varname']}.secondParm.setDistributionType(disttype)
+        ${card['card_varname']}.secondParm.setDesired(des)
+% endfor
+
+% for parm in data['parms']:
+def establish_${parm['parm_varname']}(disttype, des):
+        ${parm['parm_varname']}.setDistributionType(disttype)
+        ${parm['parm_varname']}.setDesired(des)
+% endfor
 
 
 def regenerate_parm_data_points():
