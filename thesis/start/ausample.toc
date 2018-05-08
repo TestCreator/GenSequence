@@ -1,6 +1,5 @@
-\contentsline {chapter}{Acknowledgments}{ii}
-\contentsline {chapter}{\numberline {1}This is the Title of the First Chapter}{1}
+\contentsline {chapter}{\numberline {1}\relax \fontsize {12}{14.5}\selectfont \abovedisplayskip 12\p@ plus3\p@ minus7\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \belowdisplayskip \abovedisplayskip \let \leftmargin \leftmargini \parsep 5\p@ plus2.5\p@ minus\p@ \topsep 10\p@ plus4\p@ minus6\p@ \itemsep 5\p@ plus2.5\p@ minus\p@ \leftmargin \leftmargini \parsep 5\p@ plus2.5\p@ minus\p@ \topsep 10\p@ plus4\p@ minus6\p@ \itemsep 5\p@ plus2.5\p@ minus\p@ This is the Title of the First Chapter}{1}
 \contentsline {section}{\numberline {1.1}This is an example of a section heading}{1}
-\contentsline {subsection}{\numberline {1.1.1}This is a subsection heading}{2}
-\contentsline {chapter}{\numberline {2}New Chapter}{3}
+\contentsline {subsection}{\numberline {1.1.1}This is a subsection heading}{1}
+\contentsline {chapter}{\numberline {2}\relax \fontsize {12}{14.5}\selectfont \abovedisplayskip 12\p@ plus3\p@ minus7\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \belowdisplayskip \abovedisplayskip \let \leftmargin \leftmargini \parsep 5\p@ plus2.5\p@ minus\p@ \topsep 10\p@ plus4\p@ minus6\p@ \itemsep 5\p@ plus2.5\p@ minus\p@ \leftmargin \leftmargini \parsep 5\p@ plus2.5\p@ minus\p@ \topsep 10\p@ plus4\p@ minus6\p@ \itemsep 5\p@ plus2.5\p@ minus\p@ New Chapter}{3}
 \contentsline {chapter}{Bibliography}{4}
