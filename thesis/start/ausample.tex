@@ -21,7 +21,9 @@
 
 
 \chapterfont{\centering \large}
-
+\renewcommand{\cfttoctitlefont}{\normalsize \textbf}
+\renewcommand{\cftloftitlefont}{\normalsize \textbf}
+\renewcommand{\cftlottitlefont}{\normalsize \textbf}
 
 
 % May want theorems numbered by chapter
@@ -70,36 +72,33 @@
 
 \begin{romanpages}      % roman-numbered pages 
 
-
-\chapter*{An Abstract of the Thesis of}
 \input{abs}
 
+\input{ack}
 
-
-\begin{acknowledgments}
-My acknowledgements to Michal and friends.
-\end{acknowledgments}
-
-\chapter*{\normalsize Table of Contents}
-\renewcommand\contentsname{}
+\begin{center}
 \tableofcontents
+\end{center}
 
-%list of materials
 \input{materials}
 
-\chapter*{\normalsize List of Figures}
-\renewcommand\listfigurename{}
+\begin{center}
 \listoffigures
+\end{center}
 
-\chapter*{\normalsize List of Tables}
-\renewcommand\listtablename{}
+
+\newpage
+\begin{center}
 \listoftables
+\end{center}
+
 
 \end{romanpages}        % All done with roman-numbered pages%
 
 \normalem       % Make italics the default for \em%
 
-\chapter{This is the Title of the\\ First Chapter}  % Use \\ for long titles %
+
+\chapter{\normalsize This is the Title of the First Chapter}  % Use \\ for long titles %
 This is a sample document for the Auburn \LaTeX{} style-files known
 as {\tt aums} (for Master's papers) and {\tt auphd} (for Ph.D.'s).
 The appendix contains some of the history of this project, including
@@ -163,7 +162,9 @@ Heading 1 & \multicolumn{1}{|c}{Heading 2} & \multicolumn{1}{c}{Heading 3} & \mu
 
 \subsection{This is a subsection heading}%
 Text after the subsection. And we have a figure, Figure \ref{HollowCircles}.
-\chapter{New Chapter}
+
+
+\chapter{\normalsize New Chapter}
 \begin{theorem}
 Another theorem.
 \end{theorem}%
