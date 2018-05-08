@@ -13,18 +13,14 @@
 \usepackage{url}
 \usepackage{tikz}
 \usepackage{pgf}
-\usepackage{abstract}
+\usepackage{tocloft}
+\usepackage{sectsty}
+
 %%%%%Format rules: Normal margins are 1 in. If you need to print with 1.5in margins, uncomment the line below
 \oddsidemargin0.5in \textwidth6in
 
-%% If you do not need a List of Abbreviations, then comment out the lines below and the \printnomenclature line.
-%%for List of Abbreviations information:  (see http://www.mackichan.com/TECHTALK/509.htm  )
-\usepackage[intoc]{nomencl}
-\renewcommand{\nomname}{List of Abbreviations}   	       
-\makenomenclature 
-%% don't forget to run:   makeindex ausample.nlo -s nomencl.ist -o ausample.nls
-%% Also, if 
 
+\chapterfont{\centering \large}
 
 
 
@@ -75,7 +71,7 @@
 \begin{romanpages}      % roman-numbered pages 
 
 
-\chapter*{\textbf{An Abstract of the Thesis of}}
+\chapter*{An Abstract of the Thesis of}
 \input{abs}
 
 
@@ -84,22 +80,27 @@
 My acknowledgements to Michal and friends.
 \end{acknowledgments}
 
+\chapter*{\normalsize Table of Contents}
+\renewcommand\contentsname{}
 \tableofcontents
-\vfill
 
 %list of materials
 \input{materials}
 
-
+\chapter*{\normalsize List of Figures}
+\renewcommand\listfigurename{}
 \listoffigures
+
+\chapter*{\normalsize List of Tables}
+\renewcommand\listtablename{}
 \listoftables
-\printnomenclature[0.5in] %used for the List of Abbreviations
+
 \end{romanpages}        % All done with roman-numbered pages%
 
 \normalem       % Make italics the default for \em%
 
 \chapter{This is the Title of the\\ First Chapter}  % Use \\ for long titles %
-This is a sample document for the Auburn \nomenclature{Auburn}{Auburn University} \LaTeX{} style-files known
+This is a sample document for the Auburn \LaTeX{} style-files known
 as {\tt aums} (for Master's papers) and {\tt auphd} (for Ph.D.'s).
 The appendix contains some of the history of this project, including
 contact information for the authors. 
@@ -110,7 +111,7 @@ ftp.dms.auburn.edu in the directory aums (on-campus computers may
 also retrieve these from \url{http://www.dms.auburn.edu/manuals}).
 Most users will need either Lamport's book \cite{lamport} or Hahn's book
 \cite{hahn}.%
-If you do not need the List of Abbreviations\nomenclature{LoA}{List of Abbreviations}, comment the nomencl package and associated nomenclature commands. 
+If you do not need the List of Abbreviations, comment the nomencl package and associated nomenclature commands. 
 \begin{theorem} This is an example theorem.
 \end{theorem}%
 \section{This is an example of a section heading}%
