@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  8 MAY 2018 18:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  8 MAY 2018 20:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -430,56 +430,136 @@ Package: indentfirst 1995/11/23 v1.03 Indent first paragraph (DPC)
 \WF@everypar=\toks28
 Package: wrapfig 2003/01/31  v 3.6
 )
+(/usr/local/texlive/2016/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2016/02/20 v1.1-142 Sub-captions (AR)
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2016/02/21 v3.3-144 Customizing captions (AR)
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2016/02/04 v1.7-139 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 67.
+\captionmargin=\dimen156
+\captionmargin@=\dimen157
+\captionwidth=\dimen158
+\caption@tempdima=\dimen159
+\caption@indent=\dimen160
+\caption@parindent=\dimen161
+\caption@hangindent=\dimen162
+)
+\c@ContinuedFloat=\count113
+Package caption Info: wrapfig package is loaded.
+)
+\c@subfigure=\count114
+\c@subtable=\count115
+)
 (/usr/local/texlive/2016/texmf-dist/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
 \ttl@box=\box41
 \beforetitleunit=\skip78
 \aftertitleunit=\skip79
-\ttl@plus=\dimen156
-\ttl@minus=\dimen157
+\ttl@plus=\dimen163
+\ttl@minus=\dimen164
 \ttl@toksa=\toks29
-\titlewidth=\dimen158
-\titlewidthlast=\dimen159
-\titlewidthfirst=\dimen160
+\titlewidth=\dimen165
+\titlewidthlast=\dimen166
+\titlewidthfirst=\dimen167
 )
-\c@theorem=\count113
-
-(./ausample.aux
-
-LaTeX Warning: Label `HollowCircles' multiply defined.
-
+(/usr/local/texlive/2016/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2016/04/27 v1.618033 publication quality tables
+\heavyrulewidth=\dimen168
+\lightrulewidth=\dimen169
+\cmidrulewidth=\dimen170
+\belowrulesep=\dimen171
+\belowbottomsep=\dimen172
+\aboverulesep=\dimen173
+\abovetopsep=\dimen174
+\cmidrulesep=\dimen175
+\cmidrulekern=\dimen176
+\defaultaddspace=\dimen177
+\@cmidla=\count116
+\@cmidlb=\count117
+\@aboverulesep=\dimen178
+\@belowrulesep=\dimen179
+\@thisruleclass=\count118
+\@lastruleclass=\count119
+\@thisrulewidth=\dimen180
 )
+(/usr/local/texlive/2016/texmf-dist/tex/latex/mdwtools/syntax.sty
+Package: syntax 1996/05/17 1.07 Syntax typesetting (MDW)
+\grammarparsep=\skip80
+\grammarindent=\dimen181
+\sdstartspace=\skip81
+\sdendspace=\skip82
+\sdmidskip=\skip83
+\sdtokskip=\skip84
+\sdfinalskip=\skip85
+\sdrulewidth=\dimen182
+\sdcirclediam=\dimen183
+\sdindent=\dimen184
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count120
+\lst@gtempboxa=\box42
+\lst@token=\toks30
+\lst@length=\count121
+\lst@currlwidth=\dimen185
+\lst@column=\count122
+\lst@pos=\count123
+\lst@lostspace=\dimen186
+\lst@width=\dimen187
+\lst@newlines=\count124
+\lst@lineno=\count125
+\lst@maxwidth=\dimen188
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count126
+\lst@skipnumbers=\count127
+\lst@framebox=\box43
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+\c@theorem=\count128
+
+(./ausample.aux)
 \openout1 = `ausample.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 63.
+LaTeX Font Info:    ... okay on input line 63.
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
-(lastpage)             ! on input line 38.
+(lastpage)             ! on input line 63.
  ABD: EveryShipout initializing macros
 (/usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count114
-\scratchdimen=\dimen161
-\scratchbox=\box42
-\nofMPsegments=\count115
-\nofMParguments=\count116
-\everyMPshowfont=\toks30
-\MPscratchCnt=\count117
-\MPscratchDim=\dimen162
-\MPnumerator=\count118
-\makeMPintoPDFobject=\count119
-\everyMPtoPDFconversion=\toks31
+\scratchcounter=\count129
+\scratchdimen=\dimen189
+\scratchbox=\box44
+\nofMPsegments=\count130
+\nofMParguments=\count131
+\everyMPshowfont=\toks31
+\MPscratchCnt=\count132
+\MPscratchDim=\dimen190
+\MPnumerator=\count133
+\makeMPintoPDFobject=\count134
+\everyMPtoPDFconversion=\toks32
 ) (/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2016/05/10 v0.21 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -527,6 +607,11 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: listings package is loaded.
+Package caption Info: End \AtBeginDocument code.
+\c@lstlisting=\count135
+
 [1
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
@@ -596,66 +681,222 @@ Missing character: There is no ™ in font cmr12!
 Chapter 4.
 (./background.tex [8
 
-] <team-file.png, id=62, 1445.4pt x 903.375pt>
+] <team-file.png, id=62, 1283.79625pt x 875.27pt>
 File: team-file.png Graphic file (type png)
 
 <use team-file.png>
 Package pdftex.def Info: team-file.png used on input line 10.
-(pdftex.def)             Requested size: 1445.39648pt x 903.3728pt.
+(pdftex.def)             Requested size: 385.14185pt x 262.58302pt.
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+ [9 <./team-file.png>]
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+ [10]
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ¨ in font cmr12!
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 56.
 
-Overfull \hbox (1011.77649pt too wide) in paragraph at lines 10--11
-[][] 
+(/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 56.
+ [11]
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no “ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+ [12]
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no “ in font cmr12!
+
+<law1.png, id=79, 433.62pt x 312.16624pt>
+File: law1.png Graphic file (type png)
+ <use law1.png>
+Package pdftex.def Info: law1.png used on input line 84.
+(pdftex.def)             Requested size: 303.53192pt x 218.51488pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<law2.png, id=80, 436.63126pt x 316.18124pt>
+File: law2.png Graphic file (type png)
+ <use law2.png>
+Package pdftex.def Info: law2.png used on input line 91.
+(pdftex.def)             Requested size: 305.63979pt x 221.32535pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<law3.png, id=81, 419.5675pt x 314.17375pt>
+File: law3.png Graphic file (type png)
+ <use law3.png>
+Package pdftex.def Info: law3.png used on input line 98.
+(pdftex.def)             Requested size: 293.69524pt x 219.92012pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[13]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 108.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 108.
+ [14 <./law1.png> <./law2.png>] [15 <./law3.png>]
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no “ in font cmr12!
+) [16]
+Chapter 5.
+(./methods.tex
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+) [17
+
+] [18]
+Chapter 6.
+(./results.tex
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 12.
+ (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+Underfull \hbox (badness 10000) in paragraph at lines 12--12
+[]\OT1/pcr/m/n/12 13-70-mass|right[]-slanted-position|right[]-
  []
 
 
-LaTeX Warning: Float too large for page by 252.94281pt on input line 11.
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 6--13
+[] 
+ []
 
-) [9] [10 <./team-file.png>]
-Chapter 5.
+<start-ex.png, id=107, 1020.81375pt x 877.2775pt>
+File: start-ex.png Graphic file (type png)
+ <use start-ex.png>
+Package pdftex.def Info: start-ex.png used on input line 21.
+(pdftex.def)             Requested size: 408.31827pt x 350.90479pt.
 
-LaTeX Warning: Citation `lamport' on page 11 undefined on input line 129.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no “ in font cmr12!
+[19
+
+]
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+ <final-ex.png, id=112, 1019.81pt x 874.26625pt>
+File: final-ex.png Graphic file (type png)
+ <use final-ex.png>
+Package pdftex.def Info: final-ex.png used on input line 32.
+(pdftex.def)             Requested size: 407.91678pt x 349.7003pt.
 
 
-LaTeX Warning: Citation `hahn' on page 11 undefined on input line 130.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[11
+[20 <./start-ex.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 49--49
+[]\OT1/pcr/m/n/12 6-70-magnitudes|cardioid-latitudes|left[]-
+ []
 
-] [12]
-Chapter 6.
-(./ausample.bbl [13
 
-]) [14
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 43--50
+[] 
+ []
 
-] 
+[21 <./final-ex.png>]
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+ <mags.png, id=121, 719.68875pt x 696.6025pt>
+File: mags.png Graphic file (type png)
+
+<use mags.png>
+Package pdftex.def Info: mags.png used on input line 78.
+(pdftex.def)             Requested size: 260.17464pt x 251.82901pt.
+ <depths.png, id=122, 719.68875pt x 699.61375pt>
+File: depths.png Graphic file (type png)
+
+<use depths.png>
+Package pdftex.def Info: depths.png used on input line 82.
+(pdftex.def)             Requested size: 260.17464pt x 252.9176pt.
+ [22] [23 <./mags.png> <./depths.png>]
+<clusters-nobg.png, id=134, 722.7pt x 700.6175pt>
+File: clusters-nobg.png Graphic file (type png)
+ <use clusters-nobg.png>
+Package pdftex.def Info: clusters-nobg.png used on input line 95.
+(pdftex.def)             Requested size: 361.3491pt x 350.30789pt.
+)
+[24 <./clusters-nobg.png>]
+Chapter 7.
+(./conclusion.tex
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+ [25
+
+]
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+) (./ausample.bbl [26]) [27
+
+]
+
 AED: lastpage setting LastPage
-(./ausample.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
- ) 
+(./ausample.aux) ) 
 Here is how much of TeX's memory you used:
- 12400 strings out of 493014
- 247474 string characters out of 6133351
- 286412 words of memory out of 5000000
- 15662 multiletter control sequences out of 15000+600000
- 9122 words of font info for 33 fonts, out of 8000000 for 9000
+ 15171 strings out of 493014
+ 290361 string characters out of 6133351
+ 362735 words of memory out of 5000000
+ 18373 multiletter control sequences out of 15000+600000
+ 10105 words of font info for 37 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,10n,54p,1219b,500s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><
-/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></us
-r/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr
-/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/
-local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/l
-ocal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/latxfont/lcircle1.pfb>
-
-Output written on ausample.pdf (22 pages, 509792 bytes).
+ 55i,9n,54p,1358b,1122s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.e
+nc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pf
+b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></
+usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr
+/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/lo
+cal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local
+/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/
+texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/t
+exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/tex
+live/2016/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
+Output written on ausample.pdf (35 pages, 1013124 bytes).
 PDF statistics:
- 111 PDF objects out of 1000 (max. 8388607)
- 75 compressed objects within 1 object stream
+ 186 PDF objects out of 1000 (max. 8388607)
+ 116 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 23 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 63 words of extra memory for PDF output out of 10000 (max. 10000000)
 

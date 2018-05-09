@@ -17,8 +17,33 @@
 \usepackage{sectsty}
 \usepackage{indentfirst} %abstract indent para
 \usepackage{wrapfig} %figures embedded in text
+\usepackage{subcaption} %subfigures 
 \usepackage{titlesec} %making \section headers smaller
+\usepackage{booktabs} %table styling
+\usepackage{syntax} % CFG styling
+\usepackage{listings} %both for code blocks
+\usepackage{color}
 
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=0.25mm,
+  belowskip=0.25mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numberstyle=\tiny \color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
 
 %%%%%Format rules: Normal margins are 1 in. If you need to print with 1.5in margins, uncomment the line below
 \oddsidemargin0.5in \textwidth6in
@@ -116,122 +141,74 @@
 \chapter{\normalsize Background on Design Decisions}
 \input{background}
 
-\chapter{\normalsize This is the Title of the First Chapter}  % Use \\ for long titles %
-This is a sample document for the Auburn \LaTeX{} style-files known
-as {\tt aums} (for Master's papers) and {\tt auphd} (for Ph.D.'s).
-The appendix contains some of the history of this project, including
-contact information for the authors. 
-Site administrators should upgrade to \LaTeX2e; however, the style files
-should work with the older \LaTeX.  \vfill The style files should be available
-on mallard.  The current release is available by anonymous ftp to
-ftp.dms.auburn.edu in the directory aums (on-campus computers may
-also retrieve these from \url{http://www.dms.auburn.edu/manuals}).
-Most users will need either Lamport's book \cite{lamport} or Hahn's book
-\cite{hahn}.%
-If you do not need the List of Abbreviations, comment the nomencl package and associated nomenclature commands. 
-\begin{theorem} This is an example theorem.
-\end{theorem}%
-\section{This is an example of a section heading}%
-This is some text which follows the section heading. You can find the data in Table \ref{tab:results}.
-\begin{figure}
-  \begin{center}
-  \setlength{\unitlength}{.7in}
-    \begin{picture}(4.2,1)
-      \put(0.2,.5){\circle{0.1}}
-      \put(0.9,.5){\circle{0.2}}
-      \put(1.6,.5){\circle{0.3}}
-      \put(2.3,.5){\circle{0.4}}
-      \put(3.1,.5){\circle{0.5}}
-      \put(3.8,.5){\circle{0.6}}
-    \end{picture}
-  \end{center}
- \caption{Hollow circles 1}\label{HollowCircles}
-\end{figure}%
-\begin{figure}
-\centering
-  \begin{tikzpicture}
-\filldraw [double distance=0.20mm,very thick, fill=white, draw=black] (0cm,0cm) rectangle (5cm, 2.5cm);
-   \fill (2.5in,0in) circle (3pt);
-\end{tikzpicture}
-\caption{Some TikZ picture.}
-\end{figure}%
-\begin{table}[htb]
-\begin{center}
-\begin{tabular}{|c | c | c | c|}
-\hline
-\multicolumn{1}{|c|}{~} & \multicolumn{3}{c|}{Multicolumn Heading 1}\\
-Heading 1 & \multicolumn{1}{|c}{Heading 2} & \multicolumn{1}{c}{Heading 3} & \multicolumn{1}{c|}{Heading 4} \\
-\hline
-1 & 19, 20 (19.5)& NA & NA \\
-\hline
-3 & $\infty$* ($\infty$)& 18, 15 (16.5)& 9, 9 (9)\\
-\hline
-5 & 23, 18 (20.5) 
-& 16 (16)
-& 7, 7, 8 (7.33)\\
-\hline
-\multicolumn{4}{|c|}{*Some random comment for the whole table.}\\
-\hline
-\end{tabular}
-\end{center}
-\caption{Some Table of data}
-\label{tab:results}
-\end{table}%
+\chapter{\normalsize Methods}
+\input{methods}
 
-\subsection{This is a subsection heading}%
-Text after the subsection. And we have a figure, Figure \ref{HollowCircles}.
+\chapter{\normalsize Results}
+\input{results}
 
+\chapter{\normalsize Concluding Thoughts}
+\input{conclusion}
 
-\chapter{\normalsize New Chapter}
-\begin{theorem}
-Another theorem.
-\end{theorem}%
-\begin{figure}
-  \begin{center}
-  \setlength{\unitlength}{.7in}
-    \begin{picture}(4.2,1)
-      \put(0.2,.5){\circle{0.1}}
-      \put(0.9,.5){\circle{0.2}}
-      \put(1.6,.5){\circle{0.3}}
-      \put(2.3,.5){\circle{0.4}}
-      \put(3.1,.5){\circle{0.5}}
-      \put(3.8,.5){\circle{0.6}}
-    \end{picture}
-  \end{center}
- \caption{Hollow circles}\label{HollowCircles}
-\end{figure}
+%\chapter{\normalsize This is the Title of the First Chapter}  % Use \\ for long titles %
+%This is a sample document for the Auburn \LaTeX{} style-files known
+%as {\tt aums} (for Master's papers) and {\tt auphd} (for Ph.D.'s).
+%\begin{theorem} This is an example theorem.
+%\end{theorem}%
+%\section{This is an example of a section heading}%
+%This is some text which follows the section heading. You can find the data in Table \ref{tab:results}.
+%\begin{figure}
+%  \begin{center}
+%  \setlength{\unitlength}{.7in}
+%    \begin{picture}(4.2,1)
+%      \put(0.2,.5){\circle{0.1}}
+%      \put(0.9,.5){\circle{0.2}}
+%      \put(1.6,.5){\circle{0.3}}
+%      \put(2.3,.5){\circle{0.4}}
+%      \put(3.1,.5){\circle{0.5}}
+%      \put(3.8,.5){\circle{0.6}}
+%    \end{picture}
+%  \end{center}
+% \caption{Hollow circles 1}\label{HollowCircles}
+%\end{figure}%
+%\begin{figure}
+%\centering
+%  \begin{tikzpicture}
+%\filldraw [double distance=0.20mm,very thick, fill=white, draw=black] (0cm,0cm) rectangle (5cm, 2.5cm);
+%   \fill (2.5in,0in) circle (3pt);
+%\end{tikzpicture}
+%\caption{Some TikZ picture.}
+%\end{figure}%
+%\begin{table}[htb]
+%\begin{center}
+%\begin{tabular}{|c | c | c | c|}
+%\hline
+%\multicolumn{1}{|c|}{~} & \multicolumn{3}{c|}{Multicolumn Heading 1}\\
+%Heading 1 & \multicolumn{1}{|c}{Heading 2} & \multicolumn{1}{c}{Heading 3} & \multicolumn{1}{c|}{Heading 4} \\
+%\hline
+%1 & 19, 20 (19.5)& NA & NA \\
+%\hline
+%3 & $\infty$* ($\infty$)& 18, 15 (16.5)& 9, 9 (9)\\
+%\hline
+%5 & 23, 18 (20.5) 
+%& 16 (16)
+%& 7, 7, 8 (7.33)\\
+%\hline
+%\multicolumn{4}{|c|}{*Some random comment for the whole table.}\\
+%\hline
+%\end{tabular}
+%\end{center}
+%\caption{Some Table of data}
+%\label{tab:results}
+%\end{table}%%
+
+%\subsection{This is a subsection heading}%
+%Text after the subsection. And we have a figure, Figure \ref{HollowCircles}.
+
 %%%%%%%%Two options for having a bibliography. If you use a separate file or multiple files:
 \bibliography{Phase2}
 \bibliographystyle{plain}
-%%%%% where the files are robotics.bib, imageprocessing.bib and/or thesis.bib. %
-%Or you can include the bibliography entries directly:%
-%\begin{thebibliography}{99}
-%\newcommand{\AmS}{$${\protect\the\textfont2 A}\kern-.1667em\lower
-%         .5ex\hbox{\protect\the\textfont2 M}\kern
-%         -.125em{\protect\the\textfont2 S}}%
-%\bibitem{hahn} Jane Hahn, ``\LaTeX{} For Everyone,'' Personal TeX Inc., 
-%  12 Madrona Street, Mill Valley, California.%
-%\bibitem{goossens} Frank Mittelbach and Michel Goossens (with
-%Johannes Braams, David Carlisle, and Chris Rowley),
-%  ``The \LaTeX{} Companion,'' second edition, Addison-Wesley, 2004.%
-%\bibitem{GRM:LaTeXGraphicsCompanion} 
-%Michal Goossens, Sabastian Rahtz, and Frank Mittelbach, ``The \LaTeX{} 
-%Graphics Companion,'' Addison-Wesley, 1997.%
-%\bibitem{Gra:MathIntoLaTeX} George Gr\"atzer, ``Math into \LaTeX: An 
-%introduction to \LaTeX{} and \mbox{\AmS-\LaTeX},'' Birkh\"auser, 1996.%
-%\bibitem{hoenig} Alan Hoenig, ``\TeX{} Unbound: \LaTeX{} and \TeX{} strategies
-%for Fonts, Graphics, and More,'' Oxford University Press, 1997. Includes
-%practical advice and numerous exammples for a wide range of topics,
-%includeing virtual fonts, graphics, and resources for the internet and
-%multimedia.%
-%\bibitem{KH} Helmut Kopka and Patrick W. Daly, ``A Guide to \LaTeXe:
-%  Document Preparation for Beginners and Advanced Users,'' 2nd ed.,
-%  Addison-Wesley, 1995.%
-%\bibitem{lamport} Leslie Lamport, ``\LaTeX: A Document Preparation
-%  System,'' 2nd ed., Addison-Wesley, 1994.%
-%\bibitem{walsh} Norman Walsh, ``Making \TeX{} Work,'' O'Reilly and
-%  Associates, 1994.%
-%\end{thebibliography}%
+
 
 
 \end{document}
