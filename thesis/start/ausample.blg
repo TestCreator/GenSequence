@@ -1,47 +1,51 @@
 This is BibTeX, Version 0.99d (TeX Live 2016)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: ausample.aux
-I found no \bibdata command---while reading file ausample.aux
-I found no \bibstyle command---while reading file ausample.aux
-You've used 2 entries,
-            0 wiz_defined-function locations,
-            85 strings with 501 characters,
-and the built_in function-call counts, 0 in all, are:
-= -- 0
-> -- 0
+The style file: plain.bst
+Database file #1: Phase2.bib
+Warning--entry type for "VisIt" isn't style-file defined
+--line 459 of file Phase2.bib
+Warning--I didn't find a database entry for "lamport"
+Warning--I didn't find a database entry for "hahn"
+You've used 3 entries,
+            2118 wiz_defined-function locations,
+            522 strings with 4504 characters,
+and the built_in function-call counts, 926 in all, are:
+= -- 87
+> -- 42
 < -- 0
-+ -- 0
-- -- 0
-* -- 0
-:= -- 0
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
++ -- 19
+- -- 14
+* -- 70
+:= -- 160
+add.period$ -- 8
+call.type$ -- 3
+change.case$ -- 16
 chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 0
-format.name$ -- 0
-if$ -- 0
+cite$ -- 3
+duplicate$ -- 29
+empty$ -- 75
+format.name$ -- 14
+if$ -- 183
 int.to.chr$ -- 0
-int.to.str$ -- 0
-missing$ -- 0
-newline$ -- 0
-num.names$ -- 0
-pop$ -- 0
-preamble$ -- 0
-purify$ -- 0
+int.to.str$ -- 3
+missing$ -- 2
+newline$ -- 17
+num.names$ -- 6
+pop$ -- 16
+preamble$ -- 1
+purify$ -- 13
 quote$ -- 0
-skip$ -- 0
+skip$ -- 24
 stack$ -- 0
-substring$ -- 0
-swap$ -- 0
+substring$ -- 61
+swap$ -- 3
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 0
+type$ -- 12
 warning$ -- 0
-while$ -- 0
-width$ -- 0
-write$ -- 0
-(There were 2 error messages)
+while$ -- 10
+width$ -- 4
+write$ -- 31
+(There were 3 warnings)

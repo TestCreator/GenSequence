@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  7 MAY 2018 18:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  8 MAY 2018 18:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -375,26 +375,75 @@ File: pgfmodulematrix.code.tex 2013/09/17  (rcs-revision 1.8)
 s/tikzlibrarytopaths.code.tex
 File: tikzlibrarytopaths.code.tex 2008/06/17 v3.0.1a (rcs-revision 1.2)
 )))
-(/usr/local/texlive/2016/texmf-dist/tex/latex/abstract/abstract.sty
-Package: abstract 2009/06/08 v1.2a configurable abstracts
-\abstitleskip=\skip44
-\absleftindent=\skip45
-\absrightindent=\skip46
-\absparindent=\skip47
-\absparsep=\skip48
+(/usr/local/texlive/2016/texmf-dist/tex/latex/tocloft/tocloft.sty
+Package: tocloft 2013/05/02 v2.3f parameterised ToC, etc., typesetting
+Package tocloft Info: The document has chapter divisions on input line 44.
+\cftparskip=\skip44
+\cftbeforetoctitleskip=\skip45
+\cftaftertoctitleskip=\skip46
+\cftbeforepartskip=\skip47
+\cftpartnumwidth=\skip48
+\cftpartindent=\skip49
+\cftbeforechapskip=\skip50
+\cftchapindent=\skip51
+\cftchapnumwidth=\skip52
+\cftbeforesecskip=\skip53
+\cftsecindent=\skip54
+\cftsecnumwidth=\skip55
+\cftbeforesubsecskip=\skip56
+\cftsubsecindent=\skip57
+\cftsubsecnumwidth=\skip58
+\cftbeforesubsubsecskip=\skip59
+\cftsubsubsecindent=\skip60
+\cftsubsubsecnumwidth=\skip61
+\cftbeforeparaskip=\skip62
+\cftparaindent=\skip63
+\cftparanumwidth=\skip64
+\cftbeforesubparaskip=\skip65
+\cftsubparaindent=\skip66
+\cftsubparanumwidth=\skip67
+\cftbeforeloftitleskip=\skip68
+\cftafterloftitleskip=\skip69
+\cftbeforefigskip=\skip70
+\cftfigindent=\skip71
+\cftfignumwidth=\skip72
+\c@lofdepth=\count110
+\c@lotdepth=\count111
+\cftbeforelottitleskip=\skip73
+\cftafterlottitleskip=\skip74
+\cftbeforetabskip=\skip75
+\cfttabindent=\skip76
+\cfttabnumwidth=\skip77
 )
-(/usr/local/texlive/2016/texmf-dist/tex/latex/nomencl/nomencl.sty
-Package: nomencl 2005/09/22 v4.2 Nomenclature package (LN)
-\nomlabelwidth=\dimen154
-\nom@tempdim=\dimen155
-\nomitemsep=\skip49
+(/usr/local/texlive/2016/texmf-dist/tex/latex/sectsty/sectsty.sty
+Package: sectsty 2002/02/25 v2.0.2 Commands to change all sectional heading sty
+les
 )
-\@nomenclaturefile=\write4
-\openout4 = `ausample.nlo'.
+(/usr/local/texlive/2016/texmf-dist/tex/latex/tools/indentfirst.sty
+Package: indentfirst 1995/11/23 v1.03 Indent first paragraph (DPC)
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen154
+\WF@size=\dimen155
+\c@WF@wrappedlines=\count112
+\WF@box=\box40
+\WF@everypar=\toks28
+Package: wrapfig 2003/01/31  v 3.6
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/titlesec/titlesec.sty
+Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
+\ttl@box=\box41
+\beforetitleunit=\skip78
+\aftertitleunit=\skip79
+\ttl@plus=\dimen156
+\ttl@minus=\dimen157
+\ttl@toksa=\toks29
+\titlewidth=\dimen158
+\titlewidthlast=\dimen159
+\titlewidthfirst=\dimen160
+)
+\c@theorem=\count113
 
-
-Writing nomenclature file ausample.nlo
-\c@theorem=\count110
 (./ausample.aux
 
 LaTeX Warning: Label `HollowCircles' multiply defined.
@@ -402,35 +451,35 @@ LaTeX Warning: Label `HollowCircles' multiply defined.
 )
 \openout1 = `ausample.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
-(lastpage)             ! on input line 35.
+(lastpage)             ! on input line 38.
  ABD: EveryShipout initializing macros
 (/usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count111
-\scratchdimen=\dimen156
-\scratchbox=\box40
-\nofMPsegments=\count112
-\nofMParguments=\count113
-\everyMPshowfont=\toks28
-\MPscratchCnt=\count114
-\MPscratchDim=\dimen157
-\MPnumerator=\count115
-\makeMPintoPDFobject=\count116
-\everyMPtoPDFconversion=\toks29
+\scratchcounter=\count114
+\scratchdimen=\dimen161
+\scratchbox=\box42
+\nofMPsegments=\count115
+\nofMParguments=\count116
+\everyMPshowfont=\toks30
+\MPscratchCnt=\count117
+\MPscratchDim=\dimen162
+\MPnumerator=\count118
+\makeMPintoPDFobject=\count119
+\everyMPtoPDFconversion=\toks31
 ) (/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2016/05/10 v0.21 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -481,9 +530,7 @@ e
 [1
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-(./abs.tex) [1
-
-] [2] (./ausample.toc
+(./abs.tex) (./ack.tex [1] [2]) (./ausample.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -491,63 +538,124 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 1.
 )
-\tf@toc=\write5
-\openout5 = `ausample.toc'.
+\tf@toc=\write4
+\openout4 = `ausample.toc'.
 
- (./materials.tex [3
+ (./materials.tex [3] [4])
+(./terms.tex [5]) (./ausample.lof)
+\tf@lof=\write5
+\openout5 = `ausample.lof'.
 
-]) [4] (./ausample.lof)
-\tf@lof=\write6
-\openout6 = `ausample.lof'.
+ [6] (./ausample.lot)
+\tf@lot=\write6
+\openout6 = `ausample.lot'.
 
-[5
+ [7]
+Chapter 1.
+(./introduction.tex <diagram.png, id=34, 546.843pt x 170.0754pt>
+File: diagram.png Graphic file (type png)
 
-] (./ausample.lot)
-\tf@lot=\write7
-\openout7 = `ausample.lot'.
+<use diagram.png>
+Package pdftex.def Info: diagram.png used on input line 8.
+(pdftex.def)             Requested size: 273.42082pt x 85.03748pt.
+ [1
 
-
-No file ausample.nls.
-[6
 
 ]
-Chapter 1.
-[1
+Underfull \hbox (badness 1112) in paragraph at lines 11--13
+\OT1/cmr/m/n/12 Con-se-quently, many com-
+ []
 
-
-] [2]
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+[2 <./diagram.png>]
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no “ in font cmr12!
+) [3]
 Chapter 2.
-[3
+(./litsurvey.tex
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no “ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no “ in font cmr12!
+ [4
 
-] [4
+] [5]) [6]
+Chapter 3.
+(./argument.tex
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+) [7
+
+]
+Chapter 4.
+(./background.tex [8
+
+] <team-file.png, id=62, 1445.4pt x 903.375pt>
+File: team-file.png Graphic file (type png)
+
+<use team-file.png>
+Package pdftex.def Info: team-file.png used on input line 10.
+(pdftex.def)             Requested size: 1445.39648pt x 903.3728pt.
+
+Overfull \hbox (1011.77649pt too wide) in paragraph at lines 10--11
+[][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 252.94281pt on input line 11.
+
+) [9] [10 <./team-file.png>]
+Chapter 5.
+
+LaTeX Warning: Citation `lamport' on page 11 undefined on input line 129.
+
+
+LaTeX Warning: Citation `hahn' on page 11 undefined on input line 130.
+
+[11
+
+] [12]
+Chapter 6.
+(./ausample.bbl [13
+
+]) [14
 
 ] 
 AED: lastpage setting LastPage
 (./ausample.aux)
 
+LaTeX Warning: There were undefined references.
+
+
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 11825 strings out of 493014
- 239140 string characters out of 6133351
- 273925 words of memory out of 5000000
- 15122 multiletter control sequences out of 15000+600000
- 8209 words of font info for 30 fonts, out of 8000000 for 9000
+ 12400 strings out of 493014
+ 247474 string characters out of 6133351
+ 286412 words of memory out of 5000000
+ 15662 multiletter control sequences out of 15000+600000
+ 9122 words of font info for 33 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,10n,54p,401b,498s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,10n,54p,1219b,500s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
-</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></
-usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr
-/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/
-local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/l
-ocal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/lo
-cal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/latxfont/lcircle1.pfb>
-Output written on ausample.pdf (11 pages, 85269 bytes).
+></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><
+/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></us
+r/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr
+/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/
+local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/l
+ocal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/latxfont/lcircle1.pfb>
+
+Output written on ausample.pdf (22 pages, 509792 bytes).
 PDF statistics:
- 75 PDF objects out of 1000 (max. 8388607)
- 53 compressed objects within 1 object stream
+ 111 PDF objects out of 1000 (max. 8388607)
+ 75 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 23 words of extra memory for PDF output out of 10000 (max. 10000000)
 
