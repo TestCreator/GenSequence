@@ -14,7 +14,8 @@ ACTIVATE = source "./env/bin/activate"
 
 ready: earthquakes
 	mv parsey/junk/outgoing.py .
-	python3 outgoing.py
+	#python3 outgoing.py
+	python3 earthquakegen.py
 	python3 demos/eqanalysis/eqanalysis.py ~/Documents/GenSequence/cases1/11-70-Mags\:right_slanted-Lats\:_cardioid-Longs\:left_slanted-Depths\:uniform-.csv plot magnitudes
 
 earthquakes:
