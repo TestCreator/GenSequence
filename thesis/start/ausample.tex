@@ -18,6 +18,7 @@
 \usepackage{indentfirst} %abstract indent para
 \usepackage{wrapfig} %figures embedded in text
 \usepackage{subcaption} %subfigures 
+\usepackage{float} %"attach" figures to sections
 \usepackage{titlesec} %making \section headers smaller
 \usepackage{booktabs} %table styling
 \usepackage{syntax} % CFG styling
@@ -30,11 +31,11 @@
 
 \lstset{frame=tb,
   language=Python,
-  aboveskip=0.25mm,
-  belowskip=0.25mm,
+  aboveskip=0.0mm,
+  belowskip=0.0mm,
   showstringspaces=false,
   columns=flexible,
-  basicstyle={\small\ttfamily},
+  basicstyle=\linespread{1.25}\small\ttfamily,
   numbers=left,
   numberstyle=\tiny \color{gray},
   keywordstyle=\color{blue},

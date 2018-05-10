@@ -8,3 +8,4 @@ all:
 
 easy:
 		pdflatex ausample
+		rm *.out *.aux *.log *.bbl *.blg *.nav *.snm
