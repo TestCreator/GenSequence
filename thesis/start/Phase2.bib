@@ -1,7 +1,7 @@
 %% This BibTeX bibliography file was created using BibDesk.
 %% http://bibdesk.sourceforge.net/
 
-%% Created for Jamie Zimmerman at 2018-04-05 20:08:40 -0700 
+%% Created for Jamie Zimmerman at 2018-05-11 14:30:23 -0700 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
@@ -9,6 +9,15 @@
 
 
 @inproceedings{Haller:2010:TDC:1838126.1838132,
+	Abstract = {``Today most business applications rely on databases for storing and managing data''.
+
+``Fruitful testing of DBAPs is possible only if there is test data in the tables of the DBAP (DBAP test data). Projects often ignore this until it is too late, and project managers end up making ad-hoc decisions without a conceptual foundation. One reason might be the lack of methodology for approaching the DBAP test data challenge''.
+
+``One of the basic problems of testing DBAPs is the need for
+DBAP test data {\ldots} Many factors decide which method is the most suitable. The
+challenge is balancing quality and costs.`` -> cite saying test data must be generated, tradeoff with convenience and cost.
+
+lot of human tester work, poor semantically correct data patterns, only synactically what it should be.},
 	Acmid = {1838132},
 	Address = {New York, NY, USA},
 	Annote = {Generators for data in DB testing},
@@ -16,7 +25,7 @@
 	Author = {Haller, Klaus},
 	Booktitle = {Proceedings of the Third International Workshop on Testing Database Systems},
 	Date-Added = {2018-04-06 03:07:52 +0000},
-	Date-Modified = {2018-04-06 03:08:00 +0000},
+	Date-Modified = {2018-05-10 23:42:10 +0000},
 	Doi = {10.1145/1838126.1838132},
 	Isbn = {978-1-4503-0190-9},
 	Keywords = {databases, information systems, test coverage, test data, testing},
@@ -98,13 +107,24 @@
 	Bdsk-Url-2 = {http://dx.doi.org/10.1145/3099023.3099046}}
 
 @inproceedings{Murphy:2007:PRT:1292414.1292425,
+	Abstract = {``There is no reliable test oracle to ensure that the output is correct for the given random input...Pure random testing is not the best approach in these cases either''.
+
+Datasets are on the order of hundreds to tens of thousands.
+
+Weaknesses:
+their definition of purely random contains the data type or range of values, and in and of itself is random.
+they only select data over a uniform distribution, and only generate positive integers.
+they think random data has no trends and is therefore not useful for ML
+they are right that ``random data can be used for testing the correctness of the results or for detecting bugs''.
+
+},
 	Acmid = {1292425},
 	Address = {New York, NY, USA},
 	Annote = {Probably the best. Generate data using observations of parameterized classes, but still randomly!},
 	Author = {Murphy, Christian and Kaiser, Gail and Arias, Marta},
 	Booktitle = {Proceedings of the 2Nd International Workshop on Random Testing: Co-located with the 22Nd IEEE/ACM International Conference on Automated Software Engineering (ASE 2007)},
 	Date-Added = {2018-04-06 03:00:13 +0000},
-	Date-Modified = {2018-04-06 03:00:39 +0000},
+	Date-Modified = {2018-05-11 21:14:11 +0000},
 	Doi = {10.1145/1292414.1292425},
 	Isbn = {978-1-59593-881-7},
 	Keywords = {random test data generation, software testing},
@@ -119,14 +139,49 @@
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1292414.1292425},
 	Bdsk-Url-2 = {http://dx.doi.org/10.1145/1292414.1292425}}
 
+
+@inproceedings{Murphy:Kaiser,
+	Address = {New York, NY, USA},
+	Author = {Murphy, Christian and Kaiser, Gail and Arias, Marta},
+	Keywords = {random test data generation, software testing},
+	Location = {New York City, New York},
+	Numpages = {10},
+	Pages = {1--10},
+	Publisher = {Department of Computer Science, Columbia University},
+	Series = {Columbia University Computer Science Technical Reports},
+	Title = {A Framework for Quality Assurance of Machine Learning Applications},
+	Url = {https://doi.org/10.7916/D8MP5B4B},
+	Year = {2006},
+}
+
 @inproceedings{Souza:2016:SMT:2897010.2897012,
+	Abstract = {``if automatic test data generation can achieve an acceptable level of mutation score, it has the potential to greatly reduce the involved manual effort.''
+
+``Among several testing activities, test data generation is
+one of the most critical and labor-intensive. Most often in
+the industry, test data generation is performed manually.
+However, this process is time-consuming, expensive and susceptible
+to errors. For several years, great effort has been
+devoted to studying this issue, but, the existing techniques
+are not yet quite satisfactory.''
+
+``Usually, test data are generated at random until a particular
+test objective has been achieved. However, in practice,
+in most of the cases, a random search is poor, timeconsuming
+and it has no guarantee of finding a test data
+set to reach a certain part of the program or killing some
+specific mutants [11]. The use of the search-based and metaheuristic
+techniques guided by a fitness function can provide
+the sought high-quality test set, due to its emergent features
+to explore different points in the search space and improve
+a solution from the other one.''},
 	Acmid = {2897012},
 	Address = {New York, NY, USA},
 	Annote = {Similar to Harmon. Use hillclimbing to generate data somehow.},
 	Author = {Souza, Francisco Carlos M. and Papadakis, Mike and Le Traon, Yves and Delamaro, M\'{a}rcio E.},
 	Booktitle = {Proceedings of the 9th International Workshop on Search-Based Software Testing},
 	Date-Added = {2018-04-06 02:58:43 +0000},
-	Date-Modified = {2018-04-06 02:58:51 +0000},
+	Date-Modified = {2018-05-10 23:49:11 +0000},
 	Doi = {10.1145/2897010.2897012},
 	Isbn = {978-1-4503-4166-0},
 	Keywords = {mutation testing, search-based software testing, test data generation},
@@ -457,8 +512,8 @@
 	Bdsk-Url-2 = {http://dx.doi.org/10.1145/2699716}}
 
 @online{VisIt,
-  author = {Lawrence Livermore National Laboratory},
-  title = {About {V}is{I}t},
-  url = {https://wci.llnl.gov/simulation/computer-codes/visit/},
-  urldate = {2010-09-30}
-}
+	Author = {Lawrence Livermore National Laboratory},
+	Title = {About {V}is{I}t},
+	Url = {https://wci.llnl.gov/simulation/computer-codes/visit/},
+	Urldate = {2010-09-30},
+	Bdsk-Url-1 = {https://wci.llnl.gov/simulation/computer-codes/visit/}}
