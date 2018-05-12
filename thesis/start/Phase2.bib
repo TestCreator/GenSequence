@@ -1,7 +1,7 @@
 %% This BibTeX bibliography file was created using BibDesk.
 %% http://bibdesk.sourceforge.net/
 
-%% Created for Jamie Zimmerman at 2018-05-11 14:30:23 -0700 
+%% Created for Jamie Zimmerman at 2018-05-12 12:05:00 -0700 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
@@ -9,7 +9,11 @@
 
 
 @inproceedings{Haller:2010:TDC:1838126.1838132,
-	Abstract = {``Today most business applications rely on databases for storing and managing data''.
+	Acmid = {1838132},
+	Address = {New York, NY, USA},
+	Annote = {Generators for data in DB testing
+
+``Today most business applications rely on databases for storing and managing data''.
 
 ``Fruitful testing of DBAPs is possible only if there is test data in the tables of the DBAP (DBAP test data). Projects often ignore this until it is too late, and project managers end up making ad-hoc decisions without a conceptual foundation. One reason might be the lack of methodology for approaching the DBAP test data challenge''.
 
@@ -18,14 +22,11 @@ DBAP test data {\ldots} Many factors decide which method is the most suitable. T
 challenge is balancing quality and costs.`` -> cite saying test data must be generated, tradeoff with convenience and cost.
 
 lot of human tester work, poor semantically correct data patterns, only synactically what it should be.},
-	Acmid = {1838132},
-	Address = {New York, NY, USA},
-	Annote = {Generators for data in DB testing},
 	Articleno = {6},
 	Author = {Haller, Klaus},
 	Booktitle = {Proceedings of the Third International Workshop on Testing Database Systems},
 	Date-Added = {2018-04-06 03:07:52 +0000},
-	Date-Modified = {2018-05-10 23:42:10 +0000},
+	Date-Modified = {2018-05-12 19:04:04 +0000},
 	Doi = {10.1145/1838126.1838132},
 	Isbn = {978-1-4503-0190-9},
 	Keywords = {databases, information systems, test coverage, test data, testing},
@@ -107,7 +108,11 @@ lot of human tester work, poor semantically correct data patterns, only synactic
 	Bdsk-Url-2 = {http://dx.doi.org/10.1145/3099023.3099046}}
 
 @inproceedings{Murphy:2007:PRT:1292414.1292425,
-	Abstract = {``There is no reliable test oracle to ensure that the output is correct for the given random input...Pure random testing is not the best approach in these cases either''.
+	Acmid = {1292425},
+	Address = {New York, NY, USA},
+	Annote = {Probably the best. Generate data using observations of parameterized classes, but still randomly!
+
+``There is no reliable test oracle to ensure that the output is correct for the given random input...Pure random testing is not the best approach in these cases either''.
 
 Datasets are on the order of hundreds to tens of thousands.
 
@@ -118,13 +123,10 @@ they think random data has no trends and is therefore not useful for ML
 they are right that ``random data can be used for testing the correctness of the results or for detecting bugs''.
 
 },
-	Acmid = {1292425},
-	Address = {New York, NY, USA},
-	Annote = {Probably the best. Generate data using observations of parameterized classes, but still randomly!},
 	Author = {Murphy, Christian and Kaiser, Gail and Arias, Marta},
 	Booktitle = {Proceedings of the 2Nd International Workshop on Random Testing: Co-located with the 22Nd IEEE/ACM International Conference on Automated Software Engineering (ASE 2007)},
 	Date-Added = {2018-04-06 03:00:13 +0000},
-	Date-Modified = {2018-05-11 21:14:11 +0000},
+	Date-Modified = {2018-05-12 19:03:41 +0000},
 	Doi = {10.1145/1292414.1292425},
 	Isbn = {978-1-59593-881-7},
 	Keywords = {random test data generation, software testing},
@@ -139,10 +141,14 @@ they are right that ``random data can be used for testing the correctness of the
 	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1292414.1292425},
 	Bdsk-Url-2 = {http://dx.doi.org/10.1145/1292414.1292425}}
 
-
 @inproceedings{Murphy:Kaiser,
 	Address = {New York, NY, USA},
+	Annote = {used pseudo-oracle method to test their software testing program.
+
+the parameters are: number of example, attributes, and names of output files. optionally no repeated values.
+},
 	Author = {Murphy, Christian and Kaiser, Gail and Arias, Marta},
+	Date-Modified = {2018-05-11 22:49:55 +0000},
 	Keywords = {random test data generation, software testing},
 	Location = {New York City, New York},
 	Numpages = {10},
@@ -152,7 +158,7 @@ they are right that ``random data can be used for testing the correctness of the
 	Title = {A Framework for Quality Assurance of Machine Learning Applications},
 	Url = {https://doi.org/10.7916/D8MP5B4B},
 	Year = {2006},
-}
+	Bdsk-Url-1 = {https://doi.org/10.7916/D8MP5B4B}}
 
 @inproceedings{Souza:2016:SMT:2897010.2897012,
 	Abstract = {``if automatic test data generation can achieve an acceptable level of mutation score, it has the potential to greatly reduce the involved manual effort.''

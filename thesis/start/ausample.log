@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  10 MAY 2018 16:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  12 MAY 2018 12:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -656,18 +656,17 @@ Package pdftex.def Info: images/diagram.png used on input line 8.
 
 
 ]
-Underfull \hbox (badness 1112) in paragraph at lines 11--13
-\OT1/cmr/m/n/12 Con-se-quently, many com-
- []
-
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 12.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 12.
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
-[2 <./images/diagram.png>]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no “ in font cmr12!
-) [3]
+ [2 <./images/diagram.png>]) [3] [4]
 Chapter 2.
 (./litsurvey.tex
 Missing character: There is no â in font cmr12!
@@ -676,21 +675,21 @@ Missing character: There is no “ in font cmr12!
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no “ in font cmr12!
- [4
+ [5
 
-] [5]) [6]
+] [6]) [7]
 Chapter 3.
 (./argument.tex
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
-) [7
+) [8
 
 ]
 Chapter 4.
-(./background.tex [8
+(./background.tex [9
 
-] <images/team-file.png, id=62, 1283.79625pt x 875.27pt>
+] <images/team-file.png, id=69, 1283.79625pt x 875.27pt>
 File: images/team-file.png Graphic file (type png)
 
 <use images/team-file.png>
@@ -699,11 +698,11 @@ Package pdftex.def Info: images/team-file.png used on input line 10.
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
- [9 <./images/team-file.png>]
+ [10 <./images/team-file.png>]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
- [10]
+ [11]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ¨ in font cmr12!
@@ -714,56 +713,51 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 56.
- [11]
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no “ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
  [12]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no “ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+ [13]
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no “ in font cmr12!
 
-<images/law1.png, id=79, 433.62pt x 312.16624pt>
+<images/law1.png, id=85, 433.62pt x 312.16624pt>
 File: images/law1.png Graphic file (type png)
  <use images/law1.png>
 Package pdftex.def Info: images/law1.png used on input line 84.
 (pdftex.def)             Requested size: 303.53192pt x 218.51488pt.
- [13]
-<images/law2.png, id=83, 436.63126pt x 316.18124pt>
+ [14]
+<images/law2.png, id=89, 436.63126pt x 316.18124pt>
 File: images/law2.png Graphic file (type png)
  <use images/law2.png>
 Package pdftex.def Info: images/law2.png used on input line 91.
 (pdftex.def)             Requested size: 305.63979pt x 221.32535pt.
 
-<images/law3.png, id=84, 419.5675pt x 314.17375pt>
+<images/law3.png, id=90, 419.5675pt x 314.17375pt>
 File: images/law3.png Graphic file (type png)
  <use images/law3.png>
 Package pdftex.def Info: images/law3.png used on input line 98.
 (pdftex.def)             Requested size: 293.69524pt x 219.92012pt.
 
-[14 <./images/law1.png> <./images/law2.png>]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 108.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 108.
- [15 <./images/law3.png>]
+[15 <./images/law1.png> <./images/law2.png>] [16 <./images/law3.png>]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no “ in font cmr12!
-) [16]
-[17]
+) [17]
+[18]
 Chapter 5.
 (./methods.tex
 Missing character: There is no â in font cmr12!
@@ -772,9 +766,9 @@ Missing character: There is no ™ in font cmr12!
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
-) [18
+) [19
 
-] [19]
+] [20]
 Chapter 6.
 (./results.tex
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 12.
@@ -790,7 +784,7 @@ Overfull \hbox (14.63324pt too wide) in paragraph at lines 6--13
 [] 
  []
 
-<images/start-ex.png, id=110, 1020.81375pt x 877.2775pt>
+<images/start-ex.png, id=113, 1020.81375pt x 877.2775pt>
 File: images/start-ex.png Graphic file (type png)
 
 <use images/start-ex.png>
@@ -803,13 +797,13 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no “ in font cmr12!
-[20
+[21
 
 ]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
- <images/final-ex.png, id=115, 1019.81pt x 874.26625pt>
+ <images/final-ex.png, id=118, 1019.81pt x 874.26625pt>
 File: images/final-ex.png Graphic file (type png)
 
 <use images/final-ex.png>
@@ -819,7 +813,7 @@ Package pdftex.def Info: images/final-ex.png used on input line 32.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[21 <./images/start-ex.png>]
+[22 <./images/start-ex.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 49--49
 []\OT1/pcr/m/n/12 6-70-magnitudes|cardioid-latitudes|left[]-
  []
@@ -829,7 +823,7 @@ Overfull \hbox (6.79999pt too wide) in paragraph at lines 43--50
 [] 
  []
 
-[22 <./images/final-ex.png>]
+[23 <./images/final-ex.png>]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
@@ -837,13 +831,13 @@ Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
 
-<images/mags.png, id=124, 719.68875pt x 696.6025pt>
+<images/mags.png, id=128, 719.68875pt x 696.6025pt>
 File: images/mags.png Graphic file (type png)
  <use images/mags.png>
 Package pdftex.def Info: images/mags.png used on input line 78.
 (pdftex.def)             Requested size: 260.17464pt x 251.82901pt.
 
-<images/depths.png, id=125, 719.68875pt x 699.61375pt>
+<images/depths.png, id=129, 719.68875pt x 699.61375pt>
 File: images/depths.png Graphic file (type png)
  <use images/depths.png>
 Package pdftex.def Info: images/depths.png used on input line 82.
@@ -852,20 +846,20 @@ Package pdftex.def Info: images/depths.png used on input line 82.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[23] [24 <./images/mags.png> <./images/depths.png>]
-<images/clusters-nobg.png, id=137, 722.7pt x 700.6175pt>
+[24] [25 <./images/mags.png> <./images/depths.png>]
+<images/clusters-nobg.png, id=140, 722.7pt x 700.6175pt>
 File: images/clusters-nobg.png Graphic file (type png)
 
 <use images/clusters-nobg.png>
 Package pdftex.def Info: images/clusters-nobg.png used on input line 95.
 (pdftex.def)             Requested size: 361.3491pt x 350.30789pt.
-) [25 <./images/clusters-nobg.png>]
+) [26 <./images/clusters-nobg.png>]
 Chapter 7.
 (./conclusion.tex
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
- [26
+ [27
 
 ]
 Missing character: There is no â in font cmr12!
@@ -874,7 +868,7 @@ Missing character: There is no ™ in font cmr12!
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
-) (./ausample.bbl [27]) [28
+) (./ausample.bbl [28]) [29
 
 ]
 
@@ -900,10 +894,10 @@ texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/t
 exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/te
 xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/tex
 live/2016/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on ausample.pdf (36 pages, 1013339 bytes).
+Output written on ausample.pdf (37 pages, 1014464 bytes).
 PDF statistics:
- 189 PDF objects out of 1000 (max. 8388607)
- 118 compressed objects within 2 object streams
+ 195 PDF objects out of 1000 (max. 8388607)
+ 123 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  63 words of extra memory for PDF output out of 10000 (max. 10000000)
 

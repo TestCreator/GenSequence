@@ -2,12 +2,14 @@ This is BibTeX, Version 0.99d (TeX Live 2016)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: ausample.aux
 The style file: plain.bst
-Database file #1: Phase2.bib
+Database file #1: Phase1.bib
+Database file #2: Phase2.bib
 Warning--entry type for "VisIt" isn't style-file defined
---line 459 of file Phase2.bib
+--line 520 of file Phase2.bib
+Database file #3: Phase3.bib
 You've used 3 entries,
             2118 wiz_defined-function locations,
-            520 strings with 4493 characters,
+            522 strings with 4505 characters,
 and the built_in function-call counts, 926 in all, are:
 = -- 87
 > -- 42
