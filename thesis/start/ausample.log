@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  15 MAY 2018 00:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  15 MAY 2018 13:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -766,11 +766,7 @@ File: images/team-file.png Graphic file (type png)
 <use images/team-file.png>
 Package pdftex.def Info: images/team-file.png used on input line 10.
 (pdftex.def)             Requested size: 385.14185pt x 262.58302pt.
- [12 <./images/team-file.png>] [13]
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
- [14]
+ [12 <./images/team-file.png>] [13] [14]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ¨ in font cmr12!
@@ -829,11 +825,7 @@ Missing character: There is no “ in font cmr12!
 Chapter 5.
 (./methods.tex [22
 
-]
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
-) [23]
+]) [23]
 Chapter 6.
 (./results.tex
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 12.
@@ -894,10 +886,8 @@ File: images/depths.png Graphic file (type png)
 Package pdftex.def Info: images/depths.png used on input line 80.
 (pdftex.def)             Requested size: 281.85034pt x 273.99051pt.
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<images/clusters-nobg.png, id=147, 722.7pt x 700.6175pt>
+[28] [29 <./images/mags.png> <./images/depths.png>]
+<images/clusters-nobg.png, id=156, 722.7pt x 700.6175pt>
 File: images/clusters-nobg.png Graphic file (type png)
 
 <use images/clusters-nobg.png>
@@ -907,25 +897,20 @@ Package pdftex.def Info: images/clusters-nobg.png used on input line 93.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) [28] [29 <./images/mags.png> <./images/depths.png>] [30 <./images/clusters-no
-bg.png>]
+) [30] [31 <./images/clusters-nobg.png>]
 Chapter 7.
-(./conclusion.tex
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
- [31
+(./conclusion.tex [32
 
-] [32]) (./ausample.bbl [33] [34
+] [33]) (./ausample.bbl [34] [35
 
-] [35] [36]) [37]
+] [36] [37]) [38]
 
 AED: lastpage setting LastPage
 (./ausample.aux) ) 
 Here is how much of TeX's memory you used:
  15764 strings out of 493014
  299943 string characters out of 6133351
- 376969 words of memory out of 5000000
+ 376971 words of memory out of 5000000
  18948 multiletter control sequences out of 15000+600000
  10105 words of font info for 37 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -943,10 +928,10 @@ exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/te
 xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/tex
 live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texl
 ive/2016/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on ausample.pdf (45 pages, 1075681 bytes).
+Output written on ausample.pdf (46 pages, 1075969 bytes).
 PDF statistics:
- 226 PDF objects out of 1000 (max. 8388607)
- 143 compressed objects within 2 object streams
+ 229 PDF objects out of 1000 (max. 8388607)
+ 145 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  68 words of extra memory for PDF output out of 10000 (max. 10000000)
 
