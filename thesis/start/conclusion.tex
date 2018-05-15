@@ -1,8 +1,26 @@
 %conclusion
-The research in this field has progressed quite a lot, but for many different applications. The application I have built is fairly specialized, and therefore limited in scope. It cannot be used to evaluate specific SUTs; it just does not have the functionality to do so. After all, as one paper noted, ``Test data generation is an undecidable problem, meaning that it cannot be completely solved. Nevertheless, this does not mean there is no algorithm that can find a plausible but partial solution to satisfy a specific test goal''. The application I have built is just one way to aid in testing a specific type of program.
 
-Database-driven applications literally control the world. The record of every transaction, every payment, every credit report, and every bill can dictate a person’s entire life. The infrastructure surrounding that data must not expunge or fabricate any of it, and must maintain its integrity. Software that accesses, controls, and manipulates this huge amount of data carries substantial responsibility. Moreover, software that can read, interpret, and identify trends in a huge wealth of global data has amazing power in informing us of what happens in the world and how we can make better decisions. It is therefore of utmost importance to design that software well enough to trust its results.
+I believe that GenSequence's best application is for testing database-driven applications. These applications literally control the world. Consider financial applications alone: the record of every transaction, every payment, every credit report, and every bill can dictate a person’s entire life. The infrastructure surrounding that data must not expunge or fabricate any of it, and must maintain its integrity. Software that accesses, controls, and manipulates this huge amount of data carries substantial responsibility. Moreover, software that can read, interpret, and identify trends in a huge wealth of global data has amazing power in informing us of what happens in the world and how we can make better decisions. It is therefore of utmost importance to design that software well enough to trust its results.
 
-GenSequence has addressed those applications. It functions simply but provides automation during the testing stage and generates reliable data that is what is says it is. If the context of the program warrants consideration of statistically unlikely but possible scenarios, GenSequence can make that happen. It primarily states its power by its ease of use and nearly end-to-end automation.
+GenSequence has addressed those applications. It functions simply but provides automation during the testing stage and generates reliable data that is what is says it is. If the context of the program warrants consideration of statistically unlikely but possible scenarios, GenSequence can make that happen. Moreover, the construction of data points It primarily states its power by its ease of use and nearly end-to-end automation.
 
-The simplicity of the programs for which I designed the tool may have been too great for GenSequence to help me find any actual misbehavior. Moreover, any open-source software I generate tests for may not have any flaws. Unfortunately I have no way of knowing if the tool cannot find bugs or if the programs just do not have any. This is the major difficulty with constructing software-testing tools. Numerous articles have declared their victory in finding bugs and attribute it to their testing tool. However, measuring GenSequence’s power in this way has the potential to return with a resounding no, that GenSequence is not able to do its job. Consequently, my tool’s ability to find flaws is left inconclusive, but it has potential to change testing processes in a very significant way. GenSequence has addressed the major complaint that creating test data takes too long and that the data is too unreliable.
+Given that the construction of GenSequence was a Minimum Viable Product, there is considerable room for improvement.
+
+\textbf{Current Iteration}
+\begin{enumerate}
+\item Identify an open-source project in need of a test suite, and create a hypothetical test suite for it using GenSequence.
+\end{enumerate}
+
+\textbf{Top of the Backlog}
+\begin{enumerate}
+\item Implement the entire preprocessor in Ply, develop an abstraction for a model of the Parms, and develop an interpreter that could execute those models.
+\item Combine the specifications that enter GenPairs and the preprocessor into one. This would certainly reduce the work for the tester.
+\end{enumerate}
+Merge-sort .cp and .prm files, since it makes logical sense that they be in the same file
+Double Cardioid distribution using hill climbing
+
+
+Icebox
+Actually write documentation
+deeper understanding on how random works, and why
+ML application, see what/how GenSequence could be used
