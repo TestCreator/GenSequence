@@ -1,0 +1,53 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: ausample.aux
+The style file: plain.bst
+Database file #1: Phase1.bib
+Database file #2: Phase2.bib
+Warning--entry type for "VisIt" isn't style-file defined
+--line 520 of file Phase2.bib
+Database file #3: Phase3.bib
+Warning--to sort, need author or key in Mako:Template
+Warning--empty booktitle in Murphy:Kaiser
+You've used 35 entries,
+            2118 wiz_defined-function locations,
+            741 strings with 12335 characters,
+and the built_in function-call counts, 15139 in all, are:
+= -- 1629
+> -- 621
+< -- 26
++ -- 251
+- -- 210
+* -- 1004
+:= -- 2301
+add.period$ -- 129
+call.type$ -- 35
+change.case$ -- 210
+chr.to.int$ -- 0
+cite$ -- 37
+duplicate$ -- 646
+empty$ -- 1180
+format.name$ -- 210
+if$ -- 3409
+int.to.chr$ -- 0
+int.to.str$ -- 35
+missing$ -- 31
+newline$ -- 176
+num.names$ -- 68
+pop$ -- 218
+preamble$ -- 1
+purify$ -- 175
+quote$ -- 0
+skip$ -- 513
+stack$ -- 0
+substring$ -- 976
+swap$ -- 234
+text.length$ -- 26
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 140
+warning$ -- 2
+while$ -- 154
+width$ -- 37
+write$ -- 455
+(There were 3 warnings)
