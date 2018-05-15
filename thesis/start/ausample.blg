@@ -9,45 +9,45 @@ Warning--entry type for "VisIt" isn't style-file defined
 Database file #3: Phase3.bib
 Warning--to sort, need author or key in Mako:Template
 Warning--empty booktitle in Murphy:Kaiser
-You've used 35 entries,
+You've used 36 entries,
             2118 wiz_defined-function locations,
-            741 strings with 12335 characters,
-and the built_in function-call counts, 15139 in all, are:
-= -- 1629
-> -- 621
+            746 strings with 12413 characters,
+and the built_in function-call counts, 15358 in all, are:
+= -- 1649
+> -- 628
 < -- 26
-+ -- 251
-- -- 210
-* -- 1004
-:= -- 2301
-add.period$ -- 129
-call.type$ -- 35
-change.case$ -- 210
++ -- 254
+- -- 212
+* -- 1013
+:= -- 2340
+add.period$ -- 132
+call.type$ -- 36
+change.case$ -- 213
 chr.to.int$ -- 0
-cite$ -- 37
-duplicate$ -- 646
-empty$ -- 1180
-format.name$ -- 210
-if$ -- 3409
+cite$ -- 38
+duplicate$ -- 658
+empty$ -- 1202
+format.name$ -- 212
+if$ -- 3456
 int.to.chr$ -- 0
-int.to.str$ -- 35
-missing$ -- 31
-newline$ -- 176
-num.names$ -- 68
-pop$ -- 218
+int.to.str$ -- 36
+missing$ -- 33
+newline$ -- 181
+num.names$ -- 70
+pop$ -- 225
 preamble$ -- 1
-purify$ -- 175
+purify$ -- 178
 quote$ -- 0
-skip$ -- 513
+skip$ -- 519
 stack$ -- 0
-substring$ -- 976
-swap$ -- 234
+substring$ -- 981
+swap$ -- 235
 text.length$ -- 26
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 140
+type$ -- 142
 warning$ -- 2
-while$ -- 154
-width$ -- 37
-write$ -- 455
+while$ -- 156
+width$ -- 38
+write$ -- 466
 (There were 3 warnings)

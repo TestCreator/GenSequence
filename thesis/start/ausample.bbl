@@ -22,6 +22,11 @@ David Beazley.
 \newblock Python {L}ex-{Y}acc.
 \newblock \url{https://github.com/dabeaz/ply}, 2018.
 
+\bibitem{Bentley:1986:PP:600875}
+Jon Bentley.
+\newblock {\em Programming Pearls}.
+\newblock ACM, New York, NY, USA, 1986.
+
 \bibitem{Carzaniga:2014:COI:2568225.2568287}
 Antonio Carzaniga, Alberto Goffi, Alessandra Gorla, Andrea Mattavelli, and
   Mauro Pezz\`{e}.
