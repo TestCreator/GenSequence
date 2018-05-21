@@ -1,0 +1,143 @@
+from makogram.grammar import Grammar
+from makogram.parmgen import *
+from makogram.cardioid import Cardioid
+from random import gauss, triangular, choice, vonmisesvariate, uniform, sample, randint
+from math import ceil
+import csv
+
+MAX_GENS = 100
+
+def map_desired(ident):
+        try:
+                x = int(ident)
+                return x
+        except ValueError as e:
+% for mapping in data['quantifiers']:
+                if ident == "${mapping['name']}":
+                        return int(${mapping['value']} * MAX_GENS)
+% endfor
+        return MAX_GENS
+
+# Declaring all the range objects
+% for entry in data['ranges']:
+${entry['varname']} = ${entry['Rangeobj']}
+% endfor
+
+# Declaring all the parm objects
+% for rang in data['parms']:
+${rang['parm_varname']} = Parm('${rang['construct_name']}', "one-by-one", Total${rang['parm_varname']})
+% endfor
+
+# Declaring all the cardioids
+% for card in data['cards']:
+${card['card_varname']} = Cardioid(${card['first']}, ${card['second']})
+% endfor
+
+
+
+#Cardioid cardioid
+% for card in data['special_card']:
+${card['card_varname']}.setFavorites(${card['favs']})
+${card['card_varname']}.setNonFavorites(${card['nonfavs']})
+
+% endfor
+
+
+#Parm _cardioid
+% for parm in data['special_parm']:
+${parm['parm_varname']}.setFavorites(${parm['favs']})
+${parm['parm_varname']}.setNonFavorites(${parm['nonfavs']})
+
+% endfor
+
+# Establish Cardioid functions
+% for card in data['est_cards']:
+def establish_${card['first']}(disttype, des):
+        ${card['card_varname']}.firstParm.setDistributionType(disttype)
+        ${card['card_varname']}.firstParm.setDesired(des)
+def establish_${card['second']}(disttype, des):
+        ${card['card_varname']}.secondParm.setDistributionType(disttype)
+        ${card['card_varname']}.secondParm.setDesired(des)
+% endfor
+
+% for parm in data['est_parms']:
+def establish_${parm['parm_varname']}(disttype, des):
+        ${parm['parm_varname']}.setDistributionType(disttype)
+        ${parm['parm_varname']}.setDesired(des)
+% endfor
+
+#Regenerate function
+def regenerate_parm_data_points(): #rewrites final data sets for both parms
+% for c in data['est_cards']:
+        ${c['card_varname']}.generate()
+% endfor 
+% for p in data['est_parms']:
+        ${p['parm_varname']}.setup()
+        ${p['parm_varname']}.scramble()
+% endfor
+
+
+#~#################################################################################################################
+#~#################################################################################################################
+#
+# YOUR CODE HERE!!!
+# You'll have to define your own grammar for your csv file, especially if it has more columns than the number of params
+# See docs for how to do this
+# But here are a few production rules generated for you that you can use, and will certainly have to add to.
+def declare_grammar_production_rules(repetitions):
+        tg = Grammar()
+        tg.prod("Row", "Something Here!!!!\n")
+% for card in data['est_cards']:        
+        tg.prod("${card['first']}", lambda: ${card['card_varname']}.firstParm.next())
+        tg.prod("${card['second']}", lambda: ${card['card_varname']}.secondParm.next())
+% endfor
+% for parm in data['est_parms']:
+        tg.prod("${parm['parm_varname']}", lambda: ${parm['parm_varname']}.next())
+% endfor
+        return tg
+
+#~#################################################################################################################
+#~#################################################################################################################
+
+
+if __name__=="__main__":
+        testcount = 0
+        with open("earthquakegentestvectors.csv", newline='') as vectorfile:
+                reader = csv.DictReader(vectorfile)
+                #iterate through all vectors
+                for vector in reader:
+                        testcount += 1
+                        #set all parms
+                        num_lines = map_desired(vector['Recordings']) #this is used for desired number in all parms
+                        if num_lines == None:
+                                break
+
+% for parm in data['parms']:
+                        establish_${parm['parm_varname']}(vector['${parm['parm_varname']}'], num_lines)
+% endfor
+
+                        #create new data sets
+                        regenerate_parm_data_points()
+
+                        #prepare the data file and file name
+                        test_case_file_name = "cases/{}-{}-".format(testcount, num_lines)
+                        for parm in ["Mags", "Lats", "Longs", "Depths"]:
+                                test_case_file_name += parm.split("_")[0] + '|' + vector[parm] + '-'
+                        #generate new grammar
+                        new_grammar = declare_grammar_production_rules(num_lines)
+                        new_data = new_grammar.gen("Recordings").split("\n")
+                        new_data = new_data[0:len(new_data)-1]
+
+                        #and dump into concrete data file
+                        with open("{}.csv".format(test_case_file_name), 'w', newline='') as concretefile:
+                                #~################## YOUR CODE HERE!!! ##########################################
+                                #~#  See docs for how to do this, but these fieldname strings should match the order of your grammar
+                                fieldnames = []   ## fieldnames = ['something', 'goes', 'here']
+                                #~###############################################################################
+                                writer = csv.DictWriter(concretefile, fieldnames=fieldnames)
+                                writer.writeheader()
+                                for line in new_data:
+                                        row = dict(zip(fieldnames, line.split(',', maxsplit=(len(fieldnames)-1))))
+                                        writer.writerow(row)
+                        print("[Log>: file #{:>2} complete, available for testing use".format(testcount, test_case_file_name))
+

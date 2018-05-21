@@ -1,0 +1,238 @@
+\begin{thebibliography}{10}
+
+\bibitem{Mako:Template}
+Mako templates for python.
+\newblock \url{https://github.com/zzzeek/mako}, 2017.
+
+\bibitem{Arcuri:2011:ART:2001420.2001452}
+Andrea Arcuri and Lionel Briand.
+\newblock Adaptive random testing: An illusion of effectiveness?
+\newblock In {\em Proceedings of the 2011 International Symposium on Software
+  Testing and Analysis}, ISSTA '11, pages 265--275, New York, NY, USA, 2011.
+  ACM.
+
+\bibitem{6963470}
+E.~T. Barr, M.~Harman, P.~McMinn, M.~Shahbaz, and S.~Yoo.
+\newblock The oracle problem in software testing: A survey.
+\newblock {\em IEEE Transactions on Software Engineering}, 41(5):507--525, May
+  2015.
+
+\bibitem{PythonLexYacc}
+David Beazley.
+\newblock Python {L}ex-{Y}acc.
+\newblock \url{https://github.com/dabeaz/ply}, 2018.
+
+\bibitem{Bentley:1986:PP:600875}
+Jon Bentley.
+\newblock {\em Programming Pearls}.
+\newblock ACM, New York, NY, USA, 1986.
+
+\bibitem{Carzaniga:2014:COI:2568225.2568287}
+Antonio Carzaniga, Alberto Goffi, Alessandra Gorla, Andrea Mattavelli, and
+  Mauro Pezz\`{e}.
+\newblock Cross-checking oracles from intrinsic software redundancy.
+\newblock In {\em Proceedings of the 36th International Conference on Software
+  Engineering}, ICSE 2014, pages 931--942, New York, NY, USA, 2014. ACM.
+
+\bibitem{Chays:2000:FTD:347636.348954}
+David Chays, Saikat Dan, Phyllis~G. Frankl, Filippos~I. Vokolos, and Elaine~J.
+  Weyuker.
+\newblock A framework for testing database applications.
+\newblock {\em SIGSOFT Softw. Eng. Notes}, 25(5):147--157, August 2000.
+
+\bibitem{Chen:2016:SOC:2970276.2970366}
+Junjie Chen, Yanwei Bai, Dan Hao, Lingming Zhang, Lu~Zhang, Bing Xie, and Hong
+  Mei.
+\newblock Supporting oracle construction via static analysis.
+\newblock In {\em Proceedings of the 31st IEEE/ACM International Conference on
+  Automated Software Engineering}, ASE 2016, pages 178--189, New York, NY, USA,
+  2016. ACM.
+
+\bibitem{Chen:2015:MTS:2819261.2819278}
+Tsong~Yueh Chen.
+\newblock Metamorphic testing: A simple method for alleviating the test oracle
+  problem.
+\newblock In {\em Proceedings of the 10th International Workshop on Automation
+  of Software Test}, AST '15, pages 53--54, Piscataway, NJ, USA, 2015. IEEE
+  Press.
+
+\bibitem{Garousi:2017:IWA:3084226.3084264}
+Vahid Garousi, Michael Felderer, Marco Kuhrmann, and Kadir Herkilo\u{g}lu.
+\newblock What industry wants from academia in software testing?: Hearing
+  practitioners' opinions.
+\newblock In {\em Proceedings of the 21st International Conference on
+  Evaluation and Assessment in Software Engineering}, EASE'17, pages 65--69,
+  New York, NY, USA, 2017. ACM.
+
+\bibitem{Goffi:2016:AGO:2931037.2931061}
+Alberto Goffi, Alessandra Gorla, Michael~D. Ernst, and Mauro Pezz\`{e}.
+\newblock Automatic generation of oracles for exceptional behaviors.
+\newblock In {\em Proceedings of the 25th International Symposium on Software
+  Testing and Analysis}, ISSTA 2016, pages 213--224, New York, NY, USA, 2016.
+  ACM.
+
+\bibitem{Gotterbarn:2016:CFC:2874239.2874248}
+Don Gotterbarn.
+\newblock The creation of facts in the cloud: A fiction in the making.
+\newblock {\em SIGCAS Comput. Soc.}, 45(3):60--67, January 2016.
+
+\bibitem{Gupta:2011:MBA:2002931.2002932}
+Priya Gupta and Prafullakumar Surve.
+\newblock Model based approach to assist test case creation, execution, and
+  maintenance for test automation.
+\newblock In {\em Proceedings of the First International Workshop on End-to-End
+  Test Script Engineering}, ETSE '11, pages 1--7, New York, NY, USA, 2011. ACM.
+
+\bibitem{Haller:2010:TDC:1838126.1838132}
+Klaus Haller.
+\newblock The test data challenge for database-driven applications.
+\newblock In {\em Proceedings of the Third International Workshop on Testing
+  Database Systems}, DBTest '10, pages 6:1--6:6, New York, NY, USA, 2010. ACM.
+
+\bibitem{Harman:2011:SHO:2025113.2025144}
+Mark Harman, Yue Jia, and William~B. Langdon.
+\newblock Strong higher order mutation-based test data generation.
+\newblock In {\em Proceedings of the 19th ACM SIGSOFT Symposium and the 13th
+  European Conference on Foundations of Software Engineering}, ESEC/FSE '11,
+  pages 212--222, New York, NY, USA, 2011. ACM.
+
+\bibitem{Hughes:2016:FMB:2896921.2896928}
+John Hughes, Ulf Norell, Nicholas Smallbone, and Thomas Arts.
+\newblock Find more bugs with quickcheck!
+\newblock In {\em Proceedings of the 11th International Workshop on Automation
+  of Software Test}, AST '16, pages 71--77, New York, NY, USA, 2016. ACM.
+
+\bibitem{VisIt}
+Lawrence Livermore~National Laboratory.
+\newblock About {V}is{I}t.
+
+\bibitem{Langdon:2017:IAT:3105427.3105429}
+William~B. Langdon, Shin Yoo, and Mark Harman.
+\newblock Inferring automatic test oracles.
+\newblock In {\em Proceedings of the 10th International Workshop on
+  Search-Based Software Testing}, SBST '17, pages 5--6, Piscataway, NJ, USA,
+  2017. IEEE Press.
+
+\bibitem{Lindvall:2015:MMT:2819009.2819030}
+Mikael Lindvall, Dharmalingam Ganesan, Ragnar \'{A}rdal, and Robert~E. Wiegand.
+\newblock Metamorphic model-based testing applied on nasa dat: An experience
+  report.
+\newblock In {\em Proceedings of the 37th International Conference on Software
+  Engineering - Volume 2}, ICSE '15, pages 129--138, Piscataway, NJ, USA, 2015.
+  IEEE Press.
+
+\bibitem{Lindvall:2017:MMT:3103620.3103632}
+Mikael Lindvall, Adam Porter, Gudjon Magnusson, and Christoph Schulze.
+\newblock Metamorphic model-based testing of autonomous systems.
+\newblock In {\em Proceedings of the 2Nd International Workshop on Metamorphic
+  Testing}, MET '17, pages 35--41, Piscataway, NJ, USA, 2017. IEEE Press.
+
+\bibitem{Lu:2018:URS:3184558.3186240}
+Jianguo Lu, Hao Wang, and Dingding Li.
+\newblock Uniform random sampling not recommended.
+\newblock In {\em Companion Proceedings of the The Web Conference 2018}, WWW
+  '18, pages 495--499, Republic and Canton of Geneva, Switzerland, 2018.
+  International World Wide Web Conferences Steering Committee.
+
+\bibitem{Misailovic:2007:PTG:1287624.1287645}
+Sasa Misailovic, Aleksandar Milicevic, Nemanja Petrovic, Sarfraz Khurshid, and
+  Darko Marinov.
+\newblock Parallel test generation and execution with korat.
+\newblock In {\em Proceedings of the the 6th Joint Meeting of the European
+  Software Engineering Conference and the ACM SIGSOFT Symposium on The
+  Foundations of Software Engineering}, ESEC-FSE '07, pages 135--144, New York,
+  NY, USA, 2007. ACM.
+
+\bibitem{Kassab-deFranco-Laplante}
+Philip A.~Laplante Mohamad~Kassab, Joanna F.~DeFranco.
+\newblock Software testing: the state of the practice.
+\newblock {\em IEEE Software}, 34(5):46--52, 2017.
+
+\bibitem{Murphy:Kaiser}
+Christian Murphy, Gail Kaiser, and Marta Arias.
+\newblock A framework for quality assurance of machine learning applications.
+\newblock Columbia University Computer Science Technical Reports, pages 1--10,
+  New York, NY, USA, 2006. Department of Computer Science, Columbia University.
+
+\bibitem{Murphy:2007:PRT:1292414.1292425}
+Christian Murphy, Gail Kaiser, and Marta Arias.
+\newblock Parameterizing random test data according to equivalence classes.
+\newblock In {\em Proceedings of the 2Nd International Workshop on Random
+  Testing: Co-located with the 22Nd IEEE/ACM International Conference on
+  Automated Software Engineering (ASE 2007)}, RT '07, pages 38--41, New York,
+  NY, USA, 2007. ACM.
+
+\bibitem{Muslu:2015:PDE:2771783.2771792}
+Kivanc Muslu, Yuriy Brun, and Alexandra Meliou.
+\newblock Preventing data errors with continuous testing.
+\newblock In {\em Proceedings of the 2015 International Symposium on Software
+  Testing and Analysis}, ISSTA 2015, pages 373--384, New York, NY, USA, 2015.
+  ACM.
+
+\bibitem{Palka:2011:TOC:1982595.1982615}
+Michal~H. Palka, Koen Claessen, Alejandro Russo, and John Hughes.
+\newblock Testing an optimising compiler by generating random lambda terms.
+\newblock In {\em Proceedings of the 6th International Workshop on Automation
+  of Software Test}, AST '11, pages 91--97, New York, NY, USA, 2011. ACM.
+
+\bibitem{Patrick:2016:ATI:2970276.2970333}
+Matthew Patrick, Matthew~D. Castle, Richard O. J.~H. Stutt, and Christopher~A.
+  Gilligan.
+\newblock Automatic test image generation using procedural noise.
+\newblock In {\em Proceedings of the 31st IEEE/ACM International Conference on
+  Automated Software Engineering}, ASE 2016, pages 654--659, New York, NY, USA,
+  2016. ACM.
+
+\bibitem{Sabor:2015:ART:2819261.2819271}
+Korosh~Koochekian Sabor and Stuart Thiel.
+\newblock Adaptive random testing by static partitioning.
+\newblock In {\em Proceedings of the 10th International Workshop on Automation
+  of Software Test}, AST '15, pages 28--32, Piscataway, NJ, USA, 2015. IEEE
+  Press.
+
+\bibitem{Segura:2017:TAD:3103620.3103626}
+Sergio Segura, Amador Dur\'{a}n, Javier Troya, and Antonio~Ruiz Cort{\'e}s.
+\newblock A template-based approach to describing metamorphic relations.
+\newblock In {\em Proceedings of the 2Nd International Workshop on Metamorphic
+  Testing}, MET '17, pages 3--9, Piscataway, NJ, USA, 2017. IEEE Press.
+
+\bibitem{Souza:2016:SMT:2897010.2897012}
+Francisco Carlos~M. Souza, Mike Papadakis, Yves Le~Traon, and M\'{a}rcio~E.
+  Delamaro.
+\newblock Strong mutation-based test data generation using hill climbing.
+\newblock In {\em Proceedings of the 9th International Workshop on Search-Based
+  Software Testing}, SBST '16, pages 45--54, New York, NY, USA, 2016. ACM.
+
+\bibitem{Staats:2012:AOC:2337223.2337326}
+Matt Staats, Gregory Gay, and Mats P.~E. Heimdahl.
+\newblock Automated oracle creation support, or: How i learned to stop worrying
+  about fault propagation and love mutation testing.
+\newblock In {\em Proceedings of the 34th International Conference on Software
+  Engineering}, ICSE '12, pages 870--880, Piscataway, NJ, USA, 2012. IEEE
+  Press.
+
+\bibitem{Tiwari:2013:RRT:2439976.2439982}
+Rajeev Tiwari and Noopur Goel.
+\newblock Reuse: Reducing test effort.
+\newblock {\em SIGSOFT Softw. Eng. Notes}, 38(2):1--11, March 2013.
+
+\bibitem{Yatoh:2015:FRT:2771783.2771805}
+Kohsuke Yatoh, Kazunori Sakamoto, Fuyuki Ishikawa, and Shinichi Honiden.
+\newblock Feedback-controlled random test generation.
+\newblock In {\em Proceedings of the 2015 International Symposium on Software
+  Testing and Analysis}, ISSTA 2015, pages 316--326, New York, NY, USA, 2015.
+  ACM.
+
+\bibitem{Zeller:2017:STS:3105427.3105438}
+Andreas Zeller.
+\newblock Search-based testing and system testing: A marriage in heaven.
+\newblock In {\em Proceedings of the 10th International Workshop on
+  Search-Based Software Testing}, SBST '17, pages 49--50, Piscataway, NJ, USA,
+  2017. IEEE Press.
+
+\bibitem{Gen:Pairs}
+Jamie Zimmerman and Michal Young.
+\newblock Gen{P}airs.
+\newblock \url{https://github.com/TestCreator/GenPairs}, 2017.
+
+\end{thebibliography}

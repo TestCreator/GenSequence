@@ -1,5 +1,6 @@
-from random import gauss, uniform, triangular, sample, choice
-from math import ceil
+from random import gauss, uniform, triangular, sample, choice, randint
+from math import floor
+from makogram.range import Range # for cardioid generation
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s',
                         level=logging.WARNING)
@@ -35,38 +36,12 @@ def posint(x):
         returns no negative numbers
         """
         return 0 if x<0 else x
-def norm(args):
-        """
-        creates a data point with normal (gaussian) distribution
-        needs an average and devation (mu and sigma)
-        guarantees the point is in a certain range (low and high) if thgigiose args are specified
-        """
-        ave = args["ave"]
-        dev = args["dev"]
-        low = args["low"]
-        high = args["high"]
-        x = round(gauss(ave, dev))
-        if low==None and high == None:
-                return x
-        else:
-                while not low <= x <= high:
-                        x = round(gauss(ave, dev))
-                return x
-def uni(args):
-        """
-        creates a data point with uniform distribution
-        """
-        low = args["low"]
-        high = args["high"]
-        return round(uniform(low, high))
-def slanted(args):
-        """
-        creates a data point with slant, triangular probability
-        """
-        low = args["low"]
-        high = args["high"]
-        peak = args["ave"]
-        return round(triangular(low, high, peak))
+
+def cardioid(args):
+        pass
+
+def _cardioid(args):
+        pass
 
 def days_of_week():
         return [str(day + time) for day in ["M", "T", "W", "R", "F"] for time in ["10:00 - 12:00", "12:00 - 2:00", "2:00 - 4:00", "4:00 - 6:00"]]
@@ -118,11 +93,15 @@ def names_generator(li):
 # typemap is a mapping from string specifiers passed into Parm initialization to function references
 typemap = {"many": many,
            "few": few,
-           "normal": norm,
-           "uniform": uni,
-           "triangular": slanted}
+           "normal": Range.functions['normal'],
+           "uniform": Range.functions['uniform'],
+           "right_slanted": Range.functions['right_slanted'],
+           "left_slanted": Range.functions['left_slanted'],
+           "_cardioid": _cardioid,
+           "cardioid": cardioid}
+
 class Parm:
-        def __init__(self, name, generator_type, distr_type="uniform", desired="many", low=None, high=None, ave=None, dev=None, from_set=None, per_row=1):
+        def __init__(self, name, generator_type, valuerange, distr_type="uniform", desired="many", from_set=None, per_row=1):
                 """
                 generator_type: string; "one by one" or "fixed-size-chunks"
                 generator: to be defined later; the generator object that yields data points, either one by one or at fixed size chunks
@@ -140,14 +119,11 @@ class Parm:
                 """
                 self.name = name
                 self.generator_type = generator_type
+                self.valuerange = valuerange
                 self.generator = None #to be defined in a later method
                 self.distr_type = distr_type
-                self.vert_distribution = typemap[distr_type] #this is a function reference
+                self.vert_distribution = Range.functions[distr_type] #this is a function reference
                 self.horiz_distribution = None; #TODO: implement this
-                self.dist_args = {"low": low, #these are the args passed to different distribution functions
-                                  "high": high,
-                                  "ave": ave,
-                                  "dev": dev}
                 self.from_set = from_set
                 if type(desired) == int:
                         self.desired = desired
@@ -159,17 +135,9 @@ class Parm:
                 self.generated = 0 # Marks if the generator object yield data points has been created
 
                 # Error checking
-                # if low or high is specified, the other must be specified as well
-                assert ((low==None and high==None) or (not low==None and not high==None)), "low and high arguments must both be specified"
-                # ave must be between low and high
-                if not ave==None:
-                        assert (low <= ave <= high), "Bad statistical arguments, must be low <= ave <= high"
-                #the deviation from average must be between low and high to make statistical sense
-                if not dev==None and not ave==None:
-                        assert ((ave + dev <= high) and (ave - dev >= low)), "Deviation too great, extends beyond min and max values"
                 # if the generator type is specialized, it must have per_row specified
                 if generator_type != "one-by-one":
-                        assert not per_row == None, "Must supply from_set and per_row for specialty generators"
+                        assert per_row != None, "Must supply from_set and per_row for specialty generators"
                         self.rows = self.desired
                         self.desired = self.desired * per_row
         
@@ -179,15 +147,9 @@ class Parm:
                 self.generator = gene
         def setDistributionType(self, distr_type):
                 self.distr_type = distr_type
-                self.vert_distribution = typemap[distr_type]
-        def setLow(self, low):
-                self.dist_args[low] = low
-        def setHigh(self, high):
-                self.dist_args[high] = high
-        def setAve(self, ave):
-                self.dist_args[ave] = ave
-        def setDev(self, dev):
-                self.dist_args[dev] = dev
+                self.vert_distribution = Range.functions[self.distr_type]
+        def setValueRange(self, rang):
+                self.valuerange = rang
         def setFromSet(self, from_set):
                 self.from_set = from_set
         def setDesired(self, desired):
@@ -195,41 +157,91 @@ class Parm:
                 if self.generator_type != "one-by-one":
                     self.rows = self.desired
                     self.desired = self.desired * self.per_row
+        def GetDesired(self):
+                return self.desired
         def setFinalDataSet(self, final):
                 self.final_data_set = final
         def getFinalDataSet(self):
                 return self.final_data_set
         def setPerRow(self, per_row):
                 self.per_row = per_row
+        def renew(self):
+                self.generated = 0
+        def setFavorites(self, fav):
+                """ fav is a list of Range objects. it can be a list of one Range """
+                if isinstance(fav, list):
+                    self.favorites = fav
+                elif isinstance(fav, Range):
+                    self.favorites = [fav]
+        def setNonFavorites(self, non):
+                """ non is a list of Range objects. it can be a list of one Range """
+                if isinstance(non, list):
+                    self.non_favorites = non
+                elif isinstance(non, Range):
+                    self.non_favorites = [non]
         def generate(self, k=100000):
                 """
                 generates the samples from either ints or a special set of data points like names or times
                 creates 100000 points, sorts them, and systematically picks points so that they are evenly dispersed
                 and maintains the distribution guaranteed by Law of Large Numbers
                 """
+                if self.distr_type == "_cardioid":
+                    sampling = self._cardioid_gen()
+                    return sampling
+
+                #Otherwise...
                 # Generate the large sample size
                 if self.from_set == None:
-                        samples = [self.vert_distribution(self.dist_args) for _ in range(k)]
+                        samples = [self.valuerange.functions[self.distr_type](self.valuerange) for _ in range(k)]
                 else:
-                        samples = [self.from_set[self.vert_distribution(self.dist_args)] for _ in range(k)]
+                        samples = [self.from_set[self.valuerange.functions[self.distr_type](self.valuerange)] for _ in range(k)]
                 # Now reduce down
-                sample_size = len(samples) #How many initial data points are there?
-                interval_step = ceil(sample_size / self.desired)
+                sample_size = k #How many initial data points are there?
+                interval_step = floor(sample_size / self.desired)
                 samples.sort() #The sorted data points
                 reduced = []
                 for i in range(0, sample_size, interval_step):
                         reduced.append(samples[i])
 
+                while len(reduced) != self.desired:
+                    reduced.pop()
                 log.debug("original sample size is {} and desired is {}, so the interval step is {} and the final set is {}".format(sample_size, self.desired, interval_step, len(reduced)))
                 assert len(reduced) == self.desired
                 return reduced
+
+
+        def _cardioid_gen(self):
+                assert self.favorites != None, "Uh-oh, favorites set for _cardioid distribution is not set"
+                assert self.non_favorites != None, "Uh-oh, non_favorites set for _cardioid distribution is not set"
+                num_favs = int(.9*self.desired)
+                num_outliers = int(.1*self.desired)
+                while num_outliers + num_favs < self.desired:
+                    num_outliers+= 1
+                assert num_outliers + num_favs == self.desired, "Uh-oh, _cardioid distribution creating wrong size sample: {}".format(num_outliers+num_favs)
+                
+                grand_set = []
+                # generate all the favorites pairings
+                for _ in range(num_favs):
+                    #pick point
+                    select = self.favorites[randint(0, len(self.favorites)-1)] #Range object
+                    pt = select.uniform_pick()
+                    grand_set.append(round(pt,2))
+
+                # now generate all the outliers
+                for _ in range(num_outliers):
+                    select = self.non_favorites[randint(0, len(self.non_favorites)-1)] #Range object
+                    pt = select.uniform_pick()
+                    grand_set.append(round(pt,2))
+                
+                return grand_set
+
         def setup(self):
                 """
                 calls the creation of data points, shuffles them, and stores them as a class data member
                 """
                 items = self.generate()
                 self.final_data_set = items
-                self.generated = 0 #if reusing Parm object, pretend a generator hasn't been created before
+                self.renew() #if reusing Parm object, pretend a generator hasn't been created before
         def scramble(self):
                 items = self.final_data_set
                 self.final_data_set = sample(items, len(items))
@@ -264,48 +276,7 @@ class Parm:
                         else:
                                 self.generator = self.multipart_distribute(self.distribute(self.final_data_set), self.rows, self.per_row)
                         self.generated = 1
-                t = next(self.generator)
-                THE_LIST.append(t)
-                return t
-
-rangemap = {"L": range(0,3), "M": range(3,4), "H": range(4,6)}
-class Cardioid(Parm):
-        def __init__(self, name, generator_type, distr_type="uniform", desired="many", low=None, high=None, ave=None, 
-                    dev=None, from_set=None, per_row=1):
-                assert not from_set == None
-                super().__init__(name, generator_type, distr_type, desired, low, high, ave, dev, from_set, per_row)
-                print("done setting up a cardioid")
-
-        def generate(self, k=100000):
-                symbolic_samples = []
-                concrete_samples = []
-                column1 = [choice(self.from_set) for _ in range(k)]
-                # TODO: Fix everything about this pls
-                for point in column1:
-                        if point == "L":
-                            pair = (point, choice([pick for pick in "HHHML"]))
-                        elif point == "M":
-                            pair = (point, choice([pick for pick in "MMLH"]))
-                        else:
-                            pair = (point, choice([pick for pick in "LLLMH"]))
-                        symbolic_samples.append(pair)
-                for pair in symbolic_samples:
-                        newpair = (choice(rangemap[pair[0]]), choice(rangemap[pair[1]]))
-                        concrete_samples.append(newpair)
-
-                # Now reduce the sample size
-                reduced = []
-                sample_size = len(concrete_samples) #How many initial data points are there?
-                interval_step = ceil(sample_size / self.desired)
-                concrete_samples.sort() #The sorted data points
-                reduced = []
-                for i in range(0, sample_size, interval_step):
-                        reduced.append(concrete_samples[i])
-
-                log.debug("original sample size is {} and desired is {}, so the interval step is {} and the final set is {}".format(sample_size, self.desired, interval_step, len(reduced)))
-                assert len(reduced) == self.desired
-                return reduced
-
+                return next(self.generator)
 
 
 

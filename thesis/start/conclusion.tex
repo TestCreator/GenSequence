@@ -1,0 +1,29 @@
+%conclusion
+
+I believe that GenSequence's best application is for testing database-driven applications. These applications literally control the world. Consider financial applications alone: the record of every transaction, every payment, every credit report, and every bill can dictate a person's entire life. The infrastructure surrounding that data must not expunge or fabricate any of it, and must maintain its integrity. Software that accesses, controls, and manipulates this huge amount of data carries substantial responsibility. Moreover, software that can read, interpret, and identify trends in a huge wealth of global data has amazing power in informing us of what happens in the world and how we can make better decisions. It is therefore of utmost importance to design that software well enough to trust its results.
+
+GenSequence has addressed those demands. It functions simply but provides automation during the testing stage and generates reliable data that is what is says it is. If the context of the program warrants consideration of statistically unlikely but possible scenarios, GenSequence can make that happen. It primarily states its power by its ease of use and nearly end-to-end automation. Moreover, the construction of data points does provide insight into the expected output. However, this insight is limited to eyeballing the result.
+
+Given that the construction of GenSequence was a Minimum Viable Product, there is considerable room for improvement. What follows is a discussion of future work and extensibility.
+
+\vspace{1cm}
+\textbf{Current Iteration}
+\begin{itemize}
+\item Identify an open-source project in need of a test suite, and create a hypothetical test suite for it using GenSequence. The greatest indication that GenSequence is useful is cross-checking it against a program that someone else wrote.
+\end{itemize}
+
+\textbf{Top of the Backlog}
+\begin{itemize}
+\item Implement the entire preprocessor in Ply, develop an abstraction for a model of the Parms, and develop an interpreter that could execute those models. Currently the preprocessor performs most of its parsing via line-by-line file processing, which is an inelegant and clunky solution.
+\item Combine the specifications that enter GenPairs and the preprocessor into one; in other words, combine the roles of the .cp and .prm files. This would certainly reduce the work for the tester. In initial design of the prm language I had included distribution possibilities for each parm, but had removed it from prm since it was already specified in cp language that went into GenPairs. Ideally this specification could be parsed and found from the prm file and automatically sent into pairwise generation.
+\item Develop greater control over Double cardioids - relating multicolumns together. I had this idea when developing data for TeamBuilder. I wanted control over the relationship between general skills (columns Python and Java) and more niche, specialized skills (like Haskell and C pthreads library). This required generation of two cardioids, and then calculation to determine what pattern each data instance matched, and then re-sorting by implementing a hill climbing technique. This quickly fell out favor, as much more of the system needed implementation first.
+\end{itemize}
+
+\textbf{Icebox}
+\begin{itemize}
+\item Consider alternate formats for the output. Currently GenSequence will give the tester a csv file of raw data. However in database-driven applications, the test data must come in scripts of database insert statements, as the database state must be restored for every test case. Consequently it is worth implementing a utility feature that outputs a database creation script, say for example a shell script containing SQL insert statements.
+\item Rewrite usability documentation, and provide utilities that allow for easy initial use. A core component of automation is that it is easy to set up, if even for a proof-of-concept.
+\item Develop a greater understanding of how computer random works, and its influence on data generation according to distribution functions.
+\item Research and identify possible Machine Learning applications in which GenSequence could be used. I believe that GenSequence might have applications in some ML models, in which case knowing the demands of ML models might influence the way GenSequence is used.
+\end{itemize}
+

@@ -1,0 +1,168 @@
+%%% This is an example file for the Auburn University style options
+%%%       aums.sty (Masters Thesis)
+%%%       auphd.sty (Ph.D. Dissertation)
+%%%       auhonors.sty (Honors Scholar)
+
+%%%To use it, please edit the necessary options, title, author, date, year, keywords, advisor, professor, etc. 
+
+\documentclass[12pt]{report}
+%\usepackage{aums}       % For Master's papers
+%\usepackage{auphd}     % For Ph.D.
+\usepackage{auhonors}  % For honors college
+\usepackage{ulem}       % underlining on style-page; see \normalem below
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{pgf}
+\usepackage{tocloft}
+\usepackage{sectsty}
+\usepackage{indentfirst} %abstract indent para
+\usepackage{wrapfig} %figures embedded in text
+\usepackage{subcaption} %subfigures 
+\usepackage{float} %"attach" figures to sections
+\usepackage{titlesec} %making \section headers smaller
+\usepackage{booktabs} %table styling
+\usepackage{syntax} % CFG styling
+\usepackage{listings} %both for code blocks
+\usepackage{color}
+\usepackage{verbatim} %for file names of test cases
+\usepackage[paperwidth=8.5in,paperheight=11.0in,
+  top=1.0in,bottom=1.0in,
+  includefoot,heightrounded]{geometry} %for page numbers within 1 inch
+
+\graphicspath{ {images/} }
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=0.0mm,
+  belowskip=0.0mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle=\linespread{1.25}\small\ttfamily,
+  numbers=left,
+  numberstyle=\tiny \color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+%%%%%Format rules: Normal margins are 1 in. If you need to print with 1.5in margins, uncomment the line below
+\oddsidemargin0.5in \textwidth6in
+
+
+\chapterfont{\centering \large}
+\renewcommand{\cfttoctitlefont}{\normalsize \textbf}
+\renewcommand{\cftloftitlefont}{\normalsize \textbf}
+\renewcommand{\cftlottitlefont}{\normalsize \textbf}
+
+\titleformat*{\section}{\normalsize}
+
+% May want theorems numbered by chapter
+\newtheorem{theorem}{Theorem}[chapter]
+
+
+\begin{document}
+
+
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+        
+        \Large
+        \textbf{USING STATISTICAL DISTRIBUTIONS TO GENERATE RANDOM TEST DATA}
+        
+        \vspace{3.5cm}
+        
+        \large
+        by
+        \linebreak
+        JAMIE ZIMMERMAN
+        
+        \vspace{3.5cm}
+        
+        \vfill
+
+        \normalsize
+        A THESIS
+        \vspace{1.5cm}
+        \begin{singlespace}
+        Presented to the Department of Computer and Information Science \\
+        and the Robert D. Clark Honors College \\
+        in partial fulfillment of the requirements for the degree of \\
+        Bachelor of Science
+        \end{singlespace}
+        
+        \vspace{0.8cm}
+        June 2018
+        
+    \end{center}
+\end{titlepage}
+
+
+
+\begin{romanpages}      % roman-numbered pages 
+
+\input{abs}
+
+\input{ack}
+
+\begin{center}
+\tableofcontents
+\end{center}
+
+\input{materials}
+
+\input{terms}
+
+\begin{center}
+\listoffigures
+\end{center}
+
+
+\newpage
+\begin{center}
+\listoftables
+\end{center}
+
+
+\end{romanpages}        % All done with roman-numbered pages%
+
+\normalem       % Make italics the default for \em%
+
+\chapter{\normalsize Introduction}
+\input{introduction}
+
+\chapter{\normalsize Literature Survey}
+\input{litsurvey}
+
+\chapter{\normalsize Proprosed Argument}
+\input{argument}
+
+\chapter{\normalsize Background on Design Decisions}
+\input{background}
+
+\chapter{\normalsize Methods}
+\input{methods}
+
+\chapter{\normalsize Results}
+\input{results}
+
+\chapter{\normalsize Concluding Thoughts}
+\input{conclusion}
+
+
+%%%%%%%%Two options for having a bibliography. If you use a separate file or multiple files:
+\bibliography{Phase1,Phase2,Phase3}
+\bibliographystyle{plain}
+
+
+
+\end{document}
+

@@ -1,0 +1,72 @@
+# mags ranges
+TotalMags Range(low: 0.5, lp: 2.5, ave: 5.0, dev: 1.2, rp: 7.5, high: 10.0]
+Micro Range(low: 0.0, high: 2.0]
+Feelable Range[low: 4.5, high: 7.9)
+Great Range[low: 8.0, high: 9.5]
+
+#depths ranges
+TotalDepths Range(low: 0.1, lp: 4.5, ave: 15.0, dev: 4.8, rp: 23.0, high: 30.0]
+Shallow Range[low: 0.0, high: 5.0]
+Mid Range(low: 5.0, high: 15.0)
+Deep Range[low: 15.0, high: 30.0]
+
+#latitudes ranges
+TotalLats Range(low: 38.58, high: 51.23, lp: 43.3, ave: 45.84, dev: 1.8, rp: 48.8]
+East Range[low: 38.58, high: 45.84]
+West Range[low: 45.84, high: 51.23]
+
+#longitudes ranges
+TotalLongs Range(low: -128.6085, lp: -124.22, ave: -121.347, dev: 2.2, rp: -117.8, high: -114.0844]
+North Range[low: -128.6085, high: -121.0184]
+South Range[low: -121.347, high: -114.0844]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+# how many rows in the csv?
+@Horizontal called Recordings
+        float many .7
+        float few .3
+
+@Vertical
+        multicol MagsDepths
+        multicol LatsLongs
+
+MagsDepths:
+        col Mags
+        col Depths
+
+LatsLongs:
+        col Lats
+        col Longs
+
+MagsDepths~cardioid:
+        favorites: Micro*Shallow, Great*Deep, Feelable*Mid
+        occasional:
+        not: Micro*Deep, Great*Shallow, Feelable*Deep, Feelable*Shallow
+
+Mags~_cardioid: #TODO the pairwise test vectors need to cover the opposite case
+        favorites: Micro,Feelable,Great
+        occasional:
+        outliers: Great
+
+Depths~_cardioid:
+        favorites: Shallow
+        occasional:
+        outliers: Deep
+
+Lats~_cardioid:
+        favorites: East
+        occasional: 
+        outliers: West
+
+LatsLongs~cardioid: #necessary joint distribution - multicol
+        favorites: North*East
+        occasional:
+        not: South*West
+
+Longs~_cardioid:
+        favorites: North
+        occasional: 
+        outliers: South
+
