@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  15 MAY 2018 13:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  31 MAY 2018 22:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -724,23 +724,25 @@ File: images/diagram.png Graphic file (type png)
 <use images/diagram.png>
 Package pdftex.def Info: images/diagram.png used on input line 8.
 (pdftex.def)             Requested size: 273.42082pt x 85.03748pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--11
+\OT1/cmr/m/n/12 re-sult even is.
+ []
+
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 12.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 12.
+[2 <./images/diagram.png>]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
- [2 <./images/diagram.png>]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no “ in font cmr12!
  [3]) [4]
 Chapter 2.
 (./litsurvey.tex
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no “ in font cmr12!
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no “ in font cmr12!
@@ -765,23 +767,28 @@ File: images/team-file.png Graphic file (type png)
 
 <use images/team-file.png>
 Package pdftex.def Info: images/team-file.png used on input line 10.
-(pdftex.def)             Requested size: 385.14185pt x 262.58302pt.
- [12 <./images/team-file.png>] [13] [14]
+(pdftex.def)             Requested size: 449.33542pt x 306.34909pt.
+
+Overfull \hbox (15.71542pt too wide) in paragraph at lines 10--11
+[][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[12] [13 <./images/team-file.png>] [14]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ¨ in font cmr12!
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 58.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 60.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 58.
- [15]
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no “ in font cmr12!
- [16]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 60.
+ [15] [16]
+[17]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
@@ -797,35 +804,34 @@ Missing character: There is no ™ in font cmr12!
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no “ in font cmr12!
-
-[17] <images/law1.png, id=101, 433.62pt x 312.16624pt>
+ [18] <images/law1.png, id=104, 433.62pt x 312.16624pt>
 File: images/law1.png Graphic file (type png)
- <use images/law1.png>
-Package pdftex.def Info: images/law1.png used on input line 88.
+
+<use images/law1.png>
+Package pdftex.def Info: images/law1.png used on input line 93.
 (pdftex.def)             Requested size: 303.53192pt x 218.51488pt.
-
-<images/law2.png, id=102, 436.63126pt x 316.18124pt>
+ <images/law2.png, id=105, 436.63126pt x 316.18124pt>
 File: images/law2.png Graphic file (type png)
- <use images/law2.png>
-Package pdftex.def Info: images/law2.png used on input line 95.
+
+<use images/law2.png>
+Package pdftex.def Info: images/law2.png used on input line 100.
 (pdftex.def)             Requested size: 305.63979pt x 221.32535pt.
-
-[18 <./images/law1.png>] <images/law3.png, id=107, 419.5675pt x 314.17375pt>
+ [19 <./images/law1.png>]
+<images/law3.png, id=110, 419.5675pt x 314.17375pt>
 File: images/law3.png Graphic file (type png)
-
-<use images/law3.png>
-Package pdftex.def Info: images/law3.png used on input line 102.
+ <use images/law3.png>
+Package pdftex.def Info: images/law3.png used on input line 107.
 (pdftex.def)             Requested size: 293.69524pt x 219.92012pt.
- [19 <./images/law2.png> <./images/law3.png>] [20]
+
+[20 <./images/law2.png> <./images/law3.png>] [21]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no “ in font cmr12!
-)
-[21]
+) [22]
 Chapter 5.
-(./methods.tex [22
+(./methods.tex [23
 
-]) [23]
+]) [24]
 Chapter 6.
 (./results.tex
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 12.
@@ -841,20 +847,20 @@ Overfull \hbox (14.63324pt too wide) in paragraph at lines 6--13
 [] 
  []
 
-<images/start-ex.png, id=126, 1020.81375pt x 877.2775pt>
+<images/start-ex.png, id=129, 1020.81375pt x 877.2775pt>
 File: images/start-ex.png Graphic file (type png)
 
 <use images/start-ex.png>
 Package pdftex.def Info: images/start-ex.png used on input line 19.
 (pdftex.def)             Requested size: 408.31827pt x 350.90479pt.
- [24
+ [25
 
 ]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no “ in font cmr12!
 
-<images/final-ex.png, id=131, 1019.81pt x 874.26625pt>
+<images/final-ex.png, id=134, 1019.81pt x 874.26625pt>
 File: images/final-ex.png Graphic file (type png)
 
 <use images/final-ex.png>
@@ -864,7 +870,7 @@ Package pdftex.def Info: images/final-ex.png used on input line 30.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[25 <./images/start-ex.png>] [26 <./images/final-ex.png>]
+[26 <./images/start-ex.png>] [27 <./images/final-ex.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 47--47
 []\OT1/pcr/m/n/12 6-70-magnitudes|cardioid-latitudes|left[]-
  []
@@ -874,47 +880,86 @@ Overfull \hbox (6.79999pt too wide) in paragraph at lines 41--48
 [] 
  []
 
-[27] <images/mags.png, id=145, 719.68875pt x 696.6025pt>
+[28] <images/mags.png, id=148, 719.68875pt x 696.6025pt>
 File: images/mags.png Graphic file (type png)
  <use images/mags.png>
 Package pdftex.def Info: images/mags.png used on input line 76.
 (pdftex.def)             Requested size: 281.85034pt x 272.81122pt.
 
-<images/depths.png, id=146, 719.68875pt x 699.61375pt>
+<images/depths.png, id=149, 719.68875pt x 699.61375pt>
 File: images/depths.png Graphic file (type png)
  <use images/depths.png>
 Package pdftex.def Info: images/depths.png used on input line 80.
 (pdftex.def)             Requested size: 281.85034pt x 273.99051pt.
 
-[28] [29 <./images/mags.png> <./images/depths.png>]
-<images/clusters-nobg.png, id=156, 722.7pt x 700.6175pt>
+[29] [30 <./images/mags.png> <./images/depths.png>]
+<images/mags-frequent-1.png, id=159, 722.7pt x 542.025pt>
+File: images/mags-frequent-1.png Graphic file (type png)
+
+<use images/mags-frequent-1.png>
+Package pdftex.def Info: images/mags-frequent-1.png used on input line 92.
+(pdftex.def)             Requested size: 346.89731pt x 260.16904pt.
+
+<images/depths-frequent-1.png, id=160, 722.7pt x 542.025pt>
+File: images/depths-frequent-1.png Graphic file (type png)
+
+<use images/depths-frequent-1.png>
+Package pdftex.def Info: images/depths-frequent-1.png used on input line 96.
+(pdftex.def)             Requested size: 346.89731pt x 260.16904pt.
+ [31]
+<images/mags-frequent-2.png, id=164, 722.7pt x 542.025pt>
+File: images/mags-frequent-2.png Graphic file (type png)
+
+<use images/mags-frequent-2.png>
+Package pdftex.def Info: images/mags-frequent-2.png used on input line 106.
+(pdftex.def)             Requested size: 346.89731pt x 260.16904pt.
+
+<images/depths-frequent-2.png, id=165, 722.7pt x 542.025pt>
+File: images/depths-frequent-2.png Graphic file (type png)
+
+<use images/depths-frequent-2.png>
+Package pdftex.def Info: images/depths-frequent-2.png used on input line 110.
+(pdftex.def)             Requested size: 346.89731pt x 260.16904pt.
+ [32 <./images/mags-frequent-1.png> <./images/depths-frequent-1.png>]
+<images/mags-outlier.png, id=171, 722.7pt x 542.025pt>
+File: images/mags-outlier.png Graphic file (type png)
+
+<use images/mags-outlier.png>
+Package pdftex.def Info: images/mags-outlier.png used on input line 120.
+(pdftex.def)             Requested size: 346.89731pt x 260.16904pt.
+
+<images/depths-outlier.png, id=172, 722.7pt x 542.025pt>
+File: images/depths-outlier.png Graphic file (type png)
+
+<use images/depths-outlier.png>
+Package pdftex.def Info: images/depths-outlier.png used on input line 124.
+(pdftex.def)             Requested size: 346.89731pt x 260.16904pt.
+ [33 <./images/mags-frequent-2.png> <./images/depths-frequent-2.png>] [34 <./im
+ages/mags-outlier.png> <./images/depths-outlier.png>] <images/clusters-nobg.png
+, id=183, 558.085pt x 542.025pt>
 File: images/clusters-nobg.png Graphic file (type png)
 
 <use images/clusters-nobg.png>
-Package pdftex.def Info: images/clusters-nobg.png used on input line 93.
-(pdftex.def)             Requested size: 433.62334pt x 420.37373pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-) [30] [31 <./images/clusters-nobg.png>]
+Package pdftex.def Info: images/clusters-nobg.png used on input line 135.
+(pdftex.def)             Requested size: 334.85359pt x 325.2175pt.
+) [35 <./images/clusters-nobg.png>]
 Chapter 7.
-(./conclusion.tex [32
+(./conclusion.tex [36
 
-] [33]) (./ausample.bbl [34] [35
+] [37] [38]) (./ausample.bbl [39] [40
 
-] [36] [37]) [38]
+] [41] [42]) [43]
 
 AED: lastpage setting LastPage
 (./ausample.aux) ) 
 Here is how much of TeX's memory you used:
- 15764 strings out of 493014
- 299943 string characters out of 6133351
+ 15797 strings out of 493014
+ 300838 string characters out of 6133351
  376971 words of memory out of 5000000
- 18948 multiletter control sequences out of 15000+600000
+ 18975 multiletter control sequences out of 15000+600000
  10105 words of font info for 37 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,9n,54p,2150b,1122s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,9n,54p,2163b,1122s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.e
 nc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pf
 b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
@@ -928,10 +973,10 @@ exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/te
 xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/tex
 live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texl
 ive/2016/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on ausample.pdf (46 pages, 1075969 bytes).
+Output written on ausample.pdf (51 pages, 2917404 bytes).
 PDF statistics:
- 229 PDF objects out of 1000 (max. 8388607)
- 145 compressed objects within 2 object streams
+ 257 PDF objects out of 1000 (max. 8388607)
+ 156 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 68 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 98 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,5 +1,3 @@
-
-
 all:
 		pdflatex ausample
 		bibtex ausample
