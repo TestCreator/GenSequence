@@ -26,8 +26,12 @@
 \usepackage{color}
 \usepackage{verbatim} %for file names of test cases
 \usepackage[paperwidth=8.5in,paperheight=11.0in,
-  top=1.0in,bottom=1.0in,
-  includefoot,heightrounded]{geometry} %for page numbers within 1 inch
+  top=1.0in,bottom=.875in,
+  includefoot]{geometry} %for page numbers within 1 inch
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\DeclareUnicodeCharacter{2028}{} 
+
 
 \graphicspath{ {images/} }
 
@@ -67,48 +71,14 @@
 \newtheorem{theorem}{Theorem}[chapter]
 
 
+
 \begin{document}
+\pagenumbering{roman}
 
+\thispagestyle{empty}
+\input{title}
 
-
-\begin{titlepage}
-    \begin{center}
-        \vspace*{1cm}
-        
-        \Large
-        \textbf{USING STATISTICAL DISTRIBUTIONS TO GENERATE RANDOM TEST DATA}
-        
-        \vspace{3.5cm}
-        
-        \large
-        by
-        \linebreak
-        JAMIE ZIMMERMAN
-        
-        \vspace{3.5cm}
-        
-        \vfill
-
-        \normalsize
-        A THESIS
-        \vspace{1.5cm}
-        \begin{singlespace}
-        Presented to the Department of Computer and Information Science \\
-        and the Robert D. Clark Honors College \\
-        in partial fulfillment of the requirements for the degree of \\
-        Bachelor of Science
-        \end{singlespace}
-        
-        \vspace{0.8cm}
-        June 2018
-        
-    \end{center}
-\end{titlepage}
-
-
-
-\begin{romanpages}      % roman-numbered pages 
-
+\setcounter{page}{1}
 \input{abs}
 
 \input{ack}
@@ -125,18 +95,17 @@
 \listoffigures
 \end{center}
 
-
-\newpage
 \begin{center}
 \listoftables
 \end{center}
 
 
-\end{romanpages}        % All done with roman-numbered pages%
-
 \normalem       % Make italics the default for \em%
 
+
 \chapter{\normalsize Introduction}
+\pagenumbering{arabic}
+
 \input{introduction}
 
 \chapter{\normalsize Literature Survey}
